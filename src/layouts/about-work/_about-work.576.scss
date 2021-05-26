@@ -1,0 +1,26 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-stages {
+  &__title {}
+
+  &__descr {}
+}
+
+.stages {}
+
+.about-stage {
+  &__img-block {}
+
+  &__img {}
+
+  &__title {}
+
+  &__text {}
+
+  &__num {}
+
+  &__descr {}
+}

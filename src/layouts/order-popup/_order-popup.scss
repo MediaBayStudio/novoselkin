@@ -1,0 +1,73 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.order-popup {
+  &__cnt {
+    max-width: 670px;
+    width: 100%;
+  }
+  &__close {
+    margin: 15px 0 10px auto;
+  }
+  &__params {
+    margin: 0 0 40px;
+    // text-align: center;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    font: 18px/26px Calibri;
+    &-separator {
+      display: none;
+    }
+  }
+  &__params-term {
+    display: block;
+  }
+}
+
+.order-form-wrap {
+}
+
+.order-form {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  &.loading {
+    > .loader {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &.sent {
+    > .thanks {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &__title {
+    // margin: 0 0 40px;
+    margin: 0 0 10px;
+    font: bold 21px/125% BookmanOldStyle;
+    text-align: center;
+  }
+  &__title-red {
+    display: block;
+    color: $red;
+  }
+  > .field {
+    width: 100%;
+    max-width: 300px;
+  }
+  > .field_name,
+  > .field_tel {
+    margin: 0 0 30px;
+  }
+  > .btn {
+    margin: 35px auto 20px;
+    width: 100%;
+    max-width: 300px;
+    height: 45px;
+  }
+}

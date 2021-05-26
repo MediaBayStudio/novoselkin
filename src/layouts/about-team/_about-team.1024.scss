@@ -1,0 +1,32 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-team {
+  &__title {
+    margin: 0 0 10px;
+  }
+}
+
+.team {}
+
+.person {
+  margin-top: 40px;
+  width: 195px;
+  &__img {
+    &.lazyloaded~.person__title>.person__pos::before {}
+  }
+
+  &__title {}
+
+  &__name {}
+
+  &__pos {
+    &::before {}
+
+    &-text {}
+  }
+
+  &__descr {}
+}

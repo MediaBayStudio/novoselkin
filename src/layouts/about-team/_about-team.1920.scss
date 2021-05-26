@@ -1,0 +1,34 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-team {
+  &__title {}
+}
+
+.team {}
+
+.person {
+  &:nth-child(n) {
+    margin-right: 65px;
+  }
+  &:nth-child(4n+4) {
+    margin-right: 0;
+  }
+  &__img {
+    &.lazyloaded~.person__title>.person__pos::before {}
+  }
+
+  &__title {}
+
+  &__name {}
+
+  &__pos {
+    &::before {}
+
+    &-text {}
+  }
+
+  &__descr {}
+}

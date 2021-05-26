@@ -1,0 +1,68 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about {
+  padding-bottom: 80px;
+  display: flex;
+  flex-flow: column;
+  &__text {}
+
+  &__title {
+    margin: 0 0 10px;
+    font: 32px/100% BookmanOldStyle;
+  }
+
+  &__descr {
+    &:nth-last-child(n+2) {
+      margin: 0 0 30px;
+    }
+  }
+
+  &__img {
+  }
+
+  &__number {
+    margin: 0 10px 0 0;
+    font: 60px/100% BookmanOldStyle;
+    color: $red;
+  }
+
+  &__top-text {
+    margin: 0 0 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__bottom-text {}
+}
+
+.about-img-block {
+  margin: 0 0 25px;
+  order: -1;
+}
+
+.about-img-text {
+  margin-top: 15px;
+  width: 280px;
+  display: flex;
+  align-items: center;
+  font: 18px/100% Calibri;
+  position: relative;
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 70px;
+    height: 2px;
+    position: absolute;
+    top: 17px;
+    right: 0;
+    background: $red;
+  }
+}
+
+.about-img-descr-block {
+  display: flex;
+  flex-flow: column;
+}

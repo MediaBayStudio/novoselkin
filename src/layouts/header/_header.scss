@@ -1,0 +1,33 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+// .hdr {
+//   padding-top: 15px;
+//   padding-bottom: 15px;
+//   display: flex;
+//   align-items: center;
+//   background: $white;
+//   position: relative;
+//   z-index: 2;
+//   &.fixed {
+//     width: 100%;
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     animation: translateToBottom .5s;
+//   }
+//   &__logo {
+//     margin: 0 auto 0 0;
+//   }
+//   &__logo-img {
+//   }
+//   &__callback,
+//   &__tel,
+//   &__nav {
+//     display: none;
+//   }
+//   &__burger {
+//   }
+// }

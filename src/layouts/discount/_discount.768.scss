@@ -1,0 +1,43 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.discount {
+  background: top -45px left/1025px 424px no-repeat;
+  /* .discount__cnt */
+  &__cnt {
+  }
+  /* .discount__title */
+  &__title {
+    font-size: 32px;
+  }
+  /* .discount__title-red */
+  &__title-red {
+  }
+  /* .discount__title-black */
+  &__title-black {
+  }
+}
+
+.discount-form-wrap {
+  &::before {
+    top: 35%;
+    left: 45%;
+    width: 750px;
+    height: 700px;
+  }
+}
+
+.discount-form {
+  .field {}
+  .field_name {}
+  .field_tel {}
+  .field_email {}
+  .check {
+    max-width: 300px;
+  }
+  .btn {
+    width: 300px;
+  }
+}

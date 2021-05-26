@@ -1,0 +1,39 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-team {
+  padding-bottom: 140px;
+  &__title {
+    margin: 0 0 -10px;
+  }
+}
+
+.team {
+  display: flex;
+  flex-flow: wrap;
+}
+
+.person {
+  margin-top: 70px;
+  width: 210px;
+  &:nth-child(2n+2) {
+    margin-right: 19px;
+  }
+  &__img {
+    &.lazyloaded~.person__title>.person__pos::before {}
+  }
+
+  &__title {}
+
+  &__name {}
+
+  &__pos {
+    &::before {}
+
+    &-text {}
+  }
+
+  &__descr {}
+}

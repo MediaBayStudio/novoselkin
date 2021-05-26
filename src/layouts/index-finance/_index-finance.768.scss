@@ -1,0 +1,25 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.index-finance {
+
+  /* .index-finance__title */
+  &__title {}
+
+  /* .index-finance__cards */
+  &__cards {}
+}
+
+.finance-card {
+
+  /* .finance-card__img */
+  &__img {}
+
+  /* .finance-card__title */
+  &__title {}
+
+  /* .finance-card__descr */
+  &__descr {}
+}

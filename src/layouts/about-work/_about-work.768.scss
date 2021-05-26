@@ -1,0 +1,89 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-stages {
+
+  // padding-bottom: 140px;
+  &__title {}
+
+  &__descr {
+    margin: 0 0 -5px;
+    font-size: 18px;
+  }
+}
+
+.stages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.about-stage {
+  margin-top: 50px;
+  width: 329px;
+
+  &__img-block {
+    &::before {
+      left: 35px;
+      transform: scaleX(1.5);
+    }
+  }
+
+  &:nth-child(1) {
+    >.about-stage__img-block::before {
+      left: 0;
+      transform: none;
+    }
+  }
+
+  &:nth-child(2) {
+    >.about-stage__img-block::before {
+    }
+  }
+
+  &:nth-child(3) {
+    >.about-stage__img-block::before {}
+  }
+
+  &:nth-child(4) {
+    >.about-stage__img-block::before {
+    }
+  }
+
+  &:nth-child(5) {
+    >.about-stage__img-block::before {}
+  }
+
+  &:nth-child(6) {
+    >.about-stage__img-block::before {
+      left: 0;
+      transform: none;
+    }
+  }
+
+
+  &__img {}
+
+  &__title {}
+
+  &__text {
+    margin-top: 30px;
+    font-size: 16px;
+  }
+
+  &__num {
+    margin-top: 30px;
+    font-size: 47px;
+
+    &::before {
+      width: 60px;
+      height: 90px;
+    }
+  }
+
+  &__descr {
+    margin-left: 25px;
+  }
+}

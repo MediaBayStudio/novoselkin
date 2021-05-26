@@ -1,0 +1,63 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.index-get-free {
+  padding-top: 140px;
+  padding-bottom: 140px;
+  /* .index-get-free__title */
+  &__title {}
+
+  /* .index-get-free__cards */
+  &__cards {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.get-free-card {
+  width: 417px;
+  flex-flow: column;
+  &:nth-last-child(n+2) {
+    margin: 0;
+  }
+  /* .get-free-card__img */
+  &__img {
+    margin: 0 0 35px;
+    width: 100%;
+  }
+
+  /* .get-free-card__text */
+  &__text {
+    display: flex;
+  }
+
+  /* .get-free-card__title-block */
+  &__title-block {
+    margin: 0 auto 0 0;
+    width: 185px;
+    flex-flow: column;
+    align-items: flex-start;
+  }
+
+  /* .get-free-card__title */
+  &__title {
+    width: 100%;
+    font-size: 22px;
+    line-height: 155%;
+  }
+
+  /* .get-free-card__free-text */
+  &__free-text {
+    margin: auto 0 -5px -7px;
+    padding: 20px 25px 25px 20px;
+    font-size: 24px;
+  }
+
+  /* .get-free-card__descr */
+  &__descr {
+    flex-shrink: 0;
+    width: 200px;
+  }
+}

@@ -1,0 +1,35 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.callback-popup {
+  &__cnt {
+  }
+  &__close {
+  }
+}
+
+.callback-form-wrap {
+}
+
+.callback-form {
+  &.loading {
+    > .loader {
+    }
+  }
+  &.sent {
+    > .thanks {
+    }
+  }
+  &__title {
+    font-size: 40px;
+  }
+  &__title-red {
+  }
+  > .field_name,
+  > .field_tel {
+  }
+  > .btn {
+  }
+}

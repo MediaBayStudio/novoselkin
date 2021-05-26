@@ -1,0 +1,50 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about {
+  padding-bottom: 180px;
+  &__text {
+    font-size: 18px;
+    line-height: 150%;
+    &::before {
+      left: -95px;
+      width: 570px;
+      height: 520px;
+    }
+  }
+
+  &__title {
+    margin: 0 0 20px -20px;
+    font-size: 40px;
+  }
+
+  &__descr {
+    &:nth-last-child(n+2) {}
+  }
+
+  &__img {
+    width: 505px;
+    height: 420px;
+  }
+
+  &__number {}
+
+  &__top-text {}
+
+  &__bottom-text {}
+}
+
+.about-img-block {
+  margin: 0 60px 0 0;
+}
+
+.about-img-text {
+  margin: 40px auto 0;
+  &::after {
+    right: -40px;
+  }
+}
+
+.about-img-descr-block {}

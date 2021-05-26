@@ -1,0 +1,129 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.calc-sect {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  /* .calc-sect__title */
+  &__title {
+    font-size: 32px;
+  }
+
+  /* .calc-sect__descr */
+  &__descr {
+    // margin: 0 0 45px;
+  }
+}
+
+.calc {
+  margin: 45px 0 0;
+  grid-template-columns: auto 30px 340px;
+  // grid-template-rows: auto 20px auto 30px auto;
+  grid-template-rows: auto 20px auto;
+  /* .calc__group */
+  &__group {
+    &:nth-last-child(n+2) {}
+  }
+
+  /* .calc__group-title */
+  &__group-title {
+    font-size: 20px;
+  }
+
+  /* .calc__inputs */
+  &__inputs {}
+
+  /* .calc__input-wrap */
+  &__input-wrap {
+    &:nth-last-child(n+2) {}
+  }
+
+  /* .calc__input-wrap */
+  &__input-hint {
+    &:hover::after {}
+    &::after {}
+  }
+
+  &__radio,
+  &__checkbox {
+    font-size: 18px;
+  }
+
+  /* .calc__radio */
+  &__radio {
+    > .check__text {}
+  }
+
+  /* .calc__checkbox */
+  &__checkbox {
+    
+    >.check__inp {}
+
+    >.check__text {}
+  }
+}
+
+#calc-group-type {}
+
+#calc-group-work {}
+
+#calc-group-extra-work {}
+
+#calc-group-added {}
+
+#calc-img {
+  width: 340px;
+  // height: 180px;
+}
+
+.calc-result {
+  padding: 40px 30px;
+  /* .calc-result__price-block */
+  &__price-block {
+  }
+
+  /* .calc-result__price-title */
+  &__price-title {}
+
+  /* .calc-result__price */
+  &__price {
+    margin: 10px 0 25px;
+    font-size: 38px;
+  }
+
+  &__price-period {
+    width: auto;
+  }
+
+  /* .calc-result__price-number */
+  &__price-number {
+    // max-width: 190px;
+  }
+
+  /* .calc-result__guarantee-block */
+  &__guarantee-block {
+  }
+
+  /* .calc-result__guarantee-title */
+  &__guarantee-title {}
+
+  /* .calc-result__guarantee-descr */
+  &__guarantee-descr {
+    margin: 0 0 10px;
+  }
+
+  /* .calc-result__guarantee-doc */
+  &__guarantee-doc {
+    font-size: 18px;
+    &::before {}
+  }
+
+  /* .calc-result__buttons-block */
+  &__buttons-block {
+    > .btn {
+      &:first-child {}
+    }
+  }
+}

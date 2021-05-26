@@ -1,0 +1,43 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-stages {
+  // padding-bottom: 160px;
+  &__title {}
+
+  &__descr {
+    margin: 0 0 -30px;
+  }
+}
+
+.stages {}
+
+.about-stage {
+  &__img-block {}
+
+  &__img {}
+
+  &__title {
+    font-size: 19px;
+  }
+
+  &__text {
+    margin-top: 35px;
+  }
+
+  &__num {
+    display: block;
+    font-size: 80px;
+
+    &::before {
+      width: 100px;
+      height: 150px;
+    }
+  }
+
+  &__descr {
+    margin-left: 25px;
+  }
+}

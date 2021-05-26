@@ -1,0 +1,30 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.index-hero {
+  padding-top: 400px;
+  padding-bottom: 75px;
+  font-size: 20px;
+  background-size: 768px 944px;
+  &__title {
+    width: 450px;
+    font-size: 38px;
+  }
+  &__title-marked {
+    padding: 20px 55px 20px 30px;
+    font-size: 31px;
+  }
+  &.lazyloaded {
+    .index-hero__title-marked {
+    }
+  }
+  &__ul {
+    column-count: 2;
+  }
+  &__li {
+    &:nth-last-child(n+2) {
+    }
+  }
+}

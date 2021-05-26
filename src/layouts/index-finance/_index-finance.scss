@@ -1,0 +1,41 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.index-finance {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background: $lightgrey;
+  /* .index-finance__title */
+  &__title {
+    width: 280px;
+    font: 32px/120% BookmanOldStyle;
+  }
+  /* .index-finance__cards */
+  &__cards {
+    font: 17px/153% Calibri;
+  }
+}
+
+.finance-card {
+  margin-top: 40px;
+  display: flex;
+  flex-flow: column;
+  /* .finance-card__img */
+  &__img {
+    margin: 0 0 20px;
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+  }
+  /* .finance-card__title */
+  &__title {
+    margin: 0 0 10px;
+    display: block;
+    font: bold 20px/100% Calibri;
+  }
+  /* .finance-card__descr */
+  &__descr {
+  }
+}

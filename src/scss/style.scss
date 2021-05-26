@@ -1,0 +1,35 @@
+// assets import
+@import 'assets/animations';
+@import 'assets/fonts';
+@import 'assets/grid';
+@import 'assets/reset';
+@import 'assets/colors';
+@import 'assets/mixins';
+@import 'assets/variables';
+
+// blocks import
+@import 'general/buttons/buttons';
+@import 'general/popups/popups';
+@import 'general/sliders/sliders';
+@import 'general/forms/forms';
+@import 'general/interface/interface';
+@import '../layouts/header/header';
+@import '../layouts/calc/calc';
+@import '../layouts/discount/discount';
+@import '../layouts/footer/footer';
+@import '../layouts/index-hero/index-hero';
+@import '../layouts/index-cleaning/index-cleaning';
+@import '../layouts/index-finance/index-finance';
+@import '../layouts/index-get-free/index-get-free';
+@import '../layouts/about-hero/about-hero';
+@import '../layouts/about-prices/about-prices';
+@import '../layouts/about-about/about-about';
+@import '../layouts/about-steps/about-steps';
+@import '../layouts/about-work/about-work';
+@import '../layouts/about-team/about-team';
+@import '../layouts/pice-hero/pice-hero';
+@import '../layouts/hero-404/hero-404';
+@import '../layouts/mobile-menu/mobile-menu';
+@import '../layouts/overlay/overlay';
+@import '../layouts/order-popup/order-popup';
+@import '../layouts/callback-popup/callback-popup';

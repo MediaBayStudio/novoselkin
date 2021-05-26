@@ -1,0 +1,31 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.discount {
+  /* .discount__cnt */
+  &__cnt {
+  }
+  /* .discount__title */
+  &__title {
+  }
+  /* .discount__title-red */
+  &__title-red {
+  }
+  /* .discount__title-black */
+  &__title-black {
+  }
+}
+
+.discount-form-wrap {
+}
+
+.discount-form {
+  .field {}
+  .field_name {}
+  .field_tel {}
+  .field_email {}
+  .check {}
+  .btn {}
+}

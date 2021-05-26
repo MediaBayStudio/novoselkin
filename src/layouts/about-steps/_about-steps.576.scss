@@ -1,0 +1,61 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-steps {
+  &.lazyloaded {
+    .about-step__num::before {}
+    .about-step::after {
+      background-image: url('../img/icon-arrow-long.svg');
+    }
+  }
+
+  &__title {
+    margin: 0 0 25px;
+  }
+}
+
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.about-step {
+  // margin-top: 25px;
+  width: calc((100% - 30px) / 2);
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 15px;
+    background: center/contain no-repeat;
+  }
+  &__num {
+    margin: 20px 35px 0 0;
+    font-size: 49px;
+    &::before {
+      width: 90px;
+      height: 100px;
+    }
+  }
+
+  &__num-text {}
+
+  &__right {}
+
+  &__img {
+    width: 55px;
+    height: 55px;
+  }
+
+  &__descr {
+    margin-top: 20px;
+  }
+
+  &__btn {}
+}

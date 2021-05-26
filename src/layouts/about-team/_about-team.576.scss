@@ -1,0 +1,68 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-team {
+  &.lazyloaded {
+    .about-team__more-btn::after {
+      background-image: url('../img/icon-arrow-corner.svg');
+    }
+  }
+  &__title {
+    margin: 0;
+  }
+  &__more-btn {
+    margin: 55px auto 0;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    font-size: 15px;
+    line-height: 100%;
+    transition: opacity .5s, visibility .5s;
+    &.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    &::after {
+      margin-top: 5px;
+      flex-shrink: 0;
+      content: '';
+      width: 18px;
+      height: 10px;
+      transform: rotate(90deg);
+      background: center/contain no-repeat;
+    }
+  }
+}
+
+.team {
+  display: flex;
+  flex-wrap: wrap;
+  transition: max-height .5s;
+  will-change: max-height;
+  overflow: hidden;
+}
+
+.person {
+  margin-top: 60px;
+  width: 258px;
+  &:nth-child(odd) {
+    margin-right: 19px;
+  }
+  &__img {
+    &.lazyloaded~.person__title>.person__pos::before {}
+  }
+
+  &__title {}
+
+  &__name {}
+
+  &__pos {
+    &::before {}
+
+    &-text {}
+  }
+
+  &__descr {}
+}

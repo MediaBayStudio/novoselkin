@@ -1,0 +1,107 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.calc-sect {
+  /* .calc-sect__title */
+  &__title {}
+
+  /* .calc-sect__descr */
+  &__descr {
+    max-width: 570px;
+    font-size: 20px;
+  }
+}
+
+.calc {
+
+  /* .calc__group */
+  &__group {
+    &:nth-last-child(n+2) {}
+  }
+
+  /* .calc__group-title */
+  &__group-title {}
+
+  /* .calc__inputs */
+  &__inputs {}
+
+  /* .calc__input-wrap */
+  &__input-wrap {
+    &:nth-last-child(n+2) {}
+  }
+
+  /* .calc__input-wrap */
+  &__input-hint {
+    &:hover::after {}
+    &::after {}
+  }
+
+  &__radio,
+  &__checkbox {}
+
+  /* .calc__radio */
+  &__radio {
+    > .check__text {}
+  }
+
+  /* .calc__checkbox */
+  &__checkbox {
+    
+    >.check__inp {}
+
+    >.check__text {}
+  }
+}
+
+#calc-group-type {}
+
+#calc-group-work {}
+
+#calc-group-extra-work {}
+
+#calc-group-added {}
+
+#calc__img {
+  margin: 0;
+  // width: 600px;
+  // height: 290px;
+}
+
+.calc-result {
+  /* .calc-result__price-block */
+  &__price-block {}
+
+  /* .calc-result__price-title */
+  &__price-title {}
+
+  /* .calc-result__price */
+  &__price {}
+
+  &__price-period {}
+
+  /* .calc-result__price-number */
+  &__price-number {}
+
+  /* .calc-result__guarantee-block */
+  &__guarantee-block {}
+
+  /* .calc-result__guarantee-title */
+  &__guarantee-title {}
+
+  /* .calc-result__guarantee-descr */
+  &__guarantee-descr {}
+
+  /* .calc-result__guarantee-doc */
+  &__guarantee-doc {
+    &::before {}
+  }
+
+  /* .calc-result__buttons-block */
+  &__buttons-block {
+    > .btn {
+      &:first-child {}
+    }
+  }
+}

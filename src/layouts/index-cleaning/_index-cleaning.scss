@@ -1,0 +1,61 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.index-cleaning {
+  padding-top: 25px;
+  padding-bottom: 150px;
+  background: center bottom/576px 237px no-repeat;
+  overflow: hidden;
+  /* .index-cleaning__text */
+  &.lazyloaded {
+    > .index-cleaning__text::before {
+      background-image: url('../img/cleaning-text-bg.svg');
+    }
+  }
+  &__text {
+    max-width: 350px;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      top: -140px;
+      left: -140px;
+      width: 790px;
+      height: 650px;
+      background: center/contain no-repeat;
+    }
+  }
+  /* .index-cleaning__title */
+  &__title {
+    margin: 0 0 15px;
+    font: bold 28px/115% BookmanOldStyle;
+    color: $red;
+    position: relative;
+    z-index: 1;
+  }
+  /* .index-cleaning__descr */
+  &__descr {
+    margin: 0 0 30px;
+    position: relative;
+    z-index: 1;
+  }
+  /* .index-cleaning__ul */
+  &__ul {
+    margin: 0 0 15px;
+    position: relative;
+    z-index: 1;
+  }
+  /* .index-cleaning__li */
+  &__li {
+
+  }
+  /* .index-cleaning__sign */
+  &__sign {
+    font-size: 14px;
+    color: $darkgrey;
+    position: relative;
+    z-index: 1;
+  }
+}

@@ -1,0 +1,88 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.discount {
+  padding-top: 170px;
+  padding-bottom: 60px;
+  background: top -60px left/576px 272px no-repeat;
+  overflow: hidden;
+  /* .discount__cnt */
+  &__cnt {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+  /* .discount__title */
+  &__title {
+    margin: 0 0 40px;
+    width: 280px;
+    font: bold 28px/50px BookmanOldStyle;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  /* .discount__title-red */
+  &__title-red {
+    display: block;
+    color: $red;
+  }
+  /* .discount__title-black */
+  &__title-black {
+  }
+}
+
+.discount-form-wrap {
+  position: relative;
+  &::before {
+    content: '';
+    width: 800px;
+    height: 750px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: center/contain no-repeat;
+    pointer-events: none;
+  }
+}
+
+.discount-form {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  &.loading {
+    > .loader {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &.sent {
+    > .thanks {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  .field {
+    width: 280px;
+  }
+  .field_name,
+  .field_tel {
+    margin: 0 0 30px;
+  }
+  .field_name {}
+  .field_tel {}
+  .field_email {}
+  .check {
+    margin: 20px 0 0;
+    // width: 280px;
+  }
+  .btn {
+    margin-top: 35px;
+    width: 280px;
+    height: 45px;
+  }
+}

@@ -1,0 +1,57 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.callback-popup {
+  &__cnt {
+    max-width: 670px;
+    width: 100%;
+  }
+  &__close {
+    margin: 15px 0 10px auto;
+  }
+}
+
+.callback-form-wrap {
+}
+
+.callback-form {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  &.loading {
+    > .loader {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &.sent {
+    > .thanks {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &__title {
+    margin: 0 0 40px;
+    font: bold 21px/125% BookmanOldStyle;
+    text-align: center;
+  }
+  &__title-red {
+    display: block;
+    color: $red;
+  }
+  > .field {
+    width: 100%;
+    max-width: 300px;
+  }
+  > .field_name {
+    margin: 0 0 30px;
+  }
+  > .btn {
+    margin: 35px auto 20px;
+    width: 100%;
+    max-width: 300px;
+    height: 45px;
+  }
+}

@@ -1,0 +1,73 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.ftr {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  /* .ftr__top */
+  &__top {}
+
+  /* .ftr__logo */
+  &__logo {}
+
+  /* .ftr__logo-img */
+  &__logo-img {
+    width: 200px;
+    height: 55px;
+  }
+
+  /* .ftr__copy */
+  &__copy {}
+
+  /* .ftr__nav */
+  &__nav {
+    &-list {}
+
+    &-li {
+      &:nth-last-child(n+2) {
+        margin: 0 0 35px;
+      }
+    }
+  }
+
+  /* .ftr__phones */
+  &__phones {}
+
+  /* .ftr__tel */
+  &__tel {
+    font-size: 24px;
+  }
+
+  /* .ftr__callback */
+  &__callback {}
+
+  /* .ftr__work-hours */
+  &__work-hours {}
+
+  /* .ftr__contacts */
+  &__contacts {}
+
+  /* .ftr__address */
+  &__address {
+    font-size: 24px;
+    &-text {
+    width: 221px;
+  }
+  }
+
+
+  /* .ftr__email */
+  &__email {}
+
+  /* .ftr__info */
+  &__info {}
+
+  /* .ftr__policy */
+  &__policy {}
+}
+
+.site-info {
+  font-size: 14px;
+}

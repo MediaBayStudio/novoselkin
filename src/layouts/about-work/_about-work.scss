@@ -1,0 +1,126 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-stages {
+
+  // padding-bottom: 80px;
+  &.lazyloaded {
+    .about-stage__img-block::before {
+      background-image: url('../img/steps-text-bg.svg');
+    }
+
+    .about-stage__num::before {
+      background-image: url('../img/steps-num-bg.svg');
+    }
+  }
+
+  &__title {
+    margin: 0 0 15px;
+    font: 32px/100% BookmanOldStyle;
+  }
+
+  &__descr {
+    margin: 0 0 -25px;
+  }
+}
+
+.stages {}
+
+.about-stage {
+  margin-top: 60px;
+  max-width: 370px;
+
+  &__img-block {
+    position: relative;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 165px;
+      height: 60px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: center/contain no-repeat;
+    }
+  }
+
+  &:nth-child(1) {
+    >.about-stage__img-block::before {}
+  }
+
+  &:nth-child(2) {
+    >.about-stage__img-block::before {
+      left: 40px;
+      transform: scaleX(1.5);
+    }
+  }
+
+  &:nth-child(3) {
+    >.about-stage__img-block::before {}
+  }
+
+  &:nth-child(4) {
+    >.about-stage__img-block::before {
+      left: 60px;
+      transform: scaleX(1.75);
+    }
+  }
+
+  &:nth-child(5) {
+    >.about-stage__img-block::before {}
+  }
+
+  &:nth-child(6) {
+    >.about-stage__img-block::before {}
+  }
+
+  &__img {}
+
+  &__title {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font: bold 16px/100% Calibri;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $red;
+  }
+
+  &__text {
+    margin-top: 20px;
+    display: flex;
+    align-items: flex-start;
+    font-size: 15px;
+  }
+
+  &__num {
+    margin-top: 20px;
+    font: 21px/100% BookmanOldStyle;
+    color: $white;
+    position: relative;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 45px;
+      height: 60px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: center/contain no-repeat;
+    }
+
+    &-text {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &__descr {
+    margin-left: 15px;
+  }
+}

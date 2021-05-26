@@ -1,0 +1,27 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-prices {
+  padding-top: 140px;
+  padding-bottom: 140px;
+  &__title {
+    margin: 0;
+  }
+  &__prices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+.about-price {
+  padding: 50px 25px;
+  width: calc((100% - 30px) / 2);
+  font-size: 16px;
+  &__title {
+  }
+  &__price {
+  }
+}

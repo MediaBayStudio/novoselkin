@@ -1,0 +1,41 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-hero {
+  padding-top: 130px;
+  padding-bottom: 200px;
+  overflow: hidden;
+  text-align: center;
+  background: bottom -20px center/576px 639px;
+  &.lazyloaded {
+    > .about-hero__title::before {
+      background-image: url('../img/about-hero-text-bg.svg');
+    }
+  }
+  &__title {
+    font: bold 25px/140% BookmanOldStyle;
+    position: relative;
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 355px;
+      height: 210px;
+      position: absolute;
+      top: 35%;
+      left: 45%;
+      transform: translate(-50%, -50%);
+      background: center/contain no-repeat;
+    }
+  }
+  &__title-text {
+    position: relative;
+    z-index: 1;
+  }
+  &__btn {
+    margin: 60px auto 0;
+    width: 190px;
+    height: 50px;
+  }
+}

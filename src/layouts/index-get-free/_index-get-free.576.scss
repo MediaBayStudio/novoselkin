@@ -1,0 +1,47 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.index-get-free {
+
+  /* .index-get-free__title */
+  &__title {
+    margin: 0 0 40px;
+    width: auto;
+  }
+
+  /* .index-get-free__cards */
+  &__cards {
+  }
+}
+
+.get-free-card {
+  display: flex;
+  &:nth-last-child(n+2) {
+    margin: 0 0 80px;
+  }
+  /* .get-free-card__img */
+  &__img {
+    margin: 0 20px 0 0;
+    flex-shrink: 0;
+    width: 250px;
+  }
+
+  /* .get-free-card__text */
+  &__text {}
+
+  /* .get-free-card__title-block */
+  &__title-block {
+    // display: flex;
+  }
+
+  /* .get-free-card__title */
+  &__title {}
+
+  /* .get-free-card__free-text */
+  &__free-text {}
+
+  /* .get-free-card__descr */
+  &__descr {}
+}

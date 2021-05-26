@@ -1,0 +1,31 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-steps {
+  padding-bottom: 140px;
+  &.lazyloaded {
+    .about-step__num::before {}
+  }
+
+  &__title {}
+}
+
+.steps {}
+
+.about-step {
+  &__num {
+    &::before {}
+  }
+
+  &__num-text {}
+
+  &__right {}
+
+  &__img {}
+
+  &__descr {}
+
+  &__btn {}
+}

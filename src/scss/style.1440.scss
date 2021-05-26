@@ -1,0 +1,31 @@
+// assets import
+@import 'assets/colors';
+@import 'assets/mixins';
+@import 'assets/variables';
+
+// blocks import
+@import 'general/buttons/buttons.1440';
+@import 'general/popups/popups.1440';
+@import 'general/sliders/sliders.1440';
+@import 'general/forms/forms.1440';
+@import 'general/interface/interface.1440';
+@import '../layouts/header/header.1440';
+@import '../layouts/calc/calc.1440';
+@import '../layouts/discount/discount.1440';
+@import '../layouts/footer/footer.1440';
+@import '../layouts/index-hero/index-hero.1440';
+@import '../layouts/index-cleaning/index-cleaning.1440';
+@import '../layouts/index-finance/index-finance.1440';
+@import '../layouts/index-get-free/index-get-free.1440';
+@import '../layouts/about-hero/about-hero.1440';
+@import '../layouts/about-prices/about-prices.1440';
+@import '../layouts/about-about/about-about.1440';
+@import '../layouts/about-steps/about-steps.1440';
+@import '../layouts/about-work/about-work.1440';
+@import '../layouts/about-team/about-team.1440';
+@import '../layouts/pice-hero/pice-hero.1440';
+@import '../layouts/hero-404/hero-404.1440';
+@import '../layouts/mobile-menu/mobile-menu.1440';
+@import '../layouts/overlay/overlay.1440';
+@import '../layouts/order-popup/order-popup.1440';
+@import '../layouts/callback-popup/callback-popup.1440';

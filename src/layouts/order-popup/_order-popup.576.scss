@@ -1,0 +1,42 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.order-popup {
+  &__cnt {
+  }
+  &__close {
+  }
+  &__params {
+    display: block;
+    text-align: center;
+    &-separator {
+      display: inline;
+    }
+  }
+}
+
+.order-form-wrap {
+}
+
+.order-form {
+  &.loading {
+    > .loader {
+    }
+  }
+  &.sent {
+    > .thanks {
+    }
+  }
+  &__title {
+    font-size: 40px;
+  }
+  &__title-red {
+  }
+  > .field_name,
+  > .field_tel {
+  }
+  > .btn {
+  }
+}

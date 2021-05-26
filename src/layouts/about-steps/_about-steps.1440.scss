@@ -1,0 +1,44 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-steps {
+  padding-bottom: 160px;
+  &.lazyloaded {
+    .about-step__num::before {}
+  }
+
+  &__title {
+    font-size: 40px;
+  }
+}
+
+.steps {
+  font-size: 17px;
+}
+
+.about-step {
+  &__num {
+    margin-top: 30px;
+    font-size: 80px;
+    &::before {
+      width: 140px;
+      height: 160px;
+    }
+  }
+
+  &__num-text {}
+
+  &__right {
+    width: 225px;
+  }
+
+  &__img {}
+
+  &__descr {}
+
+  &__btn {
+    margin-top: 25px;
+  }
+}

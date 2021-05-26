@@ -1,0 +1,145 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.ftr {
+  padding-top: 50px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  text-align: center;
+
+  /* .ftr__top */
+  &__top {}
+
+  /* .ftr__logo */
+  &__logo {}
+
+  /* .ftr__logo-img */
+  &__logo-img {
+    width: 165px;
+    height: 45px;
+  }
+
+  /* .ftr__copy */
+  &__copy {
+    line-height: 100%;
+    color: #767676;
+  }
+
+  &__dev {
+    margin-top: 5px;
+    font: 12px/130% Calibri;
+    text-align: center;
+  }
+
+  &__dev-link {
+    font: 600 14px SegoeUI;
+    letter-spacing: 0.08em;
+    color: #767676;
+  }
+
+  /* .ftr__nav */
+  &__nav {
+    margin: 40px 0;
+    font: 18px/100% Calibri;
+
+    &-list {}
+
+    &-li {
+      &:nth-last-child(n+2) {
+        margin: 0 0 30px;
+      }
+    }
+  }
+
+  /* .ftr__phones */
+  &__phones {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  /* .ftr__tel */
+  &__tel {
+    font: 20px/100% Calibri;
+    transition: color .5s;
+  }
+
+  /* .ftr__callback */
+  &__callback {
+    margin: 20px 0;
+    width: 185px;
+    height: 40px;
+  }
+
+  /* .ftr__work-hours */
+  &__work-hours {
+    line-height: 100%;
+    color: #767676;
+  }
+
+  /* .ftr__contacts */
+  &__contacts {
+    margin: 50px 0 0;
+  }
+
+  /* .ftr__address */
+  &__address {
+    margin: 0 0 20px;
+    display: flex;
+    justify-content: center;
+    font: 20px/140% Calibri;
+
+    &::before {
+      margin: 2px 10px 0 0;
+      flex-shrink: 0;
+      content: '';
+      display: inline-block;
+      width: 17px;
+      height: 21px;
+      background: center/contain no-repeat;
+    }
+
+    &-text {
+      width: 185px;
+    }
+  }
+
+  /* .ftr__email */
+  &__email {
+    display: inline-flex;
+    align-items: center;
+    font: 18px/100% Calibri;
+    color: $red;
+    transition: filter .5s;
+
+    &::before {
+      margin: 0 10px 0 0;
+      content: '';
+      display: inline-block;
+      width: 19px;
+      height: 14px;
+      background: center/contain no-repeat;
+    }
+  }
+
+}
+
+.site-info {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font: 12px/133% Calibri;
+  text-align: center;
+  color: #767676;
+  background: #F4F4F4;
+
+  >.policy {
+    margin-top: 5px;
+    display: inline-flex;
+    border-bottom: 1px dashed;
+    transition: border-bottom-color .5s, color .5s;
+  }
+}

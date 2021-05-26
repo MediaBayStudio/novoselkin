@@ -1,0 +1,86 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.ftr {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  align-items: stretch;
+  /* .ftr__top */
+  &__top {
+    margin: 0;
+    display: flex;
+    flex-flow: column;
+    width: auto;
+  }
+
+  /* .ftr__logo */
+  &__logo {
+    // margin: 0 0 auto;
+    margin: 0;
+  }
+
+  /* .ftr__logo-img */
+  &__logo-img {
+    width: 190px;
+    height: 54px;
+  }
+
+  /* .ftr__copy */
+  &__copy {
+    margin: auto 0;
+  }
+
+  &__dev {
+    margin: 0;
+  }
+
+  /* .ftr__nav */
+  &__nav {
+    &-list {}
+
+    &-li {
+      &:nth-last-child(n+2) {}
+    }
+  }
+
+  /* .ftr__phones */
+  &__phones {}
+
+  /* .ftr__tel */
+  &__tel {}
+
+  /* .ftr__callback */
+  &__callback {
+    margin: 20px 0 auto;
+  }
+
+  /* .ftr__work-hours */
+  &__work-hours {}
+
+  /* .ftr__contacts */
+  &__contacts {
+    display: flex;
+    flex-flow: column;
+  }
+
+  /* .ftr__address */
+  &__address {
+    margin: 0 0 auto;
+  }
+
+  /* .ftr__email */
+  &__email {}
+
+  /* .ftr__policy */
+  &__policy {}
+}
+
+.site-info {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

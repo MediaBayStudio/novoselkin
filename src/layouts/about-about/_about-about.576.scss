@@ -1,0 +1,28 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about {
+  &__text {}
+
+  &__title {}
+
+  &__descr {
+    &:nth-last-child(n+2) {}
+  }
+
+  &__img {}
+
+  &__number {}
+
+  &__top-text {}
+
+  &__bottom-text {}
+}
+
+.about-img-block {}
+
+.about-img-text {}
+
+.about-img-descr-block {}

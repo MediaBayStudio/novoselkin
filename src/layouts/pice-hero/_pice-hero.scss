@@ -1,0 +1,142 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.price-hero {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background: center right -600px no-repeat;
+  &.lazyloaded {
+    > .price-hero__title {
+      background-image: url('../img/price-hero-title-bg.svg');
+    }
+  }
+  &__title {
+    margin-left: -5px;
+    padding: 25px 50px 25px 25px;
+    display: inline-block;
+    font: bold 44px/100% BookmanOldStyle;
+    background: center/contain no-repeat;
+  }
+}
+
+.prices-sect {
+  padding-top: 80px;
+  padding-bottom: 70px;
+}
+
+.prices-block {
+  overflow: hidden;
+  // margin-left: -20px;
+  // padding-left: 20px;
+  // width: 100vw;
+  // overflow-x: auto;
+  // overflow-y: hidden;
+  &__text {
+    margin-top: 30px;
+    font-size: 18px;
+    line-height: 156%;
+  }
+}
+
+.price-block {
+  // padding-right: 20px;
+  // width: 690px;
+  &:nth-last-child(n+2) {
+    margin: 0 0 40px;
+  }
+  &__title {
+    margin: 0 0 35px;
+    display: block;
+    font: 20px/130% BookmanOldStyle;
+    text-transform: uppercase;
+  }
+}
+
+.tables-block {
+  border: 1px solid #d2d2d2;
+  border-top: 0;
+}
+
+.price-table-block {
+  max-height: 60px;
+  transition: max-height .5s;
+  will-change: max-height;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  &__title {
+    padding-left: 25px;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    font-size: 15px;
+    line-height: 100%;
+    white-space: nowrap;
+    border-top: 1px solid #d2d2d2;
+    cursor: pointer;
+    &::after {
+      margin: 0 20px 0 auto;
+      content: '+';
+      color: #898989;
+      font: bold 20px/100% BookmanOldStyle;
+    }
+  }
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  &__hdr {
+    font: 13px/130% Calibri;
+    background: #ffe9e0;
+    color: $red;
+  }
+  &__th {
+    font-weight: normal;
+  }
+  &__body {
+    font: 12px/130% Calibri;
+  }
+
+  &__tr {
+    &:first-child {
+    }
+    &:nth-child(2n) {
+      background: #F4F4F4;
+    }
+  }
+
+  &__td,
+  &__th {
+    // padding: 0 25px 0 10px;
+    padding: 0 5px;
+    height: 65px;
+    text-align: center;
+    &:first-child {
+      width: 30px;
+      // max-width: 30px;
+    }
+    &:nth-child(2) {
+      text-align: left;
+    }
+    &:nth-child(3) {
+      width: 35px;
+      // max-width: 35px;
+    }
+    &:last-child {
+      width: 40px;
+      // max-width: 40px;
+    }
+    > sup {
+      margin-top: -3px;
+      display: inline-block;
+    }
+    &:nth-last-child(-n+2) {
+      // white-space: nowrap;
+    }
+  }
+}

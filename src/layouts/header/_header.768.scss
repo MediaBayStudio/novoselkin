@@ -1,0 +1,43 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.hdr {
+  line-height: 100%;
+  &__logo {
+  }
+  &__logo-img {
+  }
+  &__callback,
+  &__tel,
+  &__nav {
+  }
+  &__nav {
+    display: block;
+
+    &-list {
+      display: flex;
+      align-items: center;
+    }
+    &-li {
+      &:nth-last-child(n+2) {
+        margin: 0 30px 0 0;
+      }
+    }
+  }
+  &__tel {
+    margin: 0 0 0 35px;
+    // display: block;
+    // transition: color .5s;
+  }
+  &__callback {
+    margin-left: 25px;
+    display: flex;
+    width: 180px;
+    height: 45px;
+  }
+  &__burger {
+    display: none;
+  }
+}

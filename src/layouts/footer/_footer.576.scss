@@ -1,0 +1,55 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.ftr {
+
+  /* .ftr__top */
+  &__top {}
+
+  /* .ftr__logo */
+  &__logo {}
+
+  /* .ftr__logo-img */
+  &__logo-img {}
+
+  /* .ftr__copy */
+  &__copy {}
+
+  /* .ftr__nav */
+  &__nav {
+    &-list {}
+
+    &-li {
+      &:nth-last-child(n+2) {}
+    }
+  }
+
+  /* .ftr__phones */
+  &__phones {}
+
+  /* .ftr__tel */
+  &__tel {}
+
+  /* .ftr__callback */
+  &__callback {}
+
+  /* .ftr__work-hours */
+  &__work-hours {}
+
+  /* .ftr__contacts */
+  &__contacts {}
+
+  /* .ftr__address */
+  &__address {}
+
+  /* .ftr__email */
+  &__email {}
+
+  /* .ftr__info */
+  &__info {}
+
+  /* .ftr__policy */
+  &__policy {}
+}

@@ -1,0 +1,40 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+// .index-hero {
+//   padding-top: 320px;
+//   padding-bottom: 50px;
+//   font: bold 18px/100% Calibri;
+//   color: $white;
+//   background: top center/576px 708px;
+//   &__title {
+//     margin: 0 0 20px;
+//     width: 280px;
+//     font: bold 26px/138% BookmanOldStyle;
+//     letter-spacing: 0.02em;
+//     text-transform: uppercase;
+//   }
+//   &__title-marked {
+//     margin: 5px 0 0 -12px;
+//     padding: 15px 50px 15px 25px;
+//     display: inline-block;
+//     font-size: 20px;
+//     line-height: 100%;
+//     color: $red;
+//     background: center/contain no-repeat;
+//   }
+//   &.lazyloaded {
+//     .index-hero__title-marked {
+//       background-image: url('../img/hero-text-bg.svg');
+//     }
+//   }
+//   &__ul {
+//   }
+//   &__li {
+//     &:nth-last-child(n+2) {
+//       margin: 0 0 15px;
+//     }
+//   }
+// }

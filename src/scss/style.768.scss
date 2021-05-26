@@ -1,0 +1,31 @@
+// assets import
+@import 'assets/colors';
+@import 'assets/mixins';
+@import 'assets/variables';
+
+// blocks import
+@import 'general/buttons/buttons.768';
+@import 'general/popups/popups.768';
+@import 'general/sliders/sliders.768';
+@import 'general/forms/forms.768';
+@import 'general/interface/interface.768';
+@import '../layouts/header/header.768';
+@import '../layouts/calc/calc.768';
+@import '../layouts/discount/discount.768';
+@import '../layouts/footer/footer.768';
+@import '../layouts/index-hero/index-hero.768';
+@import '../layouts/index-cleaning/index-cleaning.768';
+@import '../layouts/index-finance/index-finance.768';
+@import '../layouts/index-get-free/index-get-free.768';
+@import '../layouts/about-hero/about-hero.768';
+@import '../layouts/about-prices/about-prices.768';
+@import '../layouts/about-about/about-about.768';
+@import '../layouts/about-steps/about-steps.768';
+@import '../layouts/about-work/about-work.768';
+@import '../layouts/about-team/about-team.768';
+@import '../layouts/pice-hero/pice-hero.768';
+@import '../layouts/hero-404/hero-404.768';
+@import '../layouts/mobile-menu/mobile-menu.768';
+@import '../layouts/overlay/overlay.768';
+@import '../layouts/order-popup/order-popup.768';
+@import '../layouts/callback-popup/callback-popup.768';

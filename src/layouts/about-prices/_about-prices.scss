@@ -1,0 +1,31 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-prices {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  &__title {
+    margin: 0 0 30px;
+    font: bold 26px/130% Calibri;
+    color: $red;
+  }
+  &__prices {
+  }
+}
+
+.about-price {
+  margin-top: 15px;
+  padding: 50px 10px 50px 20px;
+  font: 15px/100% BookmanOldStyle;
+  background: center right/cover;
+  &__title {
+  }
+  &__price {
+    margin-top: 10px;
+    display: block;
+    font: bold 32px/100% BookmanOldStyle;
+    color: $red;
+  }
+}

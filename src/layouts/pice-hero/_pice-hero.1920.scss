@@ -1,0 +1,49 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.price-hero {
+  &.lazyloaded {
+    >.price-hero__title {}
+  }
+
+  &__title {}
+}
+
+.prices-sect {
+  padding-bottom: 100px;
+}
+
+.prices-block {}
+
+.price-block {
+  &__title {}
+}
+
+.tables-block {}
+
+.price-table-block {
+  &__title {}
+}
+
+.price-table {
+  &__hdr {}
+
+  &__th {}
+
+  &__body {}
+
+  &__tr {
+    &:first-child {}
+
+    &:nth-child(2n) {}
+  }
+
+  &__td,
+  &__th {
+    >sup {}
+
+    &:nth-last-child(-n+2) {}
+  }
+}

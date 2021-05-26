@@ -1,0 +1,21 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-hero {
+  padding-top: 250px;
+  padding-bottom: 275px;
+  background: center bottom/1920px 840px;
+  &__title {
+    max-width: 550px;
+    font-size: 50px;
+    &::before {
+      top: 35%;
+      height: 370px;
+    }
+  }
+  &__btn {
+    margin-top: 80px;
+  }
+}

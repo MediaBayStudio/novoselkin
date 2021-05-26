@@ -1,0 +1,44 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.index-get-free {
+
+  /* .index-get-free__title */
+  &__title {}
+
+  /* .index-get-free__cards */
+  &__cards {
+    font-size: 18px;
+  }
+}
+
+.get-free-card {
+  width: 570px;
+  /* .get-free-card__img */
+  &__img {
+    margin: 0 0 30px;
+    height: 390px;
+  }
+
+  /* .get-free-card__text */
+  &__text {
+    padding: 0 20px;
+  }
+
+  /* .get-free-card__title-block */
+  &__title-block {}
+
+  /* .get-free-card__title */
+  &__title {
+  }
+
+  /* .get-free-card__free-text */
+  &__free-text {}
+
+  /* .get-free-card__descr */
+  &__descr {
+    width: 310px;
+  }
+}

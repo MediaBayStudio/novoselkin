@@ -1,0 +1,82 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-team {
+  padding-bottom: 80px;
+  &__title {
+    margin: 0 0 50px;
+    font: 32px/100% BookmanOldStyle;
+  }
+  &__more-btn {
+    display: none;
+  }
+}
+
+.team {
+  font: 15px/170% Calibri;
+  &.slick-slider {
+    margin: auto;
+    width: 210px;
+    position: relative;
+    > .slick-list {
+      overflow: hidden;
+    }
+  }
+  &__prev,
+  &__next {
+    position: absolute;
+    top: 50%;
+    left: -40px;
+    transform: translateY(-50%);
+  }
+  &__next {
+    left: auto;
+    right: -40px;
+  }
+}
+
+.person {
+  width: 210px;
+  display: flex;
+  flex-flow: column;
+  &__img {
+    margin: 0 auto 30px;
+    flex-shrink: 0;
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    &.lazyloaded ~ .person__title > .person__pos::before {
+      background-image: url('../img/team-pos-bg.svg');
+    }
+  }
+  &__title {
+    margin: 0 0 15px;
+    display: flex;
+  }
+  &__name {
+    font: bold 18px/100% Calibri;
+  }
+  &__pos {
+    margin: 0 15px 0 auto;
+    font: 15px/100% Calibri;
+    position: relative;
+    &::before {
+      content: '';
+      width: 100px;
+      height: 45px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: center/contain no-repeat;
+    }
+    &-text {
+      position: relative;
+      z-index: 1;
+    }
+  }
+  &__descr {
+  }
+}

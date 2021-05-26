@@ -1,0 +1,38 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.hdr {
+  &__logo {
+    margin: 0 45px;
+  }
+  &__logo-img {
+    width: 140px;
+    height: 40px;
+  }
+  &__callback,
+  &__tel,
+  &__nav {
+  }
+  &__nav {
+    margin-left: auto;
+    order: -1;
+    font-size: 18px;
+    line-height: 100%;
+    &-list {
+    }
+    &-li {
+      &:nth-last-child(n+2) {
+        margin: 0 60px 0 0;
+      }
+    }
+  }
+  &__tel {
+    margin: 0 15px 0 0;
+  }
+  &__callback {
+  }
+  &__burger {
+  }
+}

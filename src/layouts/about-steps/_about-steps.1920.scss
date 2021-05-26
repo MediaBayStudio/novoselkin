@@ -1,0 +1,33 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-steps {
+  &.lazyloaded {
+    .about-step__num::before {}
+  }
+
+  &__title {
+    margin: 0 0 10px;
+  }
+}
+
+.steps {}
+
+.about-step {
+  margin-top: 50px;
+  &__num {
+    &::before {}
+  }
+
+  &__num-text {}
+
+  &__right {}
+
+  &__img {}
+
+  &__descr {}
+
+  &__btn {}
+}

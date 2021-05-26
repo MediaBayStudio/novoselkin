@@ -1,0 +1,21 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.about-prices {
+  &__title {
+  }
+  &__prices {
+  }
+}
+
+.about-price {
+  padding: 40px 25px;
+  font-size: 20px;
+  &__title {
+  }
+  &__price {
+    font-size: 40px;
+  }
+}
