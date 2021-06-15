@@ -4,13 +4,17 @@
 @import '../../scss/assets/variables';
 
 .ftr {
-  padding-top: 100px;
-  flex-flow: wrap;
-  justify-content: space-between;
+  padding-top: 30px;
+  padding-bottom: 35px;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: auto auto auto;
+  text-align: left;
   /* .ftr__top */
   &__top {
-    margin: 0 0 50px;
-    width: 100%;
+    justify-self: start;
+    grid-row: 1;
+    grid-column: 1;
   }
 
   /* .ftr__logo */
@@ -18,35 +22,46 @@
 
   /* .ftr__logo-img */
   &__logo-img {
-    width: 215px;
-    height: 60px;
+    width: 200px;
+    height: 55px;
   }
 
   /* .ftr__copy */
-  &__copy {}
+  &__copy {
+    margin-top: 15px;
+  }
 
   /* .ftr__nav */
   &__nav {
     margin: 0;
+    grid-row: 1;
+    grid-column: 2;
     text-align: left;
     &-list {}
 
     &-li {
-      &::before {
-        content: '';
-        margin: 0 15px 0 0;
-        display: inline-block;
-        width: 15px;
-        height: 1px;
-        background: $black;
-        vertical-align: middle;
+      // &::before {
+      //   content: '';
+      //   margin: 0 15px 0 0;
+      //   display: inline-block;
+      //   width: 15px;
+      //   height: 1px;
+      //   background: $black;
+      //   vertical-align: middle;
+      // }
+      &:nth-last-child(n+2) {
+        margin: 0 0 20px;
       }
-      &:nth-last-child(n+2) {}
     }
   }
 
   /* .ftr__phones */
-  &__phones {}
+  &__phones {
+    margin: 0 5px 0 0;
+    grid-row: 2;
+    grid-column: 3;
+    align-items: flex-end;
+  }
 
   /* .ftr__tel */
   &__tel {}
@@ -60,17 +75,56 @@
   /* .ftr__contacts */
   &__contacts {
     margin: 0;
+    grid-row: 1;
+    grid-column: 3;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-end;
+    // justify-content: flex-end;
   }
 
   /* .ftr__address */
-  &__address {}
+  &__address {
+    justify-content: flex-end;
+    text-align: left;
+  }
 
   /* .ftr__email */
-  &__email {}
+  &__email {
+    margin: 0 20px 0 0;
+    justify-content: flex-end;
+    &::before {
+      margin: 0 8px 0 0;
+    }
+  }
+
+  &__offer {
+    margin: 35px 0;
+    max-width: 270px;
+    grid-row: 2;
+    grid-column: 1;
+    font-size: 14px;
+  }
+
+  &__dev {
+    margin: 0;
+    grid-row: 3;
+    grid-column: 3;
+    justify-self: end;
+    font-size: 16px;
+    &-link {
+      font-size: 16px;
+    }
+  }
 
   /* .ftr__info */
-  &__info {}
+  // &__info {}
 
   /* .ftr__policy */
-  &__policy {}
+  &__policy {
+    justify-self: start;
+    grid-row: 3;
+    grid-column: 1;
+    font-size: 14px;
+  }
 }

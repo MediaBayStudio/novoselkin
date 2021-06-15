@@ -36,3 +36,38 @@
 //   border: 1px solid $red;
 //   border-radius: 0;
 // }
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: bold 16px/100% Calibri;
+  transition: color .5s, border-color .5s, background .5s;
+  border-radius: 5px;
+}
+
+.btn_white {
+  background: #fff;
+  border: 1px solid #fff;
+  color: #ea3038;
+  transition: color .5s, background .5s;
+}
+
+.btn_red {
+  color: #fff;
+  background: #ea3038;
+  border: 1px solid #ea3038;
+}
+
+.btn_yellow {
+  color: #333;
+  background: #ffdd2c;
+  border: 1px solid #ffdd2c;
+}
+
+.btn_ol-red {
+  background: transparent;
+  color: #ea3038;
+  border: 1px solid #ea3038;
+  // border-radius: 0;
+}

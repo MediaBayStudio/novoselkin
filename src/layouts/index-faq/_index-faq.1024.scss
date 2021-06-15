@@ -1,0 +1,32 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.index-faq {
+  &__title {
+    margin: 0 0 40px;
+  }
+  &__list {
+    font-size: 20px;
+  }
+  &__li {
+    &:not(:last-child) {
+      // margin: 0 0 40px;
+    }
+  }
+  &__question {
+    // padding: 0 0 40px;
+  }
+  &__question-number {
+
+  }
+  &__question-text {
+    max-width: 750px;
+  }
+  &__answer {
+    font-size: 18px;
+    max-width: 750px;
+    padding: 0 0 30px 25.5px;
+  }
+}

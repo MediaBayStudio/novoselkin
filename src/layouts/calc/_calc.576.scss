@@ -19,7 +19,7 @@
   display: grid;
   grid-template-columns: auto 20px 260px;
   grid-template-rows: auto 20px auto;
-  // grid-template-rows: auto 20px auto 30px auto;
+  // position: relative;
   /* .calc__group */
   &__group {
     margin: 0;
@@ -60,6 +60,17 @@
 
     >.check__text {}
   }
+
+  &__tour-btn {
+    margin: auto 0 0 auto;
+    grid-row: 3;
+    grid-column: 3;
+    // position: absolute;
+    // bottom: 0;
+    // right: 0;
+    &-icon {}
+    &-text {}
+  }
 }
 
 #calc-group-type {
@@ -84,7 +95,7 @@
 }
 
 #calc-img {
-  margin: auto 0 0;
+  margin: auto 0 40px;
   width: 260px;
   // height: 135px;
   grid-row: 3;

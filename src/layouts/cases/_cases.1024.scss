@@ -1,0 +1,47 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.cases-sect {
+  &__title {
+    margin: 0 0 40px;
+    font-size: 40px;
+  }
+
+  &__cases {}
+
+  &__case {}
+
+  &__nav {
+    width: 300px;
+  }
+}
+
+.case {
+  &__gallery {
+    margin-right: 75px;
+    width: 490px;
+    height: 365px;
+  }
+
+  &__img {}
+
+  &__bottom {
+    margin-top: 65px;
+  }
+
+  &__title {
+    font-size: 20px;
+  }
+
+  &__ul {
+    font-size: 17px;
+  }
+
+  &__li {}
+
+  &__li-left {}
+
+  &__li-right {}
+}

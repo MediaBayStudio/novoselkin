@@ -58,6 +58,16 @@
 
     >.check__text {}
   }
+
+  &__tour-btn {
+    grid-row: 5;
+    grid-column: 1/span 2;
+    margin: auto auto 0 0;
+    &-icon {}
+    &-text {
+      font-size: 18px;
+    }
+  }
 }
 
 #calc-group-type {}
@@ -103,7 +113,7 @@
 }
 
 #calc-img {
-  margin: auto;
+  margin: 0 0 0 auto;
   grid-row: 5;
   grid-column: 1/span 3;
   width: 525px;

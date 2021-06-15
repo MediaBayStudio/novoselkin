@@ -13,7 +13,6 @@
     }
   }
   &__logo {
-    margin: 0 65px;
   }
 
   &__logo-img {
@@ -26,16 +25,22 @@
   &__nav {}
 
   &__nav {
+    font-size: 18px;
     &-list {}
 
     &-li {
-      &:nth-last-child(n+2) {}
+      &:nth-last-child(n+2) {
+        margin: 0 50px 0 0;
+      }
     }
   }
 
   &__tel {
-    margin: 0 20px 0 0;
-    font-size: 20px;
+    margin: 0 65px 0 0;
+    font-size: 22px;
+    &::before {
+      margin-right: 15px;
+    }
   }
 
   &__callback {}

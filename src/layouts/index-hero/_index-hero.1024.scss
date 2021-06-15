@@ -4,21 +4,29 @@
 @import '../../scss/assets/variables';
 
 .index-hero {
-  padding-top: 95px;
-  padding-bottom: 60px;
+  // padding-top: 95px;
+  // padding-bottom: 60px;
+  padding-top: 50px;
+  padding-bottom: 65px;
   background: top right/cover;
   &__title {
-    margin: 0 0 65px;
+    margin: 0 0 45px;
     line-height: 160%;
+    font-size: 48px;
     >.br {
       display: none;
     }
   }
 
-  &__title-marked {}
+  &__title-marked {
+    padding-left: 40px;
+    font-size: 28px;
+  }
 
   &.lazyloaded {
-    .index-hero__title-marked {}
+    .index-hero__title-marked {
+      background-image: url('../img/hero-text-bg-desktop.svg');
+    }
   }
 
   &__ul {
@@ -29,5 +37,9 @@
     &:nth-last-child(n+2) {
       margin: 0 0 20px;
     }
+  }
+
+  &__btn {
+    margin-top: 50px;
   }
 }

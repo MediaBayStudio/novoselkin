@@ -1,0 +1,28 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.cases-sect {
+  &__title {}
+
+  &__cases {}
+
+  &__case {}
+}
+
+.case {
+  &__gallery {}
+
+  &__img {}
+
+  &__title {}
+
+  &__ul {}
+
+  &__li {}
+
+  &__li-left {}
+
+  &__li-right {}
+}

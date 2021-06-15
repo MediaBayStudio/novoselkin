@@ -1,6 +1,8 @@
 ;
 (function() {
-  let calcScript = id('calc-script'),
+  let calcSect = q('.calc-sect'),
+    calcTourBtn = q('.calc__tour-btn'),
+    calcScript = id('calc-script'),
     docForm = id('doc-form'),
     docFormBtn = id('doc-form-btn'),
     docFormLink = id('doc-form-link');
@@ -8,6 +10,25 @@
 
   if (calcScript) {
     body.removeChild(calcScript);
+
+    calcSect.addEventListener('lazyloaded', function() {
+      let script = document.createElement('script');
+      script.onload = function() {
+        calcTourBtn.addEventListener('click', function() {
+          // if (media('(min-width:767.98px)')) {
+          //   let step9 = q('.hdr.fixed .hdr__callback');
+          //   if (step9) {
+          //     step9.setAttribute('data-step', '9');
+          //     step9.setAttribute('data-intro', 'А если вы запутались и не знаете, что вам нужно – закажите обратный звонок. Оставьте свои контакты здесь.');
+          //   }
+          // }
+          introJs().start();
+        });
+        calcTourBtn.classList.remove('disabled');
+      }
+      script.src = templateDir + '/js/intro.min.js';
+      calcSect.appendChild(script);
+    });
 
     docFormBtn.addEventListener('click', function(e) {
       docForm.classList.add('loading');
@@ -176,8 +197,8 @@
           docFormTermInp.value = term;
 
           appendixNumberInp.value = docFormNumberInp.value;
-          appendixTotalInp.value =  calcResult.value;
-          appendixTotalPriceInp.value =  calcResult.value + ' рублей';
+          appendixTotalInp.value = calcResult.value;
+          appendixTotalPriceInp.value = calcResult.value + ' рублей';
 
           tinkoffBtn.onclick = function() {
             tinkoff.create({

@@ -68,14 +68,13 @@ foreach ( $calc as $item ) {
   unset( $table_hdr );
   unset( $table_body );
 } ?>
-<!-- <script defer src="https://forma.tinkoff.ru/static/onlineScript.js"></script> -->
 <section data-src="#" class="calc-sect container lazy">
-  <h2 class="calc-sect__title"><?php echo $sect_title ?></h2> <?php
+  <h2 class="calc-sect__title" data-intro="Это калькулятор стоимости ремонта. С его помощью вы можете посчитать итоговую стоимость и&nbsp;сроки работ." data-step="1"><?php echo $sect_title ?></h2> <?php
   if ( $sect_descr ) : ?>
     <p class="calc-sect__descr"><?php echo $sect_descr ?></p> <?php
   endif ?>
   <div class="calc" id="calc">
-    <div class="calc__group" id="calc-group-type">
+    <div class="calc__group" id="calc-group-type" data-intro="Выберете тип своей квартиры." data-step="2">
       <span class="calc__group-title">Выберите тип помещения:</span>
       <div class="calc__inputs">
         <input type="text" name="price" tabindex="-1" form="order-form" readonly id="calc-result" style="display:none">
@@ -89,7 +88,7 @@ foreach ( $calc as $item ) {
         </div>
       </div>
     </div>
-    <div class="calc__group" id="calc-group-work">
+    <div class="calc__group" id="calc-group-work" data-intro="Выберете необходимые вам работы. По нажатию на вопрос можно почитать описание." data-step="3">
       <span class="calc__group-title">Выберите необходимые виды работ:</span>
       <div class="calc__inputs">
         <div class="calc__input-wrap">
@@ -118,7 +117,7 @@ foreach ( $calc as $item ) {
         </div>
       </div>
     </div>
-    <div class="calc__group" id="calc-group-extra-work">
+    <div class="calc__group" id="calc-group-extra-work" data-intro="Дополнительные работы тоже влияют на стоимость." data-step="4">
       <span class="calc__group-title">Дополнительные работы:</span>
       <div class="calc__inputs">
         <div class="calc__input-wrap">
@@ -131,7 +130,7 @@ foreach ( $calc as $item ) {
         </div>
       </div>
     </div>
-    <div class="calc__group" id="calc-group-added">
+    <div class="calc__group" id="calc-group-added" data-intro="А еще к стоимости можно добавить черновые или чистовые материалы." data-step="5">
       <span class="calc__group-title">Добавить к стоимости:</span>
       <div class="calc__inputs">
         <div class="calc__input-wrap">
@@ -144,6 +143,7 @@ foreach ( $calc as $item ) {
         </div>
       </div>
     </div>
+    <button type="button" class="calc__tour-btn disabled"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-info.svg" class="calc__tour-btn-icon lazy"><span class="calc__tour-btn-text">Посмотреть как это работает</span></button>
     <img src="#" alt="#" class="calc__input-hint-img" id="calc-img">
   </div>
   <div class="calc-result">
@@ -216,7 +216,7 @@ foreach ( $calc as $item ) {
         <input type="text" name="appendix-total-price" class="doc-form__input">
 
         <div class="doc-form__buttons">
-          <button type="submit" class="doc-form__btn" id="doc-form-btn">Создать шаблон договора</button>
+          <button type="submit" class="doc-form__btn" id="doc-form-btn" data-intro="Если нужно сразу создать договор – скачать его можно здесь." data-step="8">Создать шаблон договора</button>
           <a href="#" target="_blank" class="doc-form__link hide" id="doc-form-link">Скачать шаблон договора</a>
         </div>
         <div class="loader">
@@ -225,8 +225,8 @@ foreach ( $calc as $item ) {
       </form>
     </div>
     <div class="calc-result__buttons-block">
-      <button type="button" class="btn btn_red" id="calc-order-btn">Оформить заявку</button>
-      <button type="button" class="btn btn_yellow" id="tinkoff-btn">Оформить в кредит</button>
+      <button type="button" class="btn btn_red" id="calc-order-btn" data-intro="Здесь можно оформить заявку." data-step="6">Оформить заявку</button>
+      <button type="button" class="btn btn_yellow" id="tinkoff-btn" data-intro="А тут оформить кредит в Тинькоф Банке." data-step="7">Оформить в кредит</button>
     </div>
     <span class="calc-result__info">*Информация является публичной офертой</span>
   </div>

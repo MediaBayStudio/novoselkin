@@ -4,8 +4,13 @@
 @import '../../scss/assets/variables';
 
 .hdr {
+  padding-top: 35px;
+  padding-bottom: 35px;
   &__logo {
-    margin: 0 45px;
+
+    margin: 0;
+    // margin: 0 70px 0 0;
+    order: -1;
   }
   &__logo-img {
     width: 140px;
@@ -16,7 +21,8 @@
   &__nav {
   }
   &__nav {
-    margin-left: auto;
+    margin: 0 auto;
+    // margin-left: auto;
     order: -1;
     font-size: 18px;
     line-height: 100%;
@@ -24,14 +30,20 @@
     }
     &-li {
       &:nth-last-child(n+2) {
-        margin: 0 60px 0 0;
+        margin: 0 40px 0 0;
       }
     }
   }
   &__tel {
-    margin: 0 15px 0 0;
+    margin: 0 40px 0 0;
+    font-size: 16px;
+    &::before {
+      width: 20px;
+      height: 20px;
+    }
   }
   &__callback {
+    margin: 0;
   }
   &__burger {
   }

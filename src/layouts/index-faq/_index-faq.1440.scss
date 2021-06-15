@@ -1,0 +1,27 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.index-faq {
+  &__title {
+    margin: 0 0 60px;
+    font-size: 40px;
+  }
+
+  &__list {}
+
+  &__li {}
+
+  &__question {}
+
+  &__question-number {}
+
+  &__question-text {
+    max-width: 960px;
+  }
+
+  &__answer {
+    max-width: 960px;
+  }
+}

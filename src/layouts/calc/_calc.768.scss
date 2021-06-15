@@ -29,7 +29,9 @@
 
   /* .calc__group-title */
   &__group-title {
+    max-width: 260px;
     font-size: 20px;
+    line-height: 130%;
   }
 
   /* .calc__inputs */
@@ -63,6 +65,12 @@
 
     >.check__text {}
   }
+
+  &__tour-btn {
+    margin: auto auto 0 0;
+    &-icon {}
+    &-text {}
+  }
 }
 
 #calc-group-type {}
@@ -74,6 +82,7 @@
 #calc-group-added {}
 
 #calc-img {
+  margin-bottom: 30px;
   width: 340px;
   // height: 180px;
 }

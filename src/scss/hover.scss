@@ -52,3 +52,8 @@
   background-color: $grey;
   background-size: 10px 10px;
 }
+
+.btn_white:hover {
+  color: $white;
+  background: transparent;
+}

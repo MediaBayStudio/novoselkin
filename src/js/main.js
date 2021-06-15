@@ -249,7 +249,65 @@ document.addEventListener('DOMContentLoaded', function() {
   orderForm = id('order-form');
   calcBlock = id('calc');
   tinkoffBtn = id('tinkoff-btn');
-  let aboutHeroBtn = id('about-hero-btn');
+  let aboutHeroBtn = id('about-hero-btn'),
+    casesBlock = q('.cases-sect__cases'),
+    casesLoadmore = q('.cases-sect__loadmore'),
+    faqList = q('.index-faq__list');
+
+  if (faqList) {
+    let faqBlocks = faqList.children,
+      dropdownText = function(element) {
+
+        if (!element) {
+          faqBlocks[0].classList.add('active');
+          for (var i = faqBlocks.length - 1; i >= 1; i--) {
+            faqBlocks[i].style.maxHeight = faqBlocks[i].children[0].scrollHeight + 'px';
+          }
+          return;
+        }
+
+        let parent = element.parentElement,
+          activeElement = q('.active', faqList);
+
+        parent.classList.add('active');
+        activeElement.classList.remove('active');
+        parent.style.maxHeight = parent.scrollHeight + 'px';
+        activeElement.style.maxHeight = activeElement.children[0].scrollHeight + 'px';
+
+      };
+
+    dropdownText();
+
+    faqList.addEventListener('click', function() {
+      let target = event.target;
+      if (target.classList.contains('index-faq__question')) {
+        dropdownText(target);
+      }
+    });
+
+  }
+
+
+  if (casesBlock && casesLoadmore) {
+    if (!casesLoadmore.classList.contains('hidden') && media('(max-width:767.98px)')) {
+      let childs = casesBlock.children,
+        height = 0;
+
+      for (let i = 0, len = childs.length; i < 3; i++) {
+        // Один раз не нужно прибавлять нижний отступ
+        let mb = i === 0 ? 0 : parseInt(getComputedStyle(childs[i]).marginBottom);
+
+        height += childs[i].offsetHeight + mb;
+      }
+
+      casesBlock.style.maxHeight = height + 'px';
+
+      casesLoadmore.addEventListener('click', function() {
+        casesBlock.style.maxHeight = casesBlock.scrollHeight + 'px';
+        casesLoadmore.classList.add('hidden');
+      });
+    }
+  }
 
   if (aboutHeroBtn) {
     aboutHeroBtn.addEventListener('click', scrollToTarget);
@@ -260,1272 +318,1363 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   //includes
-;
-(function() {
-  let mobileMenu = function(_) {
-      let setMenuStyles = function(trf, trs) {
-          let args = [trf, trs],
-            props = ['transform', 'transition'],
-            values = ['translate3d(' + trf + ', 0px, 0px)', 'transform ' + trs];
-
-          for (let i = args.length - 1; i >= 0; i--) {
-            if (args[i] !== 0) {
-              if (args[i] === '') {
-                args[i] = '';
-              } else {
-                args[i] = values[i];
+  ;
+  (function() {
+    let mobileMenu = function(_) {
+        let setMenuStyles = function(trf, trs) {
+            let args = [trf, trs],
+              props = ['transform', 'transition'],
+              values = ['translate3d(' + trf + ', 0px, 0px)', 'transform ' + trs];
+  
+            for (let i = args.length - 1; i >= 0; i--) {
+              if (args[i] !== 0) {
+                if (args[i] === '') {
+                  args[i] = '';
+                } else {
+                  args[i] = values[i];
+                }
+                menuCnt.style[props[i]] = args[i];
               }
-              menuCnt.style[props[i]] = args[i];
             }
-          }
-        },
-        checkForString = function(variable) {
-          return variable.constructor === String ? q(variable) : variable;
-        },
-        openMenu = function() {
-          if (!opened) {
-            menu.classList.add('active');
-            openBtn.classList.add('active');
-            menuCnt.scrollTop = 0;
-
-            if (!fade) {
-              setMenuStyles('0px', '.5s');
-              menuWidth = menuCnt.offsetWidth;
-            }
-            if (!allowPageScroll) {
-              pageScroll(true);
-            }
-          }
-        },
-        closeMenu = function(e, forSwipe) {
-          if (opened) {
-            let target = e && e.target;
-            // Если меню открыто и произошел свайп или нет события (закрыто вызовом функции close()) или есть евент и его св-ва
-            if (forSwipe || !e || (e.type === 'keyup' && e.keyCode === 27 || target === menu || target === closeBtn)) {
-              menu.classList.remove('active');
-              openBtn.classList.remove('active');
-
+          },
+          checkForString = function(variable) {
+            return variable.constructor === String ? q(variable) : variable;
+          },
+          openMenu = function() {
+            if (!opened) {
+              menu.classList.add('active');
+              openBtn.classList.add('active');
+              menuCnt.scrollTop = 0;
+  
               if (!fade) {
-                setMenuStyles(initialTransformX, '.5s');
+                setMenuStyles('0px', '.5s');
+                menuWidth = menuCnt.offsetWidth;
+              }
+              if (!allowPageScroll) {
+                pageScroll(true);
               }
             }
-          }
-        },
-        swipeStart = function(e) {
-          if (allowSwipe) {
-            let evt = e.touches[0] || window.e.touches[0];
-
-            isSwipe = isScroll = false;
-            posInitX = posX1 = evt.clientX;
-            posInitY = posY1 = evt.clientY;
-            swipeStartTime = Date.now();
-
-            menuCnt.addEventListener('touchend', swipeEnd);
-            menuCnt.addEventListener('touchmove', swipeAction);
-            setMenuStyles(0, '');
-          }
-        },
-        swipeAction = function(e) {
-          if (allowSwipe) {
-            let evt = e.touches[0] || window.e.touches[0],
-              style = menuCnt.style.transform,
-              transform = +style.match(trfRegExp)[0];
-
-            posX2 = posX1 - evt.clientX;
-            posX1 = evt.clientX;
-
-            posY2 = posY1 - evt.clientY;
-            posY1 = evt.clientY;
-
-            // Если еще не определено свайп или скролл (двигаемся в бок или вверх/вниз)
-            if (!isSwipe && !isScroll) {
-              let posY = Math.abs(posY2),
-                posX = Math.abs(posX2);
-
-              if (posY > 7 || posX2 === 0) {
-                isScroll = true;
-              } else if (posY < 7) {
-                isSwipe = true;
+          },
+          closeMenu = function(e, forSwipe) {
+            if (opened) {
+              let target = e && e.target;
+              // Если меню открыто и произошел свайп или нет события (закрыто вызовом функции close()) или есть евент и его св-ва
+              if (forSwipe || !e || (e.type === 'keyup' && e.keyCode === 27 || target === menu || target === closeBtn)) {
+                menu.classList.remove('active');
+                openBtn.classList.remove('active');
+  
+                if (!fade) {
+                  setMenuStyles(initialTransformX, '.5s');
+                }
               }
             }
-
-            if (isSwipe) {
-              // Если двигаемся влево или вправо при уже открытом меню, фиксируем позицию
-              if ((toLeft && posInitX > posX1) || (toRight && posInitX < posX1)) {
-                setMenuStyles('0px', 0);
-                return;
+          },
+          swipeStart = function(e) {
+            if (allowSwipe) {
+              let evt = e.touches[0] || window.e.touches[0];
+  
+              isSwipe = isScroll = false;
+              posInitX = posX1 = evt.clientX;
+              posInitY = posY1 = evt.clientY;
+              swipeStartTime = Date.now();
+  
+              menuCnt.addEventListener('touchend', swipeEnd);
+              menuCnt.addEventListener('touchmove', swipeAction);
+              setMenuStyles(0, '');
+            }
+          },
+          swipeAction = function(e) {
+            if (allowSwipe) {
+              let evt = e.touches[0] || window.e.touches[0],
+                style = menuCnt.style.transform,
+                transform = +style.match(trfRegExp)[0];
+  
+              posX2 = posX1 - evt.clientX;
+              posX1 = evt.clientX;
+  
+              posY2 = posY1 - evt.clientY;
+              posY1 = evt.clientY;
+  
+              // Если еще не определено свайп или скролл (двигаемся в бок или вверх/вниз)
+              if (!isSwipe && !isScroll) {
+                let posY = Math.abs(posY2),
+                  posX = Math.abs(posX2);
+  
+                if (posY > 7 || posX2 === 0) {
+                  isScroll = true;
+                } else if (posY < 7) {
+                  isSwipe = true;
+                }
               }
-              setMenuStyles(transform - posX2 + 'px', 0);
-            }
-          }
-        },
-        swipeEnd = function(e) {
-          posFinal = posInitX - posX1;
-
-          let absPosFinal = Math.abs(posFinal);
-
-          swipeEndTime = Date.now();
-
-          if (absPosFinal > 1 && isSwipe) {
-            if (toLeft && posFinal < 0 || toRight && posFinal > 0) {
-              if (absPosFinal >= menuWidth * swipeThreshold || swipeEndTime - swipeStartTime < 300) {
-                closeMenu(e, true);
-              } else {
-                opened = false;
-                openMenu(e, true);
-              }
-            }
-            allowSwipe = false;
-          }
-
-          menu.removeEventListener('touchend', swipeEnd);
-          menu.removeEventListener('touchmove', swipeAction);
-
-        },
-        transitionEnd = function(e) {
-          if (fade) {
-            if (e.propertyName === 'opacity') {
-              transitionEndEvents();
-            }
-          } else {
-            if (e.propertyName === 'transform') {
-              transitionEndEvents();
-            }
-          }
-          allowSwipe = true;
-        },
-        transitionEndEvents = function() {
-          if (opened) {
-            opened = false;
-            openBtn.addEventListener('click', openMenu);
-            closeBtn.removeEventListener('click', closeMenu);
-            if (!allowPageScroll) {
-              pageScroll(false);
-            }
-          } else {
-            opened = true;
-            openBtn.removeEventListener('click', openMenu);
-            closeBtn.addEventListener('click', closeMenu);
-          }
-        },
-        init = function() {
-          menu = checkForString(_.menu);
-          menuCnt = checkForString(_.menuCnt);
-          openBtn = checkForString(_.openBtn);
-          closeBtn = checkForString(_.closeBtn);
-          allowPageScroll = options.allowPageScroll;
-          toRight = options.toRight;
-          toLeft = options.toLeft;
-          initialTransformX = toLeft ? '100%' : toRight ? '-100%' : 0;
-          fade = options.fade;
-
-          setListeners('add');
-
-          if (fade) {
-            toRight = toLeft = false;
-          } else {
-            setMenuStyles(initialTransformX, 0);
-            menu.addEventListener('touchstart', swipeStart);
-          }
-        },
-        setListeners = function(action) {
-          openBtn[action + 'EventListener']('click', openMenu);
-          menu[action + 'EventListener']('click', closeMenu);
-          menu[action + 'EventListener']('transitionend', transitionEnd);
-          document[action + 'EventListener']('keyup', closeMenu);
-        },
-        destroy = function() {
-          if (opened) {
-            closeMenu();
-          }
-
-          if (fade) {
-            toRight = toLeft = false;
-          } else {
-            setMenuStyles('', '');
-            menu.removeEventListener('touchstart', swipeStart);
-          }
-
-          setListeners('remove');
-          menu = null;
-          menuCnt = null;
-          openBtn = null;
-          closeBtn = null;
-        },
-        applyMediaParams = function() {
-          // console.log('applyMediaParams');
-          if (targetMediaQuery) {
-            // console.log('set ' + targetMediaQuery + ' params');
-            for (let option in responsive[targetMediaQuery]) {
-              options[option] = responsive[targetMediaQuery][option];
-            }
-            currentMediaQuery = targetMediaQuery;
-          } else { // set initial params
-            for (let option in initialOptions) {
-              options[option] = initialOptions[option];
-            }
-            currentMediaQuery = null;
-          }
-          if (menu) {
-            destroy();
-            init();
-          }
-        },
-        checkMedia = function() {
-          if (responsive) {
-            targetMediaQuery = null;
-            for (let mediaQuery in responsive) {
-              if (media(mediaQuery)) {
-                targetMediaQuery = mediaQuery;
+  
+              if (isSwipe) {
+                // Если двигаемся влево или вправо при уже открытом меню, фиксируем позицию
+                if ((toLeft && posInitX > posX1) || (toRight && posInitX < posX1)) {
+                  setMenuStyles('0px', 0);
+                  return;
+                }
+                setMenuStyles(transform - posX2 + 'px', 0);
               }
             }
-            if (targetMediaQuery !== currentMediaQuery) {
-              applyMediaParams();
+          },
+          swipeEnd = function(e) {
+            posFinal = posInitX - posX1;
+  
+            let absPosFinal = Math.abs(posFinal);
+  
+            swipeEndTime = Date.now();
+  
+            if (absPosFinal > 1 && isSwipe) {
+              if (toLeft && posFinal < 0 || toRight && posFinal > 0) {
+                if (absPosFinal >= menuWidth * swipeThreshold || swipeEndTime - swipeStartTime < 300) {
+                  closeMenu(e, true);
+                } else {
+                  opened = false;
+                  openMenu(e, true);
+                }
+              }
+              allowSwipe = false;
             }
-          }
-          if (!menu) {
-            init();
-          }
-        },
-        options = JSON.parse(JSON.stringify(_)),
-        initialOptions = JSON.parse(JSON.stringify(_)),
-        responsive = _.responsive,
-        targetMediaQuery = null,
-        currentMediaQuery = null,
-        menu,
-        menuCnt,
-        openBtn,
-        closeBtn,
-        swipeStartTime,
-        swipeEndTime,
-        allowPageScroll,
-        swipeThreshold = 0.5,
-        toRight,
-        toLeft,
-        initialTransformX,
-        fade,
-        startPageY = pageYOffset,
-        trfRegExp = /([-0-9.]+(?=px))/,
-        isSwipe = false,
-        isScroll = false,
-        allowSwipe = false,
-        opened = false,
-        posX1 = 0,
-        posX2 = 0,
-        posY1 = 0,
-        posY2 = 0,
-        posInitX = 0,
-        posInitY = 0,
-        posFinal = 0,
-        menuWidth = 0;
-
-      if (_.menu) {
-        // Элементы не изменяются через responsive
-        checkMedia();
-
-        windowFuncs.resize.push(checkMedia);
-
-        // Если разрешена прокрутка, то закрываем при прокрутке
-        // if (allowPageScroll) {
-        //   windowFuncs.scroll.push(closeMenu);
-        // }
-
-        return {
-          options: options,
-          menu: menu,
-          menuCnt: menuCnt,
-          openBtn: openBtn,
-          closeBtn: closeBtn,
-          open: openMenu,
-          close: closeMenu,
-          destroy: destroy
-        };
-      }
-    },
-    burger = id('hdr-burger'),
-    menuClose = id('menu-close');
-
-
-  menu = mobileMenu({
-    menu: id('menu'),
-    menuCnt: q('.menu__cnt'),
-    openBtn: burger,
-    closeBtn: menuClose,
-    fade: true,
-    allowPageScroll: false
-  });
-})();
-(function() {
-  orderPopup = new Popup('.order-popup', {
-    openButtons: '#calc-order-btn',
-    closeButtons: '.order-popup__close'
-  });
-
-  orderPopup.addEventListener('popupbeforeclose', firstCalc);
-
-  callbackPopup = new Popup('.callback-popup', {
-    openButtons: '.hdr__callback, .ftr__callback, .about-step__btn, .menu__callback',
-    closeButtons: '.callback-popup__close'
-  });
-
-  // orderPopup.openPopup();
-
-  // thanksPopup.addEventListener('popupbeforeopen', function() {
-  //   clearTimeout(thanksPopupTimer);
-  // });
-
-// Закрытие всех попапов вместе с закрытием окна спасибо
-  // thanksPopup.addEventListener('popupbeforeclose', function() {
-  //   let otherPopups = [callbackPopup, orderPopup];
-
-  //   for (let i = 0; i < otherPopups.length; i++) {
-  //     if (otherPopups[i].classList.contains('active')) {
-  //       otherPopups[i].closePopup();
-  //     }
-  //   }
-  // });
-})()
-;
-(function() {
-  let $forms = [
-    id('discount-form'),
-    id('callback-form'),
-    orderForm
-  ];
-
-  let formValidator = function(params) {
-    let $form = params.form,
-      $formBtn = params.formBtn,
-      $uploadFilesBlock = params.uploadFilesBlock,
-      errorsClass = 'invalid',
-      $filesInput = params.filesInput,
-      // Правила проверки форм, аналогично jquery.validate
-      rules = {
-        name: {
-          required: true
-        },
-        tel: {
-          required: true,
-          pattern: /\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}/,
-          or: 'email'
-        },
-        email: {
-          required: true,
-          pattern: /^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z])+$/,
-          or: 'tel'
-        },
-        msg: {
-          required: true,
-          pattern: /[^\<\>\[\]%\&'`]+$/
-        },
-        policy: {
-          required: true
+  
+            menu.removeEventListener('touchend', swipeEnd);
+            menu.removeEventListener('touchmove', swipeAction);
+  
+          },
+          transitionEnd = function(e) {
+            if (fade) {
+              if (e.propertyName === 'opacity') {
+                transitionEndEvents();
+              }
+            } else {
+              if (e.propertyName === 'transform') {
+                transitionEndEvents();
+              }
+            }
+            allowSwipe = true;
+          },
+          transitionEndEvents = function() {
+            if (opened) {
+              opened = false;
+              openBtn.addEventListener('click', openMenu);
+              closeBtn.removeEventListener('click', closeMenu);
+              if (!allowPageScroll) {
+                pageScroll(false);
+              }
+            } else {
+              opened = true;
+              openBtn.removeEventListener('click', openMenu);
+              closeBtn.addEventListener('click', closeMenu);
+            }
+          },
+          init = function() {
+            menu = checkForString(_.menu);
+            menuCnt = checkForString(_.menuCnt);
+            openBtn = checkForString(_.openBtn);
+            closeBtn = checkForString(_.closeBtn);
+            allowPageScroll = options.allowPageScroll;
+            toRight = options.toRight;
+            toLeft = options.toLeft;
+            initialTransformX = toLeft ? '100%' : toRight ? '-100%' : 0;
+            fade = options.fade;
+  
+            setListeners('add');
+  
+            if (fade) {
+              toRight = toLeft = false;
+            } else {
+              setMenuStyles(initialTransformX, 0);
+              menu.addEventListener('touchstart', swipeStart);
+            }
+          },
+          setListeners = function(action) {
+            openBtn[action + 'EventListener']('click', openMenu);
+            menu[action + 'EventListener']('click', closeMenu);
+            menu[action + 'EventListener']('transitionend', transitionEnd);
+            document[action + 'EventListener']('keyup', closeMenu);
+          },
+          destroy = function() {
+            if (opened) {
+              closeMenu();
+            }
+  
+            if (fade) {
+              toRight = toLeft = false;
+            } else {
+              setMenuStyles('', '');
+              menu.removeEventListener('touchstart', swipeStart);
+            }
+  
+            setListeners('remove');
+            menu = null;
+            menuCnt = null;
+            openBtn = null;
+            closeBtn = null;
+          },
+          applyMediaParams = function() {
+            // console.log('applyMediaParams');
+            if (targetMediaQuery) {
+              // console.log('set ' + targetMediaQuery + ' params');
+              for (let option in responsive[targetMediaQuery]) {
+                options[option] = responsive[targetMediaQuery][option];
+              }
+              currentMediaQuery = targetMediaQuery;
+            } else { // set initial params
+              for (let option in initialOptions) {
+                options[option] = initialOptions[option];
+              }
+              currentMediaQuery = null;
+            }
+            if (menu) {
+              destroy();
+              init();
+            }
+          },
+          checkMedia = function() {
+            if (responsive) {
+              targetMediaQuery = null;
+              for (let mediaQuery in responsive) {
+                if (media(mediaQuery)) {
+                  targetMediaQuery = mediaQuery;
+                }
+              }
+              if (targetMediaQuery !== currentMediaQuery) {
+                applyMediaParams();
+              }
+            }
+            if (!menu) {
+              init();
+            }
+          },
+          options = JSON.parse(JSON.stringify(_)),
+          initialOptions = JSON.parse(JSON.stringify(_)),
+          responsive = _.responsive,
+          targetMediaQuery = null,
+          currentMediaQuery = null,
+          menu,
+          menuCnt,
+          openBtn,
+          closeBtn,
+          swipeStartTime,
+          swipeEndTime,
+          allowPageScroll,
+          swipeThreshold = 0.5,
+          toRight,
+          toLeft,
+          initialTransformX,
+          fade,
+          startPageY = pageYOffset,
+          trfRegExp = /([-0-9.]+(?=px))/,
+          isSwipe = false,
+          isScroll = false,
+          allowSwipe = false,
+          opened = false,
+          posX1 = 0,
+          posX2 = 0,
+          posY1 = 0,
+          posY2 = 0,
+          posInitX = 0,
+          posInitY = 0,
+          posFinal = 0,
+          menuWidth = 0;
+  
+        if (_.menu) {
+          // Элементы не изменяются через responsive
+          checkMedia();
+  
+          windowFuncs.resize.push(checkMedia);
+  
+          // Если разрешена прокрутка, то закрываем при прокрутке
+          // if (allowPageScroll) {
+          //   windowFuncs.scroll.push(closeMenu);
+          // }
+  
+          return {
+            options: options,
+            menu: menu,
+            menuCnt: menuCnt,
+            openBtn: openBtn,
+            closeBtn: closeBtn,
+            open: openMenu,
+            close: closeMenu,
+            destroy: destroy
+          };
         }
       },
-      messages = {
-        tel: {
-          required: 'Введите ваш телефон или E-mail',
-          pattern: 'Укажите верный телефон'
-        },
-        name: {
-          required: 'Введите ваше имя',
-        },
-        email: {
-          required: 'Введите ваш E-mail или телефон',
-          pattern: 'Введите верный E-mail'
-        },
-        msg: {
-          required: 'Введите ваше сообщение',
-          pattern: 'Введены недопустимые символы'
-        },
-        policy: {
-          required: 'Согласитель с политикой обработки персональных данных'
-        }
-      },
-      /*
-        Функция получения значения полей у текущей формы.
-        Ищет только те элементы формы, именя которых указаны в rules.
-        Возвращает объект: 
-        {название-поля: значение-поля}
-        Например:
-        {'user-email': 'mail@mail.ru'}
-      */
-      getFormData = function($form) {
-        let formElements = $form.elements,
-          values = {};
-
-        for (let rule in rules) {
-          let formElement = formElements[rule];
-
-          if (formElement) {
-            values[rule] = formElement.value;
+      burger = id('hdr-burger'),
+      menuClose = id('menu-close');
+  
+  
+    menu = mobileMenu({
+      menu: id('menu'),
+      menuCnt: q('.menu__cnt'),
+      openBtn: burger,
+      closeBtn: menuClose,
+      fade: true,
+      allowPageScroll: false
+    });
+  })();
+  (function() {
+    orderPopup = new Popup('.order-popup', {
+      openButtons: '#calc-order-btn',
+      closeButtons: '.order-popup__close'
+    });
+  
+    orderPopup.addEventListener('popupbeforeclose', firstCalc);
+  
+    callbackPopup = new Popup('.callback-popup', {
+      openButtons: '.hdr__callback, .ftr__callback, .about-step__btn, .menu__callback',
+      closeButtons: '.callback-popup__close'
+    });
+  
+    // orderPopup.openPopup();
+  
+    // thanksPopup.addEventListener('popupbeforeopen', function() {
+    //   clearTimeout(thanksPopupTimer);
+    // });
+  
+  // Закрытие всех попапов вместе с закрытием окна спасибо
+    // thanksPopup.addEventListener('popupbeforeclose', function() {
+    //   let otherPopups = [callbackPopup, orderPopup];
+  
+    //   for (let i = 0; i < otherPopups.length; i++) {
+    //     if (otherPopups[i].classList.contains('active')) {
+    //       otherPopups[i].closePopup();
+    //     }
+    //   }
+    // });
+  })()
+  ;
+  (function() {
+    let $forms = [
+      id('discount-form'),
+      id('callback-form'),
+      orderForm
+    ];
+  
+    let formValidator = function(params) {
+      let $form = params.form,
+        $formBtn = params.formBtn,
+        $uploadFilesBlock = params.uploadFilesBlock,
+        errorsClass = 'invalid',
+        $filesInput = params.filesInput,
+        // Правила проверки форм, аналогично jquery.validate
+        rules = {
+          name: {
+            required: true
+          },
+          tel: {
+            required: true,
+            pattern: /\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}/,
+            or: 'email'
+          },
+          email: {
+            required: true,
+            pattern: /^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z])+$/,
+            or: 'tel'
+          },
+          msg: {
+            required: true,
+            pattern: /[^\<\>\[\]%\&'`]+$/
+          },
+          policy: {
+            required: true
           }
-        }
-
-        return values;
-      },
-      /*
-        Функция проверки правильности заполнения формы.
-      */
-      validationForm = function(event) {
-        let errors = {},
-          thisForm = $form,
-          values = getFormData(thisForm);
-
-        for (let elementName in values) {
-          let rule = rules[elementName],
-            $formElement = thisForm[elementName],
-            elementValue = values[elementName],
-            or = rule.or,
-            $orFormElement = thisForm[or];
-
-          if (rule) {
-            if ($formElement.hasAttribute('required') || rule.required === true) {
-              let elementType = $formElement.type,
-                pattern = rule.pattern;
-
-              // Если элемент не чекнут или пустой
-              if (((elementType === 'checkbox' || elementType === 'radio') && !$formElement.checked) ||
-                elementValue === '') {
-
-                if (or && $orFormElement) {
-                  if ($orFormElement.value === '') {
+        },
+        messages = {
+          tel: {
+            required: 'Введите ваш телефон или E-mail',
+            pattern: 'Укажите верный телефон'
+          },
+          name: {
+            required: 'Введите ваше имя',
+          },
+          email: {
+            required: 'Введите ваш E-mail или телефон',
+            pattern: 'Введите верный E-mail'
+          },
+          msg: {
+            required: 'Введите ваше сообщение',
+            pattern: 'Введены недопустимые символы'
+          },
+          policy: {
+            required: 'Согласитель с политикой обработки персональных данных'
+          }
+        },
+        /*
+          Функция получения значения полей у текущей формы.
+          Ищет только те элементы формы, именя которых указаны в rules.
+          Возвращает объект: 
+          {название-поля: значение-поля}
+          Например:
+          {'user-email': 'mail@mail.ru'}
+        */
+        getFormData = function($form) {
+          let formElements = $form.elements,
+            values = {};
+  
+          for (let rule in rules) {
+            let formElement = formElements[rule];
+  
+            if (formElement) {
+              values[rule] = formElement.value;
+            }
+          }
+  
+          return values;
+        },
+        /*
+          Функция проверки правильности заполнения формы.
+        */
+        validationForm = function(event) {
+          let errors = {},
+            thisForm = $form,
+            values = getFormData(thisForm);
+  
+          for (let elementName in values) {
+            let rule = rules[elementName],
+              $formElement = thisForm[elementName],
+              elementValue = values[elementName],
+              or = rule.or,
+              $orFormElement = thisForm[or];
+  
+            if (rule) {
+              if ($formElement.hasAttribute('required') || rule.required === true) {
+                let elementType = $formElement.type,
+                  pattern = rule.pattern;
+  
+                // Если элемент не чекнут или пустой
+                if (((elementType === 'checkbox' || elementType === 'radio') && !$formElement.checked) ||
+                  elementValue === '') {
+  
+                  if (or && $orFormElement) {
+                    if ($orFormElement.value === '') {
+                      errors[elementName] = messages[elementName].required;
+                      continue;
+                    }
+                  } else {
                     errors[elementName] = messages[elementName].required;
                     continue;
                   }
-                } else {
-                  errors[elementName] = messages[elementName].required;
-                  continue;
                 }
-              }
-
-              // Если текстовый элемент, у которого есть щаблон для заполнения
-              if (elementType !== 'cehckbox' && elementType !== 'radio' && pattern) {
-                if (elementValue !== '' && pattern.test(elementValue) === false) {
-                  errors[elementName] = messages[elementName].pattern;
-                  continue;
+  
+                // Если текстовый элемент, у которого есть щаблон для заполнения
+                if (elementType !== 'cehckbox' && elementType !== 'radio' && pattern) {
+                  if (elementValue !== '' && pattern.test(elementValue) === false) {
+                    errors[elementName] = messages[elementName].pattern;
+                    continue;
+                  }
                 }
+  
+                hideError($formElement);
               }
-
-              hideError($formElement);
             }
           }
-        }
-
-        if (Object.keys(errors).length == 0) {
-          thisForm.removeEventListener('change', validationForm);
-          thisForm.removeEventListener('input', validationForm);
-          $form.validatie = true;
-        } else {
-          thisForm.addEventListener('change', validationForm);
-          thisForm.addEventListener('input', validationForm);
-          showErrors(thisForm, errors);
-          $form.validatie = false;
-        }
-
-      },
-      showErrors = function($form, errors) {
-        let $formElements = $form.elements;
-
-        for (let elementName in errors) {
-          let errorText = errors[elementName],
-            $errorElement = `<label class="${errorsClass}">${errorText}</label>`,
-            $formElement = $formElements[elementName],
-            $nextElement = $formElement.nextElementSibling;
-
-          if ($nextElement && $nextElement.classList.contains(errorsClass)) {
-            if ($nextElement.textContent !== errorText) {
-              $nextElement.textContent = errorText;
-            }
-            continue;
+  
+          if (Object.keys(errors).length == 0) {
+            thisForm.removeEventListener('change', validationForm);
+            thisForm.removeEventListener('input', validationForm);
+            $form.validatie = true;
           } else {
-            $formElement.insertAdjacentHTML('afterend', $errorElement);
+            thisForm.addEventListener('change', validationForm);
+            thisForm.addEventListener('input', validationForm);
+            showErrors(thisForm, errors);
+            $form.validatie = false;
           }
-
-          $formElement.classList.add(errorsClass);
-        }
-
-      },
-      hideError = function($formElement) {
-        let $nextElement = $formElement.nextElementSibling;
-        $formElement.classList.remove(errorsClass);
-        if ($nextElement && $nextElement.classList.contains(errorsClass)) {
-          $nextElement.parentElement.removeChild($nextElement);
-        }
-      },
-      submitHandler = function(event) {
-        let $form = event.target,
-          eventType = event.type;
-
-        if (!$form || $form && $form.tagName !== 'FORM') {
-          $form = q('#' + event.detail.id + '>form');
-        }
-
-        if (eventType === 'wpcf7mailsent') {
+  
+        },
+        showErrors = function($form, errors) {
           let $formElements = $form.elements;
-
-          for (let i = 0; i < $formElements.length; i++) {
-            hideError($formElements[i]);
-            $formElements[i].classList.remove('filled');
+  
+          for (let elementName in errors) {
+            let errorText = errors[elementName],
+              $errorElement = `<label class="${errorsClass}">${errorText}</label>`,
+              $formElement = $formElements[elementName],
+              $nextElement = $formElement.nextElementSibling;
+  
+            if ($nextElement && $nextElement.classList.contains(errorsClass)) {
+              if ($nextElement.textContent !== errorText) {
+                $nextElement.textContent = errorText;
+              }
+              continue;
+            } else {
+              $formElement.insertAdjacentHTML('afterend', $errorElement);
+            }
+  
+            $formElement.classList.add(errorsClass);
           }
-
-          // $form.reset();
-          if ($uploadFilesBlock) {
-            $uploadFilesBlock.innerHTML = '';
+  
+        },
+        hideError = function($formElement) {
+          let $nextElement = $formElement.nextElementSibling;
+          $formElement.classList.remove(errorsClass);
+          if ($nextElement && $nextElement.classList.contains(errorsClass)) {
+            $nextElement.parentElement.removeChild($nextElement);
           }
+        },
+        submitHandler = function(event) {
+          let $form = event.target,
+            eventType = event.type;
+  
+          if (!$form || $form && $form.tagName !== 'FORM') {
+            $form = q('#' + event.detail.id + '>form');
+          }
+  
+          if (eventType === 'wpcf7mailsent') {
+            let $formElements = $form.elements;
+  
+            for (let i = 0; i < $formElements.length; i++) {
+              hideError($formElements[i]);
+              $formElements[i].classList.remove('filled');
+            }
+  
+            // $form.reset();
+            if ($uploadFilesBlock) {
+              $uploadFilesBlock.innerHTML = '';
+            }
+            if ($form.classList.contains('order-form')) {
+              let inputs = $form.elements;
+  
+              for (let i = 0, len = inputs.length; i < len; i++) {
+                let inputName = inputs[i].name,
+                  inp = inputs[i];
+  
+                if ((inputName === 'work[]' || inputName === 'extra-work[]' || inputName === 'added[]') && inp.hasAttribute('data-value')) {
+                  inp.value = inp.getAttribute('data-value');
+                  inp.removeAttribute('data-value');
+                } else if (inputName === 'type') {
+                  // Ищем селект, с дата-атрибутом
+                  let selectedOption = q('option[data-value]', inp);
+                  selectedOption.value = selectedOption.getAttribute('data-value');
+                  selectedOption.removeAttribute('data-value');
+                }
+              }
+  
+              setTimeout(function() {
+                $form.classList.remove('sent');
+                orderPopup.closePopup();
+                firstCalc();
+              }, 3000);
+            } else if ($form.classList.contains('callback-form')) {
+              setTimeout(function() {
+                callbackPopup.closePopup();
+              }, 3000);
+            }
+            // if ($form === $quizForm) {
+            //   id('quiz').resetQuiz();
+            // }
+            console.log('отправлено');
+          }
+  
+          console.log('event', event);
+  
+          $form.classList.remove('loading');
+  
+          setTimeout(function() {
+            $form.classList.remove('sent');
+          }, 3000);
+  
+        },
+        toggleInputsClass = function() {
+          let $input = event.target,
+            type = $input.type,
+            files = $input.files,
+            classList = $input.classList,
+            value = $input.value;
+  
+          if (type === 'text' || $input.tagName === 'TEXTAREA') {
+            if (value === '') {
+              classList.remove('filled');
+            } else {
+              classList.add('filled');
+            }
+          } else if (type === 'file') {
+            // $input.filesArray = [];
+  
+            let uploadedFiles = '';
+            for (let i = 0, len = files.length; i < len; i++) {
+              // $input.filesArray[i] = files[i];
+              uploadedFiles += '<span class="uploadedfiles__file"><span class="uploadedfiles__file-text">' + files[i].name + '</span></span>';
+            }
+            $uploadFilesBlock.innerHTML = uploadedFiles;
+          }
+        };
+  
+      $form.setAttribute('novalidate', '');
+      $form.validatie = false;
+      $formBtn.addEventListener('click', function() {
+        validationForm();
+        if ($form.validatie === false) {
+          event.preventDefault();
+        } else {
+          $form.classList.add('loading');
           if ($form.classList.contains('order-form')) {
             let inputs = $form.elements;
-
+  
             for (let i = 0, len = inputs.length; i < len; i++) {
-              let inputName = inputs[i].name,
-                inp = inputs[i];
-
-              if ((inputName === 'work[]' || inputName === 'extra-work[]' || inputName === 'added[]') && inp.hasAttribute('data-value')) {
-                inp.value = inp.getAttribute('data-value');
-                inp.removeAttribute('data-value');
+              let inputName = inputs[i].name;
+  
+              if (inputName === 'work[]' || inputName === 'extra-work[]' || inputName === 'added[]') {
+                inputs[i].setAttribute('data-value', inputs[i].value);
+                inputs[i].value = inputs[i].parentElement.textContent;
               } else if (inputName === 'type') {
-                // Ищем селект, с дата-атрибутом
-                let selectedOption = q('option[data-value]', inp);
-                selectedOption.value = selectedOption.getAttribute('data-value');
-                selectedOption.removeAttribute('data-value');
+                let selectedOption = inputs[i][inputs[i].selectedIndex];
+                selectedOption.setAttribute('data-value', selectedOption.value);
+                selectedOption.value = selectedOption.textContent;
               }
             }
-
-            setTimeout(function() {
-              $form.classList.remove('sent');
-              orderPopup.closePopup();
-              firstCalc();
-            }, 3000);
-          } else if ($form.classList.contains('callback-form')) {
-            setTimeout(function() {
-              callbackPopup.closePopup();
-            }, 3000);
           }
-          // if ($form === $quizForm) {
-          //   id('quiz').resetQuiz();
-          // }
-          console.log('отправлено');
+  
         }
-
-        console.log('event', event);
-
-        $form.classList.remove('loading');
-
-        setTimeout(function() {
-          $form.classList.remove('sent');
-        }, 3000);
-
-      },
-      toggleInputsClass = function() {
-        let $input = event.target,
-          type = $input.type,
-          files = $input.files,
-          classList = $input.classList,
-          value = $input.value;
-
-        if (type === 'text' || $input.tagName === 'TEXTAREA') {
-          if (value === '') {
-            classList.remove('filled');
-          } else {
-            classList.add('filled');
-          }
-        } else if (type === 'file') {
-          // $input.filesArray = [];
-
-          let uploadedFiles = '';
-          for (let i = 0, len = files.length; i < len; i++) {
-            // $input.filesArray[i] = files[i];
-            uploadedFiles += '<span class="uploadedfiles__file"><span class="uploadedfiles__file-text">' + files[i].name + '</span></span>';
-          }
-          $uploadFilesBlock.innerHTML = uploadedFiles;
+      });
+      if (!document.wpcf7mailsent) {
+        document.addEventListener('wpcf7mailsent', submitHandler);
+        document.wpcf7mailsent = true;
+      }
+      $form.addEventListener('input', toggleInputsClass);
+    };
+  
+    for (var i = $forms.length - 1; i >= 0; i--) {
+      if ($forms[i]) {
+        let id = $forms[i].id,
+          eventName;
+  
+        formValidator({
+          form: $forms[i],
+          formBtn: q('button', $forms[i]),
+          uploadFilesBlock: q('.uploadedfiles', $forms[i]),
+          filesInput: q('input[type="file"]', $forms[i])
+        });
+  
+        switch (id) {
+          // Форма "оформить заявку" в калькуляторе
+          case 'order-form':
+            eventName = 'submit_form';
+            break;
+            // Фрма "Получите консультацию по ремонту"
+          case 'discount-form':
+            eventName = 'submit_consult';
+            break;
+            // Форма "Закажите обратный звонок" в попапе
+          case 'callback-form':
+            eventName = 'submit_call_back';
+            break;
         }
-      };
-
-    $form.setAttribute('novalidate', '');
-    $form.validatie = false;
-    $formBtn.addEventListener('click', function() {
-      validationForm();
-      if ($form.validatie === false) {
-        event.preventDefault();
+  
+        $forms[i].addEventListener('submit', function() {
+          ym(32819272, 'reachGoal', eventName);
+        });
+      }
+    }
+  })();
+  ;(function() {
+    let setCursorPosition = function(pos, inputElement) {
+      inputElement.focus();
+      if (inputElement.setSelectionRange) {
+        inputElement.setSelectionRange(pos, pos);
+      } else if (inputElement.createTextRange) {
+        let range = inputElement.createTextRange();
+  
+        range.collapse(true);
+        range.moveEnd('character', pos);
+        range.moveStart('character', pos);
+        range.select();
+      }
+    };
+  
+    mask = function() {
+      let pattern = '+7(___)___-__-__',
+        i = 0,
+        def = pattern.replace(/\D/g, ''),
+        val = this.value.replace(/\D/g, '');
+  
+      if (def.length >= val.length) {
+        val = def;
+      }
+  
+      this.value = pattern.replace(/./g, function(match) {
+        return /[_\d]/.test(match) && i < val.length ? val.charAt(i++) : i >= val.length ? '' : match;
+      });
+  
+      if (event.type === 'blur') {
+        if (this.value.length === 2) {
+          this.value = '';
+          this.classList.remove('filled');
+        }
       } else {
-        $form.classList.add('loading');
-        if ($form.classList.contains('order-form')) {
-          let inputs = $form.elements;
-
-          for (let i = 0, len = inputs.length; i < len; i++) {
-            let inputName = inputs[i].name;
-
-            if (inputName === 'work[]' || inputName === 'extra-work[]' || inputName === 'added[]') {
-              inputs[i].setAttribute('data-value', inputs[i].value);
-              inputs[i].value = inputs[i].parentElement.textContent;
-            } else if (inputName === 'type') {
-              let selectedOption = inputs[i][inputs[i].selectedIndex];
-              selectedOption.setAttribute('data-value', selectedOption.value);
-              selectedOption.value = selectedOption.textContent;
+        setCursorPosition(this.value.length, this);
+      }
+    };
+  
+    let input = qa('[name=tel]');
+  
+    for (let i = 0; i < input.length; i++) {
+      input[i].addEventListener('input', mask);
+      input[i].addEventListener('focus', mask);
+      input[i].addEventListener('blur', mask);
+    }
+  
+  })();
+  ;
+  (function() {
+    let nextArrow = '<button type="button" class="arrow"></button>',
+      prevArrow = '<button type="button" class="arrow"></button>',
+      dot = '<button type="button" class="dot"></button>',
+      arrowSvg = '<svg class="arrow__svg" width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.13191 17.6171L9.61719 9.13184L1.48546 1.00011" stroke="currentColor"/></svg>',
+      createArrow = function(className, inside) {
+  
+        className = (className.indexOf('prev') === -1 ? 'next ' : 'prev ') + className;
+  
+        return '<button type="button" class="arrow arrow_' + className + '">' + inside + '</button>';
+      },
+  
+      // Функции slick для сокращения записи
+      // Чем больше слайдеров, тем актуальнее эти функции
+      hasSlickClass = function($el) {
+        return $el.hasClass('slick-slider');
+      },
+      unslick = function($el) {
+        $el.slick('unslick');
+      },
+  
+      // Слайдеры
+      teamSlider = id('team-slider'),
+      teamLoadMoreBtn = id('team-more-btn'),
+  
+      // cases
+      casesSect = q('.cases-sect');
+  
+    if (teamSlider) {
+      let slides = qa('.person', teamSlider),
+        slidesLength = slides.length,
+        $teamSlider = $(teamSlider),
+        buildTeamSlider = function() {
+          // если ширина экрана больше 576px и слайдов меньше 3, то слайдера не будет
+          // Ограничиваем высоту блока
+          if (media(mediaQueries.s)) {
+            if (hasSlickClass($teamSlider)) {
+              unslick($teamSlider);
+            }
+            let coeff = media(mediaQueries.m) ? 2 : 1;
+  
+            $teamSlider.css('max-height', (slides[0].offsetHeight + +(getComputedStyle(slides[0]).marginTop).slice(0, -2)) * coeff + 'px');
+  
+            if (media(mediaQueries.lg)) {
+              if (slidesLength > 9) {
+                teamLoadMoreBtn.classList.remove('hidden');
+              } else {
+                teamLoadMoreBtn.classList.add('hidden');
+              }
+            } else if (media(mediaQueries.m)) {
+              if (slidesLength > 6) {
+                teamLoadMoreBtn.classList.remove('hidden');
+              } else {
+                teamLoadMoreBtn.classList.add('hidden');
+              }
+            } else if (media(mediaQueries.s)) {
+              if (slidesLength > 2) {
+                teamLoadMoreBtn.classList.remove('hidden');
+              } else {
+                teamLoadMoreBtn.classList.add('hidden');
+              }
+            }
+          } else {
+            if (hasSlickClass($teamSlider)) {
+              // слайдер уже создан
+              return;
+            }
+            if (slidesLength && slidesLength > 1) {
+              $teamSlider.slick({
+                infinite: false,
+                prevArrow: createArrow('team__prev', arrowSvg),
+                nextArrow: createArrow('team__next', arrowSvg)
+              });
             }
           }
-        }
-
-      }
-    });
-    if (!document.wpcf7mailsent) {
-      document.addEventListener('wpcf7mailsent', submitHandler);
-      document.wpcf7mailsent = true;
-    }
-    $form.addEventListener('input', toggleInputsClass);
-  };
-
-  for (var i = $forms.length - 1; i >= 0; i--) {
-    if ($forms[i]) {
-      let id = $forms[i].id,
-        eventName;
-
-      formValidator({
-        form: $forms[i],
-        formBtn: q('button', $forms[i]),
-        uploadFilesBlock: q('.uploadedfiles', $forms[i]),
-        filesInput: q('input[type="file"]', $forms[i])
+        };
+      buildTeamSlider();
+      windowFuncs.resize.push(buildTeamSlider);
+      teamLoadMoreBtn.addEventListener('click', function() {
+        teamSlider.style.maxHeight = teamSlider.scrollHeight + 'px';
+        teamLoadMoreBtn.classList.add('hidden');
       });
-
-      switch (id) {
-        // Форма "оформить заявку" в калькуляторе
-        case 'order-form':
-          eventName = 'submit_form';
-          break;
-          // Фрма "Получите консультацию по ремонту"
-        case 'discount-form':
-          eventName = 'submit_consult';
-          break;
-          // Форма "Закажите обратный звонок" в попапе
-        case 'callback-form':
-          eventName = 'submit_call_back';
-          break;
-      }
-
-      $forms[i].addEventListener('submit', function() {
-        ym(32819272, 'reachGoal', eventName);
-      });
     }
-  }
-})();
-;(function() {
-  let setCursorPosition = function(pos, inputElement) {
-    inputElement.focus();
-    if (inputElement.setSelectionRange) {
-      inputElement.setSelectionRange(pos, pos);
-    } else if (inputElement.createTextRange) {
-      let range = inputElement.createTextRange();
-
-      range.collapse(true);
-      range.moveEnd('character', pos);
-      range.moveStart('character', pos);
-      range.select();
-    }
-  };
-
-  mask = function() {
-    let pattern = '+7(___)___-__-__',
-      i = 0,
-      def = pattern.replace(/\D/g, ''),
-      val = this.value.replace(/\D/g, '');
-
-    if (def.length >= val.length) {
-      val = def;
-    }
-
-    this.value = pattern.replace(/./g, function(match) {
-      return /[_\d]/.test(match) && i < val.length ? val.charAt(i++) : i >= val.length ? '' : match;
-    });
-
-    if (event.type === 'blur') {
-      if (this.value.length === 2) {
-        this.value = '';
-        this.classList.remove('filled');
-      }
-    } else {
-      setCursorPosition(this.value.length, this);
-    }
-  };
-
-  let input = qa('[name=tel]');
-
-  for (let i = 0; i < input.length; i++) {
-    input[i].addEventListener('input', mask);
-    input[i].addEventListener('focus', mask);
-    input[i].addEventListener('blur', mask);
-  }
-
-})();
-;
-(function() {
-  let nextArrow = '<button type="button" class="arrow"></button>',
-    prevArrow = '<button type="button" class="arrow"></button>',
-    dot = '<button type="button" class="dot"></button>',
-    arrowSvg = '<svg class="arrow__svg" width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.13191 17.6171L9.61719 9.13184L1.48546 1.00011" stroke="currentColor"/></svg>',
-    createArrow = function(className, inside) {
-
-      className = (className.indexOf('prev') === -1 ? 'next ' : 'prev ') + className;
-
-      return '<button type="button" class="arrow arrow_' + className + '">' + inside + '</button>';
-    },
-
-    // Функции slick для сокращения записи
-    // Чем больше слайдеров, тем актуальнее эти функции
-    hasSlickClass = function($el) {
-      return $el.hasClass('slick-slider');
-    },
-    unslick = function($el) {
-      $el.slick('unslick');
-    },
-
-    // Слайдеры
-    teamSlider = id('team-slider'),
-    teamLoadMoreBtn = id('team-more-btn');
-
-  if (teamSlider) {
-    let slides = qa('.person', teamSlider),
-      slidesLength = slides.length,
-      $teamSlider = $(teamSlider),
-      buildTeamSlider = function() {
-        // если ширина экрана больше 576px и слайдов меньше 3, то слайдера не будет
-        // Ограничиваем высоту блока
-        if (media(mediaQueries.s)) {
-          if (hasSlickClass($teamSlider)) {
-            unslick($teamSlider);
-          }
-          let coeff = media(mediaQueries.m) ? 2 : 1;
-
-          $teamSlider.css('max-height', (slides[0].offsetHeight + +(getComputedStyle(slides[0]).marginTop).slice(0, -2)) * coeff + 'px');
-
-          if (media(mediaQueries.lg)) {
-            if (slidesLength > 9) {
-              teamLoadMoreBtn.classList.remove('hidden');
-            } else {
-              teamLoadMoreBtn.classList.add('hidden');
-            }
-          } else if (media(mediaQueries.m)) {
-            if (slidesLength > 6) {
-              teamLoadMoreBtn.classList.remove('hidden');
-            } else {
-              teamLoadMoreBtn.classList.add('hidden');
-            }
-          } else if (media(mediaQueries.s)) {
-            if (slidesLength > 2) {
-              teamLoadMoreBtn.classList.remove('hidden');
-            } else {
-              teamLoadMoreBtn.classList.add('hidden');
-            }
-          }
-        } else {
-          if (hasSlickClass($teamSlider)) {
+  
+    if (casesSect) {
+      let casesSlider = q('.cases-sect__cases', casesSect),
+        casesGallery = $('.case__gallery', casesSlider),
+        casesLoadmoreBtn = q('.cases-sect__loadmore', casesSect),
+        $casesSlider = $(casesSlider),
+        counter = q('.cases-sect__counter', casesSect),
+        buildCaseGallerySlider = function() {
+          if (hasSlickClass(casesGallery)) {
             // слайдер уже создан
             return;
           }
-          if (slidesLength && slidesLength> 1) {
-            console.log();
-            $teamSlider.slick({
+          casesGallery.slick({
+            infinite: false,
+            arrows: false,
+            dots: true,
+            dotsClass: 'case__gallery-dots',
+            mobileFirst: true,
+            customPaging: () => dot,
+            responsive: [{
+              breakpoint: 767.98,
+              settings: {
+                arrows: true,
+                prevArrow: createArrow('case__gallery-prev', arrowSvg),
+                nextArrow: createArrow('case__gallery-next', arrowSvg)
+              }
+            }]
+          });
+        },
+        buildCasesSlider = function() {
+          if (media('(max-width:767.98px)')) {
+            if (hasSlickClass($casesSlider)) {
+              unslick($casesSlider);
+              return;
+            }
+          } else {
+            if (hasSlickClass($casesSlider)) {
+              // слайдер уже создан
+              return;
+            }
+            $casesSlider.slick({
+              accessibility: false,
+              fade: true,
               infinite: false,
-              prevArrow: createArrow('team__prev', arrowSvg),
-              nextArrow: createArrow('team__next', arrowSvg)
+              slide: '.cases-sect__case',
+              draggable: false,
+              swipe: false,
+              slidesToScroll: 1,
+              slidesToShow: 1,
+              appendArrows: $('.cases-sect__nav'),
+              prevArrow: '<button type="button" class="cases-sect__arrow cases-sect__prev"><svg class="cases-sect__arrow-svg" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.7071 8.7071C31.0976 8.31658 31.0976 7.68341 30.7071 7.29289L24.3431 0.92893C23.9526 0.538406 23.3195 0.538406 22.9289 0.92893C22.5384 1.31945 22.5384 1.95262 22.9289 2.34314L28.5858 8L22.9289 13.6569C22.5384 14.0474 22.5384 14.6805 22.9289 15.0711C23.3195 15.4616 23.9526 15.4616 24.3431 15.0711L30.7071 8.7071ZM8.74228e-08 9L30 9L30 7L-8.74228e-08 7L8.74228e-08 9Z" fill="#F73C4A"/></svg></button>',
+              nextArrow: '<button type="button" class="cases-sect__arrow cases-sect__next"><svg class="cases-sect__arrow-svg" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.7071 8.7071C31.0976 8.31658 31.0976 7.68341 30.7071 7.29289L24.3431 0.92893C23.9526 0.538406 23.3195 0.538406 22.9289 0.92893C22.5384 1.31945 22.5384 1.95262 22.9289 2.34314L28.5858 8L22.9289 13.6569C22.5384 14.0474 22.5384 14.6805 22.9289 15.0711C23.3195 15.4616 23.9526 15.4616 24.3431 15.0711L30.7071 8.7071ZM8.74228e-08 9L30 9L30 7L-8.74228e-08 7L8.74228e-08 9Z" fill="#F73C4A"/></svg></button>'
             });
           }
+        };
+  
+      $casesSlider.on('init reInit afterChange', function(event, slick, currentSlide, nextSlide) {
+        if (event.target.classList.contains('cases-sect__cases') && slick.slideCount) {
+          let number = (currentSlide ? currentSlide : 0) + 1;
+          counter.textContent = 'Объект ' + number + '/' + (slick.slideCount - slick.options.slidesToShow + slick.options.slidesToScroll);
         }
-      }
-    buildTeamSlider();
-    windowFuncs.resize.push(buildTeamSlider);
-    teamLoadMoreBtn.addEventListener('click', function() {
-      teamSlider.style.maxHeight = teamSlider.scrollHeight + 'px';
-      teamLoadMoreBtn.classList.add('hidden');
-    });
-  }
-
-
-  // настройки grab курсора на всех слайдерах
-  $('.slick-list.draggable').on('mousedown', function() {
-    $(this).addClass('grabbing');
-  });
-
-  $('.slick-list.draggable').on('beforeChange', function() {
-    $(this).removeClass('grabbing');
-  });
-
-  $(document).on('mouseup', function() {
-    $('.slick-list.draggable').removeClass('grabbing');
-  });
-
-
-})();
-;(function() {
-  let pricesSect = q('.prices-sect');
-  if (pricesSect) {
-    let pricesBlocks = qa('.price-table-block__title', pricesSect);
-
-    for (let i = 0, len = pricesBlocks.length; i < len; i++) {
-      pricesBlocks[i].addEventListener('click', function() {
-        let parent = pricesBlocks[i].parentElement,
-          maxHeight = parent.classList.contains('active') ? 60 : parent.scrollHeight;
-        parent.style.maxHeight = maxHeight + 'px';
-        parent.classList.toggle('active');
       });
+  
+  
+      buildCaseGallerySlider();
+      buildCasesSlider();
+      windowFuncs.resize.push(buildCaseGallerySlider, buildCasesSlider);
     }
-  }  
-})();
-(function() {
-  'use strict';
-
-  var words = [
-    [
-      '', 'один', 'два', 'три', 'четыре', 'пять', 'шесть',
-      'семь', 'восемь', 'девять', 'десять', 'одиннадцать',
-      'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать',
-      'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать'
-    ],
-    [
-      '', '', 'двадцать', 'тридцать', 'сорок', 'пятьдесят',
-      'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто'
-    ],
-    [
-      '', 'сто', 'двести', 'триста', 'четыреста', 'пятьсот',
-      'шестьсот', 'семьсот', 'восемьсот', 'девятьсот'
-    ]
-  ];
-
-  var rusRubles = ['рубль', 'рубля', 'рублей'];
-
-  var belRubles = ['белорусский рубль', 'белорусских рубля', 'белорусских рублей'];
-
-  var toFloat = function(number) {
-    return parseFloat(number);
-  };
-
-  var plural = function(count, options) {
-    if (options.length !== 3) {
-      return false;
-    }
-
-    count = Math.abs(count) % 100;
-    var rest = count % 10;
-
-    if (count > 10 && count < 20) {
-      return options[2];
-    }
-
-    if (rest > 1 && rest < 5) {
-      return options[1];
-    }
-
-    if (rest === 1) {
-      return options[0];
-    }
-
-    return options[2];
-  };
-
-  var parseNumber = function(number, count, currCode) {
-    var first;
-    var second;
-    var numeral = '';
-
-    if (number.length === 3) {
-      first = number.substr(0, 1);
-      number = number.substr(1, 3);
-      numeral = '' + words[2][first] + ' ';
-    }
-
-    if (number < 20) {
-      numeral = numeral + words[0][toFloat(number)] + ' ';
-    } else {
-      first = number.substr(0, 1);
-      second = number.substr(1, 2);
-      numeral = numeral + words[1][first] + ' ' + words[0][second] + ' ';
-    }
-
-    if (count === 0) {
-      switch (currCode) {
-        case 'BYN': {
-          numeral = numeral + plural(number, belRubles);
-          break;
-        }
-        case 'RU':
-        default: {
-          numeral = numeral + plural(number, rusRubles);
-        }
+  
+  
+    // настройки grab курсора на всех слайдерах
+    $('.slick-list.draggable').on('mousedown', function() {
+      $(this).addClass('grabbing');
+    });
+  
+    $('.slick-list.draggable').on('beforeChange', function() {
+      $(this).removeClass('grabbing');
+    });
+  
+    $(document).on('mouseup', function() {
+      $('.slick-list.draggable').removeClass('grabbing');
+    });
+  
+  
+  })();
+  ;(function() {
+    let pricesSect = q('.prices-sect');
+    if (pricesSect) {
+      let pricesBlocks = qa('.price-table-block__title', pricesSect);
+  
+      for (let i = 0, len = pricesBlocks.length; i < len; i++) {
+        pricesBlocks[i].addEventListener('click', function() {
+          let parent = pricesBlocks[i].parentElement,
+            maxHeight = parent.classList.contains('active') ? 60 : parent.scrollHeight;
+          parent.style.maxHeight = maxHeight + 'px';
+          parent.classList.toggle('active');
+        });
       }
-    } else if (count === 1) {
-      if (numeral !== '  ') {
-        numeral = numeral + plural(number, ['тысяча ', 'тысячи ', 'тысяч ']);
-        numeral = numeral.replace('один ', 'одна ').replace('два ', 'две ');
-      }
-    } else if (count === 2) {
-      if (numeral !== '  ') {
-        numeral = numeral + plural(number, ['миллион ', 'миллиона ', 'миллионов ']);
-      }
-    } else if (count === 3) {
-      numeral = numeral + plural(number, ['миллиард ', 'миллиарда ', 'миллиардов ']);
-    }
-
-    return numeral;
-  };
-
-  var parseDecimals = function(number) {
-    var text = plural(number, ['копейка', 'копейки', 'копеек']);
-
-    if (number === 0) {
-      number = '00';
-    } else if (number < 10) {
-      number = '0' + number;
-    }
-
-    return ' ' + number + ' ' + text;
-  };
-
-  var rubles = function(number, currCode) {
-    if (!number) {
-      return false;
-    }
-
-    var type = typeof number;
-    if (type !== 'number' && type !== 'string') {
-      return false;
-    }
-
-    if (type === 'string') {
-      number = toFloat(number.replace(',', '.'));
-
-      if (isNaN(number)) {
+    }  
+  })();
+  (function() {
+    'use strict';
+  
+    var words = [
+      [
+        '', 'один', 'два', 'три', 'четыре', 'пять', 'шесть',
+        'семь', 'восемь', 'девять', 'десять', 'одиннадцать',
+        'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать',
+        'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать'
+      ],
+      [
+        '', '', 'двадцать', 'тридцать', 'сорок', 'пятьдесят',
+        'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто'
+      ],
+      [
+        '', 'сто', 'двести', 'триста', 'четыреста', 'пятьсот',
+        'шестьсот', 'семьсот', 'восемьсот', 'девятьсот'
+      ]
+    ];
+  
+    var rusRubles = ['рубль', 'рубля', 'рублей'];
+  
+    var belRubles = ['белорусский рубль', 'белорусских рубля', 'белорусских рублей'];
+  
+    var toFloat = function(number) {
+      return parseFloat(number);
+    };
+  
+    var plural = function(count, options) {
+      if (options.length !== 3) {
         return false;
       }
-    }
-
-    if (number <= 0) {
-      return false;
-    }
-
-    var splt;
-    var decimals;
-
-    number = number.toFixed(2);
-    if (number.indexOf('.') !== -1) {
-      splt = number.split('.');
-      number = splt[0];
-      decimals = splt[1];
-    }
-
-    var numeral = '';
-    var length = number.length - 1;
-    var parts = '';
-    var count = 0;
-    var digit;
-
-    while (length >= 0) {
-      digit = number.substr(length, 1);
-      parts = digit + parts;
-
-      if ((parts.length === 3 || length === 0) && !isNaN(toFloat(parts))) {
-        numeral = parseNumber(parts, count, currCode) + numeral;
-        parts = '';
-        count++;
+  
+      count = Math.abs(count) % 100;
+      var rest = count % 10;
+  
+      if (count > 10 && count < 20) {
+        return options[2];
       }
-
-      length--;
-    }
-
-    numeral = numeral.replace(/\s+/g, ' ');
-
-    if (decimals) {
-      numeral = numeral + parseDecimals(toFloat(decimals));
-    }
-
-    return numeral;
-  };
-
-  var globals;
-
-  if (typeof module !== 'undefined' && module !== null) {
-    globals = exports;
-  } else {
-    globals = window;
-  }
-
-  globals.rubles = rubles;
-
-})();
-;
-(function() {
-  let calcScript = id('calc-script'),
-    docForm = id('doc-form'),
-    docFormBtn = id('doc-form-btn'),
-    docFormLink = id('doc-form-link');
-
-
-  if (calcScript) {
-    body.removeChild(calcScript);
-
-    docFormBtn.addEventListener('click', function(e) {
-      docForm.classList.add('loading');
-    });
-
-    let randomInteger = function(min, max) {
-      // случайное число от min до (max+1)
-      let rand = min + Math.random() * (max + 1 - min);
-      return Math.floor(rand);
+  
+      if (rest > 1 && rest < 5) {
+        return options[1];
+      }
+  
+      if (rest === 1) {
+        return options[0];
+      }
+  
+      return options[2];
     };
-
-    firstCalc = function() {
-      let calcResult = id('calc-result'),
-        calcImg = id('calc-img'),
-        calcPeriod = id('calc-period'),
-        orderPopupType = id('order-popup-type'),
-        orderPopupPrice = id('order-popup-price'),
-        orderPopupPeriod = id('order-popup-term'),
-        // checkedOption = q('.radio__inp[checked]', calcBlock),
-        checkedOption = q('option[checked]', calcBlock),
-        resultNumber = q('.calc-result__price-number'),
-        imgNameTemplate = '%number%-%ceiling%-%floor%-%tile%-%plumbing%-%walls%-%windows%',
-
-        docFormNumberInp = q('[name="number"]', docForm),
-        docFormDateInp = q('[name="date"]', docForm),
-        docFormSumInp = q('[name="sum"]', docForm),
-        docFormSumTextInp = q('[name="sum-text"]', docForm),
-        docFormTermInp = q('[name="term"]', docForm),
-
-        appendixNumberInp = q('[name="appendix-number"]', docForm),
-        appendixInputsBlock = q('.appendix-inputs', docForm),
-        appendixInputsBlockChilds = appendixInputsBlock.children,
-        appendixWorkInputs = qa('[name^="appendix-work"]', appendixInputsBlock),
-        appendixPriceInputs = qa('[name^="appendix-price"]', appendixInputsBlock),
-        appendixCostInputs = qa('[name^="appendix-cost"]', appendixInputsBlock),
-        appendixTotalInp = q('[name="appendix-total"]', docForm),
-        appendixTotalPriceInp = q('[name="appendix-total-price"]', docForm),
-
-        imgName = '',
-        imgSrc = '',
-        flatType,
-        checkedType,
-        checkedWorks = {},
-        checkedExtraWorks = {},
-        term,
-        sum,
-        draftSum,
-        finishSum,
-        beautifyDigitsRegExp = /(\d)(?=(\d{3})+(?!\d))/g,
-        // Окончания для вывода количества дней
-        days = ['день', 'дня', 'дней'],
-        workDays = ['рабочий', 'рабочих', 'рабочих'],
-        beautifySum = function(input) {
-          return (input + '').replace(beautifyDigitsRegExp, '$1 ');
-        },
-        calc = function(e) {
-          docFormBtn.classList.remove('hide');
-          docFormLink.classList.add('hide');
-          let target = e.target || e,
-            targetParent = target.parentElement,
-            targetName = target.name || targetParent.name, // Родительский элемент для select
-            targetValue = target.value,
-            targetChecked = target.checked,
-            targetText = target.textContent || targetParent.textContent,
-            flatType = q('.calc__select').selectedOptions[0].textContent,
-            checkedWorksInputs = qa('[name="work[]"]:checked, [name="extra-work[]"]:checked', calcBlock),
-            checkedExtraWorksInputs = qa('[name="added[]"]:checked', calcBlock),
-            allInputs = qa('input', calcBlock),
-            checkedExtraWorksInputsLength = checkedExtraWorksInputs.length,
-            checkedWorksInputsLength = checkedWorksInputs.length,
-            calcValue = function(input) {
-              let price = input['price'],
-                draft = input['draft'],
-                finish = input['finish'],
-                sum = 0;
-
-              if (typeof input['price'] === 'string') {
-                // Добавляем стоимость
-                sum += +price;
-                // Добавляем стоимость черновых работ
-                if (checkedExtraWorks['draft'] === true) {
-                  sum += +draft;
-                  draftSum += +draft;
-                }
-                // Добавляем стоимость чистовых работ
-                if (checkedExtraWorks['finish'] === true) {
-                  sum += +finish;
-                  finishSum += +finish;
-                }
-                term += +input['term'];
-              } else {
-                for (let i = 0, len = input.length; i < len; i++) {
-                  sum += calcValue(input[i]);
-                }
-              }
-
-              return sum;
-            };
-
-          // Если нажимаем радио-кнопки
-          if (targetName === 'type') {
-            if (target.tagName === 'SELECT') {
-              targetText = target[target.selectedIndex].textContent;
-            }
-            checkedType = calcTable[targetText];
-            // Ставим номер квартиры (0 - студия. 1 - 1к кв и т.д.)
-            imgName = imgNameTemplate.replace('%number%', targetValue);
-            // Обновляем объект виды работ
-            if (checkedWorksInputsLength > 0) {
-              checkedWorks = {};
-              for (let i = 0; i < checkedWorksInputsLength; i++) {
-                let text = checkedWorksInputs[i].parentElement.textContent,
-                  value = checkedWorksInputs[i].value;
-                checkedWorks[text] = checkedType[text];
-                imgName = imgName.replace('%' + value + '%', value);
-              }
-            }
-            // Обновляем объект дополнительных работ
-            if (checkedExtraWorksInputsLength > 0) {
-              checkedExtraWorks = {};
-              for (let i = 0; i < checkedExtraWorksInputsLength; i++) {
-                let text = checkedExtraWorksInputs[i].parentElement.textContent;
-                checkedExtraWorks[checkedExtraWorksInputs[i].value] = true;
-              }
-            }
-            // Если нажимаем чекбоксы "виды работ"
-          } else if ((targetName === 'work[]' || targetName === 'extra-work[]') && checkedType) {
-            if (targetChecked) {
-              checkedWorks[targetText] = checkedType[targetText];
-              imgName = imgName.replace('%' + targetValue + '%', targetValue);
-            } else {
-              delete checkedWorks[targetText];
-              imgName = imgName.replace(targetValue, '%' + targetValue + '%');
-            }
-
-            // console.log(target.value);
+  
+    var parseNumber = function(number, count, currCode) {
+      var first;
+      var second;
+      var numeral = '';
+  
+      if (number.length === 3) {
+        first = number.substr(0, 1);
+        number = number.substr(1, 3);
+        numeral = '' + words[2][first] + ' ';
+      }
+  
+      if (number < 20) {
+        numeral = numeral + words[0][toFloat(number)] + ' ';
+      } else {
+        first = number.substr(0, 1);
+        second = number.substr(1, 2);
+        numeral = numeral + words[1][first] + ' ' + words[0][second] + ' ';
+      }
+  
+      if (count === 0) {
+        switch (currCode) {
+          case 'BYN': {
+            numeral = numeral + plural(number, belRubles);
+            break;
           }
-          // Если нижимаем чекбоксы "добавить к стоимости"
-          else if (targetName === 'added[]' && checkedType) {
-            checkedExtraWorks[targetValue] = targetChecked;
+          case 'RU':
+          default: {
+            numeral = numeral + plural(number, rusRubles);
           }
-
-          // Очищаем инпуты для приложения
-          for (let i = 0, len = appendixInputsBlockChilds.length; i < len; i++) {
-            appendixInputsBlockChilds[i].value = appendixInputsBlockChilds[i].name.indexOf('work') === -1 ? '&#8212;&#8212;&#8212;&#8212;&#8212;' : '__________________________________________';
-          }
-
-          // Ставим стоимость в калькулятор
-          sum = 0;
-          term = 0; // кол-во дней (сроки работ)
-          draftSum = 0; // сумма черновых работ
-          finishSum = 0; // сумма чистовых рабтот
-          for (let key in checkedWorks) {
-            sum += calcValue(checkedWorks[key]);
-          }
-          let k = (term % 100 > 4 && term % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(term % 10 < 5) ? term % 10 : 5];
-
-          orderPopupType.textContent = flatType;
-          orderPopupPeriod.innerHTML = calcPeriod.innerHTML = term + '&nbsp' + workDays[k] + '&nbsp' + days[k];
-          calcResult.value = beautifySum(sum);
-          orderPopupPrice.innerHTML = resultNumber.innerHTML = calcResult.value.replace(' ', '&nbsp;');
-
-          docFormNumberInp.value = docFormNumberInp.getAttribute('data-initial-value') + randomInteger(1, 9);
-          docFormSumInp.value = calcResult.value + ' рублей';
-          docFormSumTextInp.value = rubles(sum);
-          docFormTermInp.value = term;
-
-          appendixNumberInp.value = docFormNumberInp.value;
-          appendixTotalInp.value =  calcResult.value;
-          appendixTotalPriceInp.value =  calcResult.value + ' рублей';
-
-          tinkoffBtn.onclick = function() {
-            tinkoff.create({
-              shopId: '7250c9d5-4a56-400e-9a8c-e881c31ad707',
-              showcaseId: 'd81c22d1-03e4-49d3-a208-5a6a7761be67',
-              demoFlow: 'sms',
-              items: [{
-                name: 'Услуга «Ремонт в ' + flatType.toLowerCase()
-                  .replace('квартира', 'квартире')
-                  .replace('студия', 'студии')
-                  .replace('комнатная', 'комнатной') + '»',
-                price: sum,
-                quantity: 1
-              }, ],
-              sum: sum
-            });
-          }
-
-          imgSrc = templateDir + '/img/calc/' + imgName.replace(/-%.*?%/g, '') + '.jpg';
-
-          if (calcImg.src !== imgSrc) {
-            if (calcImg.src[calcImg.src.length - 1] === '#') {
-              let observer = new IntersectionObserver(function(entries, observer) {
-                if (entries[0].isIntersecting) {
-                  calcImg.src = imgSrc;
-                  observer.unobserve(calcImg);
-                }
-              }, { threshold: 0.5 });
-              observer.observe(calcImg);
-            } else {
-              calcImg.src = imgSrc;
-            }
-          }
-
-          for (let i = 0, j = 0, len = allInputs.length; i < len; i++) {
-            let inputParent = allInputs[i].parentElement,
-              parentNextEl = inputParent.nextElementSibling,
-              inputIsCheked = allInputs[i].checked,
-              hint = parentNextEl,
-              price;
-
-            inputParent.classList.toggle('checked', inputIsCheked);
-
-            if (inputIsCheked) {
-              // ! Чистовые и черновые работы считаются в функции calcValue()
-
-              if (hint.hasAttribute('data-hint')) {
-                hint = hint.getAttribute('data-hint');
-
-                price = calcTable[flatType][inputParent.textContent];
-
-                if (price) {
-                  if (typeof price.price === 'string') {
-                    price = price.price;
-                  } else {
-                    let tempPrice = 0;
-                    for (let k = 0, len = price.length; k < len; k++) {
-                      tempPrice += +price[k].price;
-                    }
-                    price = tempPrice;
-                  }
-                } else {
-                  if (inputParent.textContent.indexOf('Черн') !== -1) {
-                    price = draftSum;
-                  } else if (inputParent.textContent.indexOf('Чист') !== -1) {
-                    price = finishSum;
-                  }
-                }
-
-              }
-
-              appendixWorkInputs[j].value = inputParent.textContent + ' (' + hint.toLowerCase() + ')';
-              appendixPriceInputs[j].value = beautifySum(price);
-              appendixCostInputs[j].value = beautifySum(price);
-              j++;
-            }
-          }
-
-          // for (el of docForm.elements) {
-          //   console.log(el.value);
-          // }
-        };
-
-      calc(checkedOption);
-      calcBlock.addEventListener('change', calc);
+        }
+      } else if (count === 1) {
+        if (numeral !== '  ') {
+          numeral = numeral + plural(number, ['тысяча ', 'тысячи ', 'тысяч ']);
+          numeral = numeral.replace('один ', 'одна ').replace('два ', 'две ');
+        }
+      } else if (count === 2) {
+        if (numeral !== '  ') {
+          numeral = numeral + plural(number, ['миллион ', 'миллиона ', 'миллионов ']);
+        }
+      } else if (count === 3) {
+        numeral = numeral + plural(number, ['миллиард ', 'миллиарда ', 'миллиардов ']);
+      }
+  
+      return numeral;
+    };
+  
+    var parseDecimals = function(number) {
+      var text = plural(number, ['копейка', 'копейки', 'копеек']);
+  
+      if (number === 0) {
+        number = '00';
+      } else if (number < 10) {
+        number = '0' + number;
+      }
+  
+      return ' ' + number + ' ' + text;
+    };
+  
+    var rubles = function(number, currCode) {
+      if (!number) {
+        return false;
+      }
+  
+      var type = typeof number;
+      if (type !== 'number' && type !== 'string') {
+        return false;
+      }
+  
+      if (type === 'string') {
+        number = toFloat(number.replace(',', '.'));
+  
+        if (isNaN(number)) {
+          return false;
+        }
+      }
+  
+      if (number <= 0) {
+        return false;
+      }
+  
+      var splt;
+      var decimals;
+  
+      number = number.toFixed(2);
+      if (number.indexOf('.') !== -1) {
+        splt = number.split('.');
+        number = splt[0];
+        decimals = splt[1];
+      }
+  
+      var numeral = '';
+      var length = number.length - 1;
+      var parts = '';
+      var count = 0;
+      var digit;
+  
+      while (length >= 0) {
+        digit = number.substr(length, 1);
+        parts = digit + parts;
+  
+        if ((parts.length === 3 || length === 0) && !isNaN(toFloat(parts))) {
+          numeral = parseNumber(parts, count, currCode) + numeral;
+          parts = '';
+          count++;
+        }
+  
+        length--;
+      }
+  
+      numeral = numeral.replace(/\s+/g, ' ');
+  
+      if (decimals) {
+        numeral = numeral + parseDecimals(toFloat(decimals));
+      }
+  
+      return numeral;
+    };
+  
+    var globals;
+  
+    if (typeof module !== 'undefined' && module !== null) {
+      globals = exports;
+    } else {
+      globals = window;
     }
+  
+    globals.rubles = rubles;
+  
+  })();
+  ;
+  (function() {
+    let calcSect = q('.calc-sect'),
+      calcTourBtn = q('.calc__tour-btn'),
+      calcScript = id('calc-script'),
+      docForm = id('doc-form'),
+      docFormBtn = id('doc-form-btn'),
+      docFormLink = id('doc-form-link');
+  
+  
+    if (calcScript) {
+      body.removeChild(calcScript);
+  
+      calcSect.addEventListener('lazyloaded', function() {
+        let script = document.createElement('script');
+        script.onload = function() {
+          calcTourBtn.addEventListener('click', function() {
+            // if (media('(min-width:767.98px)')) {
+            //   let step9 = q('.hdr.fixed .hdr__callback');
+            //   if (step9) {
+            //     step9.setAttribute('data-step', '9');
+            //     step9.setAttribute('data-intro', 'А если вы запутались и не знаете, что вам нужно – закажите обратный звонок. Оставьте свои контакты здесь.');
+            //   }
+            // }
+            introJs().start();
+          });
+          calcTourBtn.classList.remove('disabled');
+        }
+        script.src = templateDir + '/js/intro.min.js';
+        calcSect.appendChild(script);
+      });
+  
+      docFormBtn.addEventListener('click', function(e) {
+        docForm.classList.add('loading');
+      });
+  
+      let randomInteger = function(min, max) {
+        // случайное число от min до (max+1)
+        let rand = min + Math.random() * (max + 1 - min);
+        return Math.floor(rand);
+      };
+  
+      firstCalc = function() {
+        let calcResult = id('calc-result'),
+          calcImg = id('calc-img'),
+          calcPeriod = id('calc-period'),
+          orderPopupType = id('order-popup-type'),
+          orderPopupPrice = id('order-popup-price'),
+          orderPopupPeriod = id('order-popup-term'),
+          // checkedOption = q('.radio__inp[checked]', calcBlock),
+          checkedOption = q('option[checked]', calcBlock),
+          resultNumber = q('.calc-result__price-number'),
+          imgNameTemplate = '%number%-%ceiling%-%floor%-%tile%-%plumbing%-%walls%-%windows%',
+  
+          docFormNumberInp = q('[name="number"]', docForm),
+          docFormDateInp = q('[name="date"]', docForm),
+          docFormSumInp = q('[name="sum"]', docForm),
+          docFormSumTextInp = q('[name="sum-text"]', docForm),
+          docFormTermInp = q('[name="term"]', docForm),
+  
+          appendixNumberInp = q('[name="appendix-number"]', docForm),
+          appendixInputsBlock = q('.appendix-inputs', docForm),
+          appendixInputsBlockChilds = appendixInputsBlock.children,
+          appendixWorkInputs = qa('[name^="appendix-work"]', appendixInputsBlock),
+          appendixPriceInputs = qa('[name^="appendix-price"]', appendixInputsBlock),
+          appendixCostInputs = qa('[name^="appendix-cost"]', appendixInputsBlock),
+          appendixTotalInp = q('[name="appendix-total"]', docForm),
+          appendixTotalPriceInp = q('[name="appendix-total-price"]', docForm),
+  
+          imgName = '',
+          imgSrc = '',
+          flatType,
+          checkedType,
+          checkedWorks = {},
+          checkedExtraWorks = {},
+          term,
+          sum,
+          draftSum,
+          finishSum,
+          beautifyDigitsRegExp = /(\d)(?=(\d{3})+(?!\d))/g,
+          // Окончания для вывода количества дней
+          days = ['день', 'дня', 'дней'],
+          workDays = ['рабочий', 'рабочих', 'рабочих'],
+          beautifySum = function(input) {
+            return (input + '').replace(beautifyDigitsRegExp, '$1 ');
+          },
+          calc = function(e) {
+            docFormBtn.classList.remove('hide');
+            docFormLink.classList.add('hide');
+            let target = e.target || e,
+              targetParent = target.parentElement,
+              targetName = target.name || targetParent.name, // Родительский элемент для select
+              targetValue = target.value,
+              targetChecked = target.checked,
+              targetText = target.textContent || targetParent.textContent,
+              flatType = q('.calc__select').selectedOptions[0].textContent,
+              checkedWorksInputs = qa('[name="work[]"]:checked, [name="extra-work[]"]:checked', calcBlock),
+              checkedExtraWorksInputs = qa('[name="added[]"]:checked', calcBlock),
+              allInputs = qa('input', calcBlock),
+              checkedExtraWorksInputsLength = checkedExtraWorksInputs.length,
+              checkedWorksInputsLength = checkedWorksInputs.length,
+              calcValue = function(input) {
+                let price = input['price'],
+                  draft = input['draft'],
+                  finish = input['finish'],
+                  sum = 0;
+  
+                if (typeof input['price'] === 'string') {
+                  // Добавляем стоимость
+                  sum += +price;
+                  // Добавляем стоимость черновых работ
+                  if (checkedExtraWorks['draft'] === true) {
+                    sum += +draft;
+                    draftSum += +draft;
+                  }
+                  // Добавляем стоимость чистовых работ
+                  if (checkedExtraWorks['finish'] === true) {
+                    sum += +finish;
+                    finishSum += +finish;
+                  }
+                  term += +input['term'];
+                } else {
+                  for (let i = 0, len = input.length; i < len; i++) {
+                    sum += calcValue(input[i]);
+                  }
+                }
+  
+                return sum;
+              };
+  
+            // Если нажимаем радио-кнопки
+            if (targetName === 'type') {
+              if (target.tagName === 'SELECT') {
+                targetText = target[target.selectedIndex].textContent;
+              }
+              checkedType = calcTable[targetText];
+              // Ставим номер квартиры (0 - студия. 1 - 1к кв и т.д.)
+              imgName = imgNameTemplate.replace('%number%', targetValue);
+              // Обновляем объект виды работ
+              if (checkedWorksInputsLength > 0) {
+                checkedWorks = {};
+                for (let i = 0; i < checkedWorksInputsLength; i++) {
+                  let text = checkedWorksInputs[i].parentElement.textContent,
+                    value = checkedWorksInputs[i].value;
+                  checkedWorks[text] = checkedType[text];
+                  imgName = imgName.replace('%' + value + '%', value);
+                }
+              }
+              // Обновляем объект дополнительных работ
+              if (checkedExtraWorksInputsLength > 0) {
+                checkedExtraWorks = {};
+                for (let i = 0; i < checkedExtraWorksInputsLength; i++) {
+                  let text = checkedExtraWorksInputs[i].parentElement.textContent;
+                  checkedExtraWorks[checkedExtraWorksInputs[i].value] = true;
+                }
+              }
+              // Если нажимаем чекбоксы "виды работ"
+            } else if ((targetName === 'work[]' || targetName === 'extra-work[]') && checkedType) {
+              if (targetChecked) {
+                checkedWorks[targetText] = checkedType[targetText];
+                imgName = imgName.replace('%' + targetValue + '%', targetValue);
+              } else {
+                delete checkedWorks[targetText];
+                imgName = imgName.replace(targetValue, '%' + targetValue + '%');
+              }
+  
+              // console.log(target.value);
+            }
+            // Если нижимаем чекбоксы "добавить к стоимости"
+            else if (targetName === 'added[]' && checkedType) {
+              checkedExtraWorks[targetValue] = targetChecked;
+            }
+  
+            // Очищаем инпуты для приложения
+            for (let i = 0, len = appendixInputsBlockChilds.length; i < len; i++) {
+              appendixInputsBlockChilds[i].value = appendixInputsBlockChilds[i].name.indexOf('work') === -1 ? '&#8212;&#8212;&#8212;&#8212;&#8212;' : '__________________________________________';
+            }
+  
+            // Ставим стоимость в калькулятор
+            sum = 0;
+            term = 0; // кол-во дней (сроки работ)
+            draftSum = 0; // сумма черновых работ
+            finishSum = 0; // сумма чистовых рабтот
+            for (let key in checkedWorks) {
+              sum += calcValue(checkedWorks[key]);
+            }
+            let k = (term % 100 > 4 && term % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(term % 10 < 5) ? term % 10 : 5];
+  
+            orderPopupType.textContent = flatType;
+            orderPopupPeriod.innerHTML = calcPeriod.innerHTML = term + '&nbsp' + workDays[k] + '&nbsp' + days[k];
+            calcResult.value = beautifySum(sum);
+            orderPopupPrice.innerHTML = resultNumber.innerHTML = calcResult.value.replace(' ', '&nbsp;');
+  
+            docFormNumberInp.value = docFormNumberInp.getAttribute('data-initial-value') + randomInteger(1, 9);
+            docFormSumInp.value = calcResult.value + ' рублей';
+            docFormSumTextInp.value = rubles(sum);
+            docFormTermInp.value = term;
+  
+            appendixNumberInp.value = docFormNumberInp.value;
+            appendixTotalInp.value = calcResult.value;
+            appendixTotalPriceInp.value = calcResult.value + ' рублей';
+  
+            tinkoffBtn.onclick = function() {
+              tinkoff.create({
+                shopId: '7250c9d5-4a56-400e-9a8c-e881c31ad707',
+                showcaseId: 'd81c22d1-03e4-49d3-a208-5a6a7761be67',
+                demoFlow: 'sms',
+                items: [{
+                  name: 'Услуга «Ремонт в ' + flatType.toLowerCase()
+                    .replace('квартира', 'квартире')
+                    .replace('студия', 'студии')
+                    .replace('комнатная', 'комнатной') + '»',
+                  price: sum,
+                  quantity: 1
+                }, ],
+                sum: sum
+              });
+            }
+  
+            imgSrc = templateDir + '/img/calc/' + imgName.replace(/-%.*?%/g, '') + '.jpg';
+  
+            if (calcImg.src !== imgSrc) {
+              if (calcImg.src[calcImg.src.length - 1] === '#') {
+                let observer = new IntersectionObserver(function(entries, observer) {
+                  if (entries[0].isIntersecting) {
+                    calcImg.src = imgSrc;
+                    observer.unobserve(calcImg);
+                  }
+                }, { threshold: 0.5 });
+                observer.observe(calcImg);
+              } else {
+                calcImg.src = imgSrc;
+              }
+            }
+  
+            for (let i = 0, j = 0, len = allInputs.length; i < len; i++) {
+              let inputParent = allInputs[i].parentElement,
+                parentNextEl = inputParent.nextElementSibling,
+                inputIsCheked = allInputs[i].checked,
+                hint = parentNextEl,
+                price;
+  
+              inputParent.classList.toggle('checked', inputIsCheked);
+  
+              if (inputIsCheked) {
+                // ! Чистовые и черновые работы считаются в функции calcValue()
+  
+                if (hint.hasAttribute('data-hint')) {
+                  hint = hint.getAttribute('data-hint');
+  
+                  price = calcTable[flatType][inputParent.textContent];
+  
+                  if (price) {
+                    if (typeof price.price === 'string') {
+                      price = price.price;
+                    } else {
+                      let tempPrice = 0;
+                      for (let k = 0, len = price.length; k < len; k++) {
+                        tempPrice += +price[k].price;
+                      }
+                      price = tempPrice;
+                    }
+                  } else {
+                    if (inputParent.textContent.indexOf('Черн') !== -1) {
+                      price = draftSum;
+                    } else if (inputParent.textContent.indexOf('Чист') !== -1) {
+                      price = finishSum;
+                    }
+                  }
+  
+                }
+  
+                appendixWorkInputs[j].value = inputParent.textContent + ' (' + hint.toLowerCase() + ')';
+                appendixPriceInputs[j].value = beautifySum(price);
+                appendixCostInputs[j].value = beautifySum(price);
+                j++;
+              }
+            }
+  
+            // for (el of docForm.elements) {
+            //   console.log(el.value);
+            // }
+          };
+  
+        calc(checkedOption);
+        calcBlock.addEventListener('change', calc);
+      }
+  
+  
+      firstCalc();
+    }
+  
+  })();
 
 
-    firstCalc();
-  }
 
-})();
-
-
-
-   // Делаем глобальный lazy, чтобы потом можно было обновлять его через lazy.refresh()
+  // Делаем глобальный lazy, чтобы потом можно было обновлять его через lazy.refresh()
   lazy = new lazyload({
     clearSrc: true,
     clearMedia: true

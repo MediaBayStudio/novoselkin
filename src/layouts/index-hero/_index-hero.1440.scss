@@ -4,18 +4,18 @@
 @import '../../scss/assets/variables';
 
 .index-hero {
-  padding-top: 150px;
-  padding-bottom: 110px;
-  font-size: 34px;
+  padding-top: 80px;
+  padding-bottom: 115px;
+  font-size: 22px;
   &__title {
     margin: 0 0 35px;
-    font-size: 58px;
+    font-size: 48px;
   }
 
   &__title-marked {
-    margin-left: -20px;
+    margin-left: -60px;
     padding: 40px 140px 40px 60px;
-    font-size: 50px;
+    font-size: 28px;
   }
 
   &.lazyloaded {
@@ -28,5 +28,9 @@
 
   &__li {
     &:nth-last-child(n+2) {}
+  }
+
+  &__btn {
+    margin: 50px 0 0 0;
   }
 }

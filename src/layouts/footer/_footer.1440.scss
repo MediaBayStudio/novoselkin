@@ -5,7 +5,7 @@
 
 .ftr {
   padding-top: 120px;
-  padding-bottom: 120px;
+  padding-bottom: 50px;
   /* .ftr__top */
   &__top {}
 
@@ -14,8 +14,8 @@
 
   /* .ftr__logo-img */
   &__logo-img {
-    width: 200px;
-    height: 55px;
+    // width: 200px;
+    // height: 55px;
   }
 
   /* .ftr__copy */
@@ -27,7 +27,7 @@
 
     &-li {
       &:nth-last-child(n+2) {
-        margin: 0 0 35px;
+        // margin: 0 0 35px;
       }
     }
   }
@@ -37,7 +37,7 @@
 
   /* .ftr__tel */
   &__tel {
-    font-size: 24px;
+    // font-size: 24px;
   }
 
   /* .ftr__callback */
@@ -51,9 +51,9 @@
 
   /* .ftr__address */
   &__address {
-    font-size: 24px;
+    // font-size: 24px;
     &-text {
-    width: 221px;
+    // width: 221px;
   }
   }
 
@@ -64,10 +64,18 @@
   /* .ftr__info */
   &__info {}
 
+  &__offer {
+    grid-column: 1/span 2;
+    max-width: 100%;
+  }
+
   /* .ftr__policy */
-  &__policy {}
+  &__policy {
+    margin: 0 auto 25px 0;
+    grid-column: 1;
+  }
 }
 
 .site-info {
-  font-size: 14px;
+  // font-size: 14px;
 }

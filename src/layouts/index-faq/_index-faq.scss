@@ -1,0 +1,69 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.index-faq {
+  padding-bottom: 80px;
+  &__title {
+    margin: 0 0 30px;
+    font: 32px/118% BookmanOldStyle;
+  }
+  &__list {
+    display: flex;
+    flex-flow: column;
+    font: 700 16px/156% Calibri;
+  }
+  &__li {
+    width: 100%;
+    border-bottom: 1px solid #c4c4c4;
+    overflow: hidden;
+    transition: max-height .5s;
+    &.active {
+      pointer-events: none;
+      .index-faq__question::after {
+        transform: rotate(180deg);
+      }
+    }
+    &:not(:last-child) {
+      margin: 0 0 20px;
+    }
+  }
+  &__question {
+    padding: 0 0 20px;
+    display: flex;
+    align-items: flex-start;
+    &::after {
+      content: '';
+      margin: 0 0 0 auto;
+      flex-shrink: 0;
+      align-self: center;
+      width: 14px;
+      height: 14px;
+      background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNi45OTcgNi40N0wxMy4wOC4zODhhLjUzOS41MzkgMCAwMS43NjEuNzYyTDcuMzc4IDcuNjEzYS41MzkuNTM5IDAgMDEtLjc2MiAwTC4xNSAxLjE1QS41MzkuNTM5IDAgMDEuOTEzLjM4N0w2Ljk5NyA2LjQ3eiIgZmlsbD0iIzMzMyIvPjwvc3ZnPg==') center/contain no-repeat;
+      transition: transform .5s;
+      pointer-events: none;
+    }
+    &-number {
+      margin-right: 10px;
+      color: $red;
+      pointer-events: none;
+    }
+    &-text {
+      pointer-events: none;
+      padding: 0 15px 0 0;
+    }
+  }
+  &__answer {
+    padding: 0 0 20px 22.4px;
+    font: 14px/179% Calibri;
+    color: #333;
+    > .link {
+      color: $red;
+      transition: color .5s;
+      &:hover {
+        color: $black;
+      }
+    }
+  }
+}

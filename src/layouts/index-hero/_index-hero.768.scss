@@ -4,22 +4,29 @@
 @import '../../scss/assets/variables';
 
 .index-hero {
-  font-size: 24px;
+  padding-top: 450px;
+  padding-bottom: 75px;
+  font-size: 20px;
   background-size: 1024px 944px;
+
   &__title {
     margin: 0 0 40px;
     width: 600px;
-    font-size: 50px;
+    font-size: 40px;
   }
 
   &__title-marked {
-    padding: 30px 130px 30px 35px;;
-    font-size: 42px;
+    margin-top: 15px;
+    padding: 30px 130px 30px 35px;
+    ;
+    font-size: 32px;
     background-position: top left;
   }
 
   &.lazyloaded {
-    .index-hero__title-marked {}
+    .index-hero__title-marked {
+      
+    }
   }
 
   &__ul {
@@ -28,5 +35,13 @@
 
   &__li {
     &:nth-last-child(n+2) {}
+  }
+
+  &__btn {
+    margin-top: 40px;
+    font-size: 20px;
+    margin-left: 20px;
+    width: 210px;
+    height: 50px;
   }
 }

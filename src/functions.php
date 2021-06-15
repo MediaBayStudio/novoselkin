@@ -23,11 +23,23 @@ if ( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false || strpos( $_SERV
   $webp_support = false; // webp не поддерживается
 }
 
+// Запрет обновления плагинов
+add_filter( 'site_transient_update_plugins', function( $value ) {
+  unset(
+    $value->response['contact-form-7/wp-contact-form-7.php'],
+    $value->response['contact-form-7-honeypot/honeypot.php'],
+    $value->response['advanced-custom-fields-pro/acf.php']
+  );
+
+  return $value;
+} );
+
+
 // Удаляем ненужные пункты в меню админки
 require $template_dir . '/inc/disable-menu-items-in-admin.php';
 
 // Регистрация калькуятора как типа записей
-require $template_dir . '/inc/register-calc-post-type.php';
+require $template_dir . '/inc/register-post-type.php';
 
 // Удаление разных скриптов и стилей от wp
 // Отключаем гутенберг

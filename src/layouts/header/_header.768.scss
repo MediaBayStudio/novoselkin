@@ -28,8 +28,14 @@
   }
   &__tel {
     margin: 0 0 0 35px;
+    font-weight: normal;
     // display: block;
     // transition: color .5s;
+    &::before {
+      margin-right: 10px;
+      width: 16px;
+      height: 16px;
+    }
   }
   &__callback {
     margin-left: 25px;

@@ -50,7 +50,7 @@ add_action( 'wp_enqueue_scripts', function() {
 	];
 
   foreach ( $scripts as $script_name ) {
-    if ( $script_name === 'slick.min' && !is_page( 'about' ) ) {
+    if ( $script_name === 'slick.min' && !is_page( 'about' ) && !is_front_page() ) {
       continue;
     }
     wp_enqueue_script( "{$script_name}", $template_directory . "/js/{$script_name}.js", [], null );

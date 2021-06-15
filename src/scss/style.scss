@@ -8,6 +8,7 @@
 @import 'assets/variables';
 
 // blocks import
+@import 'introjs';
 @import 'general/buttons/buttons';
 @import 'general/popups/popups';
 @import 'general/sliders/sliders';
@@ -15,11 +16,13 @@
 @import 'general/interface/interface';
 @import '../layouts/header/header';
 @import '../layouts/calc/calc';
+@import '../layouts/cases/cases';
 @import '../layouts/discount/discount';
 @import '../layouts/footer/footer';
 @import '../layouts/index-hero/index-hero';
 @import '../layouts/index-cleaning/index-cleaning';
 @import '../layouts/index-finance/index-finance';
+@import '../layouts/index-faq/index-faq';
 @import '../layouts/index-get-free/index-get-free';
 @import '../layouts/about-hero/about-hero';
 @import '../layouts/about-prices/about-prices';
