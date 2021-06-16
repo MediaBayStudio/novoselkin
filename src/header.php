@@ -31,9 +31,45 @@
   <link rel="preload" href="<?php echo $template_directory ?>/css/style.css" as="style" />
   <link rel="preload" href="<?php echo $template_directory ?>/img/logo-red.svg" as="image" />
   <link rel="preload" href="<?php echo $template_directory ?>/img/icon-burger.svg" as="image" />
+  <!-- other preload --> <?php
+  if ( is_front_page() ) {
+    $hero_gallery = get_field( 'sections' )[0]['gallery'];
+    $hero_gallery_preload = '';
+
+    foreach ( $hero_gallery as $img ) {
+      $img_title = $img['title'];
+      $media = ' media="';
+
+      if ( strpos( $img_title, '1920' ) !== false ) {
+        $media .= '(min-width:1439.98px)"';
+      } else if ( strpos( $img_title, '768' ) !== false ) {
+        $media .= '(min-width:575.98px)"';
+      } else if ( strpos( $img_title, '1024' ) !== false ) {
+        $media .= '(min-width:767.98px)"';
+      } else if ( strpos( $img_title, '1440' ) !== false ) {
+        $media .= '(min-width:1023.98px)"';
+      } else if ( strpos( $img_title, '2560' ) !== false ) {
+        $media .= '(min-width:1919.98px)"';
+      } else {
+        $media .= '(max-width:575.98px)"';
+      }
+
+      if ( $webp_support ) {
+        $url = str_replace( '.jpg', '.webp', $img['url'] );
+      } else {
+        $url = $img['url'];
+      }
+
+      $hero_gallery_preload .= PHP_EOL . '<link rel="preload" as="image"' . $media . ' href="' . $url . '" />';
+
+    }
+
+    echo $hero_gallery_preload;
+    unset ( $hero_gallery, $hero_gallery_preload, $img_title, $media, $url );
+  } ?>
   <!-- favicons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $site_url ?>/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $site_url ?>/favicon-16x16.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
   <meta name="msapplication-TileColor" content="#ffffff" />

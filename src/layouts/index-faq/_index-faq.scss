@@ -20,9 +20,11 @@
     overflow: hidden;
     transition: max-height .5s;
     &.active {
-      pointer-events: none;
-      .index-faq__question::after {
-        transform: rotate(180deg);
+      .index-faq__question {
+        // pointer-events: none;
+        &::after {
+          transform: rotate(180deg);
+        }
       }
     }
     &:not(:last-child) {
@@ -33,6 +35,7 @@
     padding: 0 0 20px;
     display: flex;
     align-items: flex-start;
+    cursor: pointer;
     &::after {
       content: '';
       margin: 0 0 0 auto;

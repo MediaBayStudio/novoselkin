@@ -5,30 +5,71 @@
     calcScript = id('calc-script'),
     docForm = id('doc-form'),
     docFormBtn = id('doc-form-btn'),
-    docFormLink = id('doc-form-link');
+    docFormLink = id('doc-form-link'),
+    indexHeroBtn = q('.index-hero__btn');
 
 
   if (calcScript) {
     body.removeChild(calcScript);
 
-    calcSect.addEventListener('lazyloaded', function() {
-      let script = document.createElement('script');
-      script.onload = function() {
-        calcTourBtn.addEventListener('click', function() {
-          // if (media('(min-width:767.98px)')) {
-          //   let step9 = q('.hdr.fixed .hdr__callback');
-          //   if (step9) {
-          //     step9.setAttribute('data-step', '9');
-          //     step9.setAttribute('data-intro', 'А если вы запутались и не знаете, что вам нужно – закажите обратный звонок. Оставьте свои контакты здесь.');
-          //   }
-          // }
-          introJs().start();
-        });
-        calcTourBtn.classList.remove('disabled');
-      }
-      script.src = templateDir + '/js/intro.min.js';
-      calcSect.appendChild(script);
+    [calcTourBtn, indexHeroBtn].forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        introJs().setOptions({
+          steps: [{
+            intro: 'Это калькулятор стоимости ремонта. С его помощью вы можете посчитать итоговую стоимость и&nbsp;сроки работ.',
+            element: q('.calc-sect__title', calcSect)
+          }, {
+            intro: 'Выберете тип своей квартиры.',
+            element: id('calc-group-type')
+          }, {
+            intro: 'Выберете необходимые вам работы. По нажатию на вопрос можно почитать описание.',
+            element: id('calc-group-work')
+          }, {
+            intro: 'Вы так же можете выбрать дополнительные работы – штукатурку всех стен или ровнитель для пола.',
+            element: id('calc-group-extra-work')
+          }, {
+            intro: 'А еще к стоимости можно добавить черновые или чистовые материалы.',
+            element: id('calc-group-added')
+          }, {
+            intro: 'Стоимость и срок выполнения работ для выбранных вами услуг отображается здесь и фиксируется в договоре.',
+            element: q('.calc-result__price-block', calcSect)
+          }, {
+            intro: 'Здесь можно оформить заявку.',
+            element: id('calc-order-btn')
+          }, {
+            intro: 'А тут оформить кредит в Тинькоф Банке.',
+            element: id('tinkoff-btn')
+          }, {
+            intro: 'Если нужно сразу создать договор – скачать его можно здесь.',
+            element: id('doc-form-btn')
+          }, {
+            intro: '<span style="display:block;font-size:18px;text-align:center;white-space:nowrap;margin:0 0 10px;">Быстрее оставляйте заявку!</span><img src="https://i.giphy.com/media/E6jscXfv3AkWQ/giphy.webp" alt="#" class="intro-js-image" />',
+            element: id('tinkoff-btn')
+          }]
+        }).start();
+      });
     });
+
+    // https://i.giphy.com/media/E6jscXfv3AkWQ/giphy.webp
+
+    // calcSect.addEventListener('lazyloaded', function() {
+    // let script = document.createElement('script');
+    // script.onload = function() {
+    // calcTourBtn.addEventListener('click', function() {
+    // if (media('(min-width:767.98px)')) {
+    //   let step9 = q('.hdr.fixed .hdr__callback');
+    //   if (step9) {
+    //     step9.setAttribute('data-step', '9');
+    //     step9.setAttribute('data-intro', 'А если вы запутались и не знаете, что вам нужно – закажите обратный звонок. Оставьте свои контакты здесь.');
+    //   }
+    // }
+    // introJs().start();
+    // });
+    // calcTourBtn.classList.remove('disabled');
+    // }
+    // script.src = templateDir + '/js/intro.min.js';
+    // calcSect.appendChild(script);
+    // });
 
     docFormBtn.addEventListener('click', function(e) {
       docForm.classList.add('loading');

@@ -9,7 +9,23 @@
   padding-bottom: 25px;
   font: bold 16px/100% Calibri;
   color: #fff;
-  background: top center/576px 708px;
+  // background: top center/576px 708px;
+  position: relative;
+}
+
+.index-hero__pic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.index-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .index-hero__title {

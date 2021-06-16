@@ -29,7 +29,7 @@ function enqueue_style( $style_name, $widths ) {
 // Подключаем свои стили и скрипты
 add_action( 'wp_enqueue_scripts', function() {
   global $template_directory;
-  $screen_widths = ['0', '420', '576', '768', '1024', '1240', '1920']; // на каких экранах подключать css
+  $screen_widths = ['0', '420', '576', '768', '1024', '1240']; // на каких экранах подключать css
 
   wp_enqueue_style( 'theme-style', get_stylesheet_uri(), [], null );        // подключить стиль темы (default)
 
@@ -46,6 +46,7 @@ add_action( 'wp_enqueue_scripts', function() {
 		'lazy.min',
 		'Popup.min',
 		'svg4everybody.min',
+    'intro.min',
 		'main'
 	];
 
@@ -75,6 +76,7 @@ add_action( 'wp_enqueue_scripts', function() {
 			'slick.min',
 			'lazy.min',
 			'Popup.min',
+      'intro.min',
 			'svg4everybody.min',
       'contact-form-7',
       'fgpdf-main-script',

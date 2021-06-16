@@ -20,7 +20,8 @@
 }
 
 .ftr__email:hover {
-  filter: brightness(0);
+  color: $red;
+  // filter: brightness(0);
 }
 
 .policy:hover,

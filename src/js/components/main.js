@@ -20,8 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
       dropdownText = function(element) {
 
         if (!element) {
-          faqBlocks[0].classList.add('active');
-          for (var i = faqBlocks.length - 1; i >= 1; i--) {
+          for (var i = faqBlocks.length - 1; i >= 0; i--) {
             faqBlocks[i].style.maxHeight = faqBlocks[i].children[0].scrollHeight + 'px';
           }
           return;
@@ -30,10 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
         let parent = element.parentElement,
           activeElement = q('.active', faqList);
 
-        parent.classList.add('active');
-        activeElement.classList.remove('active');
-        parent.style.maxHeight = parent.scrollHeight + 'px';
-        activeElement.style.maxHeight = activeElement.children[0].scrollHeight + 'px';
+        parent&&parent.classList.add('active');
+        activeElement&&activeElement.classList.remove('active');
+        parent&&(parent.style.maxHeight = parent.scrollHeight + 'px');
+        activeElement&&(activeElement.style.maxHeight = activeElement.children[0].scrollHeight + 'px');
 
       };
 
@@ -76,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Инициализируем поддержку svg (в основном это надо для svg use в IE)
   svg4everybody();
-
 
   //includes
   //=include menu.js

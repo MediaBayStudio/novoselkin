@@ -23,6 +23,20 @@
     margin-right: 75px;
     width: 490px;
     height: 365px;
+    &-prev {
+      transform: translateX(-100%);
+    }
+    &-next {
+      transform: translateX(100%);
+    }
+    &:hover {
+      .case__gallery-prev,
+      .case__gallery-next {
+        &:not(.slick-disabled) {
+          transform: translateX(0);
+        }
+      }
+    }
   }
 
   &__img {}

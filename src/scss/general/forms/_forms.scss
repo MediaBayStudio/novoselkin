@@ -57,7 +57,7 @@ $checkbox_text_width: calc(100% - #{$checkbox_size + $checkbox_margin_right});
   }
 
   &__link {
-    border-bottom: 1px dashed;
+    border-bottom: 1px solid;
     transition: color .5s, border-bottom-color .5s;
   }
 

@@ -171,33 +171,21 @@ html[lang] {
   transition: border-bottom-color .5s, color .5s;
 }
 
-.hdr__nav-li {
-  &.current {
-    cursor: not-allowed;
-    >.nav__link {
-      color: $red;
-      opacity: .5;
-      pointer-events: none;
-    }
-  }
-}
-
 .menu__nav-li {
   &.current {
-    cursor: not-allowed;
     >.nav__link {
-      opacity: 0.5;
+      border-bottom: 1px solid;
       pointer-events: none;
     }
   }
 }
 
+.hdr__nav-li,
 .ftr__nav-li {
   &.current {
-    cursor: not-allowed;
     >.nav__link {
       color: $red;
-      opacity: 0.5;
+      border-bottom: 1px solid;
       pointer-events: none;
     }
   }

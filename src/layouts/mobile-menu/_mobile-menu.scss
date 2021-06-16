@@ -3,82 +3,6 @@
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
 
-// .menu {
-//   width: 100%;
-//   height: 105%;
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   overflow: hidden;
-//   opacity: 0;
-//   visibility: hidden;
-//   transition: opacity .5s, visibility .5s;
-//   background: rgba(0, 0, 0, 0.7);
-//   &.active {
-//     opacity: 1;
-//     visibility: visible;
-//   }
-
-//   &__cnt {
-//     padding: 15px 20px 8vh 20px;
-//     display: flex;
-//     flex-flow: column;
-//     align-items: flex-start;
-//     height: 100vh;
-//     height: calc(var(--vh, 1vh) * 100);
-//     max-height: 100%;
-//     // max-height: 100vh;
-//     // max-height: calc(var(--vh, 1vh) * 100);
-//     font: 20px/100% Calibri;
-//     background: $red;
-//     color: $white;
-//     overflow-x: hidden;
-//     overflow-y: auto;
-//   }
-
-//   &__hdr {
-//     display: flex;
-//     align-items: center;
-//     width: 100%;
-//   }
-
-//   &__close {
-//     &-icon {
-//       pointer-events: none;
-//     }
-//   }
-
-//   &__logo {
-//     margin: 0 auto 0 0;
-//   }
-
-//   &__logo-img {}
-
-
-//   &__tel {
-//     margin: 0 0 30px;
-//     font-weight: bold;
-//   }
-
-//   &__nav {
-//     margin: auto 0;
-//     padding: 10px 0;
-//   }
-
-//   &__nav-list {}
-
-//   &__nav-li {
-//     &:nth-last-child(n+2) {
-//       margin: 0 0 40px;
-//     }
-//   }
-
-//   &__callback {
-//     width: 180px;
-//     height: 45px;
-//   }
-// }
-
 .menu {
   width: 100%;
   height: 105%;
@@ -106,9 +30,8 @@
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
   max-height: 100%;
-  font: 20px/100% Calibri;
-  background: #ea3038;
-  color: #fff;
+  background: #fff;
+  color: #333;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -125,16 +48,29 @@
 
 .menu__logo {
   margin: 0 auto 0 0;
+  width: 80px;
+  height: 22px;
 }
 
 .menu__tel {
-  margin: 0 0 30px;
-  font-weight: bold;
+  margin: 0 auto 15px;
+  font: 16px/162% Calibri;
+  &::before {
+    margin: 0 15px 0 0;
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTcuMzQyIDUuNTRsLTEuMDggMS4wMzdjLS4zMTYtLjE4LS45MDItLjU0MS0xLjUzMi0xLjE3MkE3LjMzMyA3LjMzMyAwIDAxMy41MTQgMy44M0w0LjU1IDIuNzQ4IDEuODAyLjA0NSAxLjg0NyAwIC40OTUgMS4zMDZDLjE4IDEuNjY2IDAgMi4wNzIgMCAyLjUyM2MwIC4yNy4wNDUuNDk1LjE4LjcyLjQ1Ljk0NiAxLjMwNiAyLjM4OCAyLjc0OCAzLjgzQzQuMzY5IDguNTEyIDUuODEgOS4zNjggNi43NTcgOS44MmMuMjI1LjEzNS40OTUuMTguNzIuMTguNDUgMCAuODU2LS4xOCAxLjE3Mi0uNDk1bDEuMzA2LTEuMzA3LjA0NS0uMDQ1LTIuNjU4LTIuNjEyem0tNi4yNi0zLjYwM2wuNzItLjcyIDEuNTMxIDEuNTMtLjkuOTAyLjEzNS4yN3MuNDA1Ljk0NiAxLjQ4NiAyLjAyN2MxLjA4MSAxLjA4MSAxLjk4MiAxLjQ4NiAyLjAyNyAxLjQ4NmwuMjcuMTM2LjkwMS0uOTAxTDguNzQgOC4xNTNsLS43MjEuNzJhLjkwMy45MDMgMCAwMS0uOTQ2LjE4MWMtLjktLjQ1LTIuMjUyLTEuMjYxLTMuNjA0LTIuNjEzQTEzLjk3MiAxMy45NzIgMCAwMS44NTYgMi44MzhjLS4wNDUtLjI3IDAtLjY3Ni4yMjUtLjkwMXoiIGZpbGw9IiNFMzIyMkIiLz48L3N2Zz4=') center/contain no-repeat;
+  }
 }
 
 .menu__nav {
   margin: auto 0;
   padding: 10px 0;
+  width: 100%;
+  font: 28px/100% BookmanOldStyle;
+  text-align: center;
 }
 
 .menu__nav-li:nth-last-child(n+2) {
@@ -142,6 +78,7 @@
 }
 
 .menu__callback {
+  margin: 0 auto;
   width: 180px;
   height: 45px;
 }
