@@ -44,7 +44,7 @@
             element: id('doc-form-btn')
           }, {
             intro: '<span style="display:block;font-size:18px;text-align:center;margin:0 0 10px;">Оформляйте заявку и&nbsp;наслаждайтесь ремонтом!</span><img src="https://media.giphy.com/media/WYEWpk4lRPDq0/giphy.gif" alt="#" class="intro-js-image" />',
-            element: id('calc')
+            element: id('calc-group-type')
           }]
         }).start();
       });
