@@ -95,6 +95,7 @@
 #calc-group-extra-work {
   grid-row: 3;
   grid-column: 3;
+  justify-self: stretch;
   > .calc__inputs {
     width: 100%;
     flex-flow: wrap;
@@ -110,6 +111,7 @@
 #calc-group-added {
   grid-row: 3;
   grid-column: 1;
+  justify-self: stretch;
 }
 
 #calc-img {

@@ -23,6 +23,7 @@
   /* .calc__group */
   &__group {
     margin: 0;
+    justify-self: start;
     &:nth-last-child(n+2) {
       margin: 0;
     }

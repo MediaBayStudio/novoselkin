@@ -11,6 +11,7 @@
   /* .calc-sect__title */
   &__title {
     // margin: 0 0 10px;
+    display: inline-block;
     font: 24px/100% BookmanOldStyle;
   }
 
@@ -23,7 +24,9 @@
 
 .calc {
   margin: 30px 0 0;
-
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
   /* .calc__group */
   &__group {
     &:nth-last-child(n+2) {
