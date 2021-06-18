@@ -6,15 +6,17 @@
     docForm = id('doc-form'),
     docFormBtn = id('doc-form-btn'),
     docFormLink = id('doc-form-link'),
-    indexHeroBtn = q('.index-hero__btn');
+    indexHeroBtn = q('.index-hero__btn') || id('about-hero-btn');
 
 
   if (calcScript) {
+    console.log(calcScript);
     body.removeChild(calcScript);
 
     [calcTourBtn, indexHeroBtn].forEach(function(btn) {
       btn.addEventListener('click', function() {
         introJs().setOptions({
+          scrollTo: 'tooltip',
           steps: [{
             intro: 'Это калькулятор стоимости ремонта. С его помощью вы можете посчитать итоговую стоимость и&nbsp;сроки работ.',
             element: q('.calc-sect__title', calcSect)

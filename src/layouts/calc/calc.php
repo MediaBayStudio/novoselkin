@@ -74,6 +74,7 @@ foreach ( $calc as $item ) {
     <p class="calc-sect__descr"><?php echo $sect_descr ?></p> <?php
   endif ?>
   <div class="calc" id="calc">
+    <button type="button" class="calc__tour-btn"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-info.svg" class="calc__tour-btn-icon lazy"><span class="calc__tour-btn-text">Посмотреть как это работает</span></button>
     <div class="calc__group" id="calc-group-type">
       <span class="calc__group-title">Выберите тип помещения:</span>
       <div class="calc__inputs">
@@ -143,7 +144,6 @@ foreach ( $calc as $item ) {
         </div>
       </div>
     </div>
-    <button type="button" class="calc__tour-btn"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-info.svg" class="calc__tour-btn-icon lazy"><span class="calc__tour-btn-text">Посмотреть как это работает</span></button>
     <img src="#" alt="#" class="calc__input-hint-img" id="calc-img">
   </div>
   <div class="calc-result">

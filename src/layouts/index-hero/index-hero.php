@@ -38,7 +38,7 @@ $gallery = $section['gallery'] ?>
         $img_tag = '<img src="' . $url . '" alt="#" class="index-hero__img">';
       }
 
-    } 
+    }
     echo $src_768;
     echo $src_1024;
     echo $src_1440;
