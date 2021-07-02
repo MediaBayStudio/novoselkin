@@ -3,37 +3,116 @@
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
 
+// .cases-sect {
+//   padding-bottom: 160px;
+//   &__title {
+//     margin: 0 0 60px;
+//   }
+
+//   &__cases {}
+
+//   &__case {}
+
+//   &__nav {
+//     // width: 430px;
+//   }
+// }
+
+// .case {
+//   &__gallery {
+//     margin-right: 60px;
+//     width: 680px;
+//     height: 500px;
+//   }
+
+//   &__img {}
+
+//   &__title {}
+
+//   &__ul {}
+
+//   &__li {}
+
+//   &__li-left {}
+
+//   &__li-right {}
+// }
+
 .cases-sect {
-  padding-bottom: 160px;
-  &__title {
-    margin: 0 0 60px;
-  }
+  &__title {}
 
-  &__cases {}
-
-  &__case {}
-
-  &__nav {
-    // width: 430px;
+  &__cases {
+    .slick-slide {
+      width: 1160px;
+    }
   }
 }
 
 .case {
-  &__gallery {
-    margin-right: 60px;
-    width: 680px;
-    height: 500px;
-  }
+  width: 375px;
+  &__images {}
 
-  &__img {}
+  &__link {}
+
+  &__img {
+    height: 292px;
+  }
 
   &__title {}
 
-  &__ul {}
+  &__arrow {}
 
-  &__li {}
+  &__arrow-img {}
+}
 
-  &__li-left {}
+.case-popup {
+  &__cnt {
+    padding: 50px 40px 45px;
+    width: 1085px;
+    grid-template-columns: 630px 40px auto;
+  }
+  &__close {
+  }
+  &__close-svg {
 
-  &__li-right {}
+  }
+  &__close-path {
+  }
+  &__title {
+    grid-column: 3;
+  }
+  &__area {
+    grid-column: 3;
+  }
+  &__images {
+    margin: 0 0 15px 0;
+    grid-row: 1/span 3;
+    .slick-list {
+    }
+    &-img {
+      height: 435px;
+    }
+  }
+  &__images-nav {
+    grid-row: 4;
+    .slick-list {
+    }
+    .slick-track {
+    }
+    &-img {
+      margin-right: 15px;
+      width: 114px;
+      &:nth-child(6n) {
+        margin-left: 15px;
+      }
+    }
+  }
+  &__text {
+    // margin: 0;
+    grid-row: 3/span 2;
+  }
+  &__p {
+    &:nth-last-child(n+2) {
+    }
+  }
 }

@@ -3,59 +3,221 @@
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
 
+// .cases-sect {
+//   &__title {
+//     margin: 0 0 40px;
+//     font-size: 40px;
+//   }
+
+//   &__cases {}
+
+//   &__case {}
+
+//   &__nav {
+//     width: 300px;
+//   }
+// }
+
+// .case {
+//   &__gallery {
+//     margin-right: 75px;
+//     width: 490px;
+//     height: 365px;
+//     &-prev {
+//       transform: translateX(-100%);
+//     }
+//     &-next {
+//       transform: translateX(100%);
+//     }
+//     &:hover {
+//       .case__gallery-prev,
+//       .case__gallery-next {
+//         &:not(.slick-disabled) {
+//           transform: translateX(0);
+//         }
+//       }
+//     }
+//   }
+
+//   &__img {}
+
+//   &__bottom {
+//     margin-top: 65px;
+//   }
+
+//   &__title {
+//     font-size: 20px;
+//   }
+
+//   &__ul {
+//     font-size: 17px;
+//   }
+
+//   &__li {}
+
+//   &__li-left {}
+
+//   &__li-right {}
+// }
+
 .cases-sect {
+  padding-top: 70px;
+  padding-bottom: 55px;
+  &__heading {
+    // margin: 0 0 35px;
+  }
   &__title {
-    margin: 0 0 40px;
-    font-size: 40px;
+    margin: 0 0 35px;
   }
 
-  &__cases {}
-
-  &__case {}
-
-  &__nav {
-    width: 300px;
+  &__cases {
+    .slick-slide {
+      width: 960px;
+    }
   }
 }
 
 .case {
-  &__gallery {
-    margin-right: 75px;
-    width: 490px;
-    height: 365px;
-    &-prev {
-      transform: translateX(-100%);
-    }
-    &-next {
-      transform: translateX(100%);
-    }
-    &:hover {
-      .case__gallery-prev,
-      .case__gallery-next {
-        &:not(.slick-disabled) {
-          transform: translateX(0);
-        }
-      }
-    }
+  width: 300px;
+  position: relative;
+  &__images {
+    margin: 0;
   }
 
-  &__img {}
+  &__text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    // width: calc(100% - 20px);
+    height: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+    color: $white;
+    background: rgba(0,0,0,.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .5s;
+    // &::after {
+    //   content: '';
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    //   width: 100%;
+    //   height: 100%;
+    //   background: rgba(0,0,0,.6);
+    //   filter: blur(4px);
+    //   // transition: filter .5s;
+    // }
+  }
 
-  &__bottom {
-    margin-top: 65px;
+  &__link {}
+
+  &__img {
+    height: 242px;
   }
 
   &__title {
-    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
   }
 
-  &__ul {
-    font-size: 17px;
+  &__arrow {
+    margin: 0;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    background: $white;
+    z-index: 1;
   }
 
-  &__li {}
+  &__arrow-img {}
+}
 
-  &__li-left {}
 
-  &__li-right {}
+.case-popup {
+  align-items: center;
+  &__cnt {
+    padding: 40px 80px 55px;
+    width: 960px;
+    display: grid;
+    grid-template-columns: 430px 60px auto;
+    grid-template-rows: auto auto auto 1fr;
+    position: relative;
+  }
+  &__close {
+    margin: 0;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  &__close-svg {
+
+  }
+  &__prev,
+  &__next {
+    background: transparent;
+    transition: background .5s;
+  }
+  &__close-path {
+  }
+  &__title {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  &__area {
+    margin: 0 0 10px;
+    grid-row: 2;
+    grid-column: 1;
+  }
+  &__images {
+    margin: 0 0 10px;
+    grid-row: 3;
+    grid-column: 1;
+    &:hover {
+     .case-popup__prev,
+     .case-popup__next {
+       background: rgba(0,0,0,.35);
+     }
+    }
+    .slick-list {
+    }
+    &-img {
+      height: 300px;
+    }
+  }
+  &__images-nav {
+    margin: 0;
+    grid-row: 4;
+    grid-column: 1;
+    align-self: start;
+    .slick-list {
+    }
+    .slick-track {
+    }
+    &-img {
+      margin-right: 10px;
+      width: 78px;
+      &:nth-child(6n) {
+        margin-left: 10px;
+      }
+    }
+  }
+  &__text {
+    margin: 0 0 auto;
+    grid-row: 3/span 2;
+    grid-column: 3;
+  }
+  &__p {
+    &:nth-last-child(n+2) {
+    }
+  }
 }

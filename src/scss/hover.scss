@@ -58,3 +58,10 @@
   color: $white;
   background: transparent;
 }
+
+.case:hover {
+  >.case__text {
+    opacity: 1;
+    visibility: visible;
+  }
+}

@@ -90,8 +90,8 @@
         orderPopupType = id('order-popup-type'),
         orderPopupPrice = id('order-popup-price'),
         orderPopupPeriod = id('order-popup-term'),
-        // checkedOption = q('.radio__inp[checked]', calcBlock),
-        checkedOption = q('option[checked]', calcBlock),
+        checkedOption = q('.radio__inp[checked]', calcBlock),
+        // checkedOption = q('option[checked]', calcBlock),
         resultNumber = q('.calc-result__price-number'),
         imgNameTemplate = '%number%-%ceiling%-%floor%-%tile%-%plumbing%-%walls%-%windows%',
 
@@ -136,7 +136,8 @@
             targetValue = target.value,
             targetChecked = target.checked,
             targetText = target.textContent || targetParent.textContent,
-            flatType = q('.calc__select').selectedOptions[0].textContent,
+            // flatType = q('.calc__select').selectedOptions[0].textContent,
+            flatType = q('.radio__inp[checked]', calcBlock).parentElement.textContent,
             checkedWorksInputs = qa('[name="work[]"]:checked, [name="extra-work[]"]:checked', calcBlock),
             checkedExtraWorksInputs = qa('[name="added[]"]:checked', calcBlock),
             allInputs = qa('input', calcBlock),
@@ -175,6 +176,8 @@
           if (targetName === 'type') {
             if (target.tagName === 'SELECT') {
               targetText = target[target.selectedIndex].textContent;
+            } else {
+              targetText = target.parentElement.textContent;
             }
             checkedType = calcTable[targetText];
             // Ставим номер квартиры (0 - студия. 1 - 1к кв и т.д.)
@@ -277,6 +280,9 @@
           }
 
           for (let i = 0, j = 0, len = allInputs.length; i < len; i++) {
+            if (allInputs[i].type === 'radio') {
+              continue;
+            }
             let inputParent = allInputs[i].parentElement,
               parentNextEl = inputParent.nextElementSibling,
               inputIsCheked = allInputs[i].checked,

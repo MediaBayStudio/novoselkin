@@ -6,6 +6,30 @@ var
     'lg': '(min-width:1023.98px)',
     'xl': '(min-width:1439.98px)'
   },
+  SLIDER = {
+    nextArrow: '<button type="button" class="arrow"></button>',
+    prevArrow: '<button type="button" class="arrow"></button>',
+    dot: '<button type="button" class="dot"></button>',
+    hasSlickClass: function($el) {
+      return $el.hasClass('slick-slider');
+    },
+    unslick: function($el) {
+      $el.slick('unslick');
+    },
+    createArrow: function(className, inside) {
+      className = (className.indexOf('prev') === -1 ? 'next ' : 'prev ') + className;
+      return '<button type="button" class="arrow arrow_' + className + '">' + inside + '</button>';
+    },
+    setImages: function(slides) {
+      for (let i = 0, len = slides.length; i < len; i++) {
+        let img = q('img', slides[i]);
+        // Если элемент найден и он без display:none
+        if (img && img.offsetParent) {
+          img.src = img.getAttribute('data-lazy') || img.getAttribute('data-src');
+        }
+      }
+    }
+  },
   // Определяем бразуер пользователя
   browser = {
     // Opera 8.0+

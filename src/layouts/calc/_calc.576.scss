@@ -16,14 +16,16 @@
 
 .calc {
   margin: 40px 0 0;
-  display: grid;
-  grid-template-columns: auto 20px 260px;
-  grid-template-rows: auto 20px auto;
+  display: flex;
+  flex-flow: wrap;
+  // display: grid;
+  // grid-template-columns: auto 20px 260px;
+  // grid-template-rows: auto 20px auto;
   // position: relative;
   /* .calc__group */
   &__group {
     margin: 0;
-    justify-self: start;
+    // justify-self: start;
     &:nth-last-child(n+2) {
       margin: 0;
     }
@@ -63,9 +65,9 @@
   }
 
   &__tour-btn {
-    margin: auto 0 0 auto;
-    grid-row: 3;
-    grid-column: 3;
+    // margin: auto 0 0 auto;
+    // grid-row: 3;
+    // grid-column: 3;
     // position: absolute;
     // bottom: 0;
     // right: 0;
@@ -75,44 +77,63 @@
 }
 
 #calc-group-type {
-  grid-row: 1/span 3;
-  grid-column: 1;
+  margin: 0 auto 0 0;
+  order: 1;
+  // grid-row: 1/span 3;
+  // grid-column: 1;
 }
 
 #calc-group-work {
+  margin: 40px 0 0 0;
+  order: 3;
+  flex-flow: wrap;
+  width: 100%;
+  > .calc__inputs {
+    // width: 50%;
+    &:first-of-type {
+      margin: 0 213px 0 0;
+    }
+  }
   // grid-row: 5;
-  grid-row: 3;
-  grid-column: 1;
+  // grid-row: 3;
+  // grid-column: 1;
 }
 
 #calc-group-extra-work {
-  grid-row: 1;
-  grid-column: 3;
+  order: 2;
+  // grid-row: 1;
+  // grid-column: 3;
 }
 
 #calc-group-added {
-  grid-row: 3;
-  grid-column: 3;
+  // grid-row: 3;
+  // grid-column: 3;
 }
 
 #calc-img {
-  margin: auto 0 40px;
-  width: 260px;
+  order: 2;
+  // display: block;
+  // margin: auto 0 40px;
+  width: 220px;
+  // width: 260px;
   height: auto;
   // height: 135px;
-  grid-row: 3;
-  grid-column: 3;
+  // grid-row: 3;
+  // grid-column: 3;
 }
 
 .calc-result {
   margin-top: 50px;
-  padding: 40px 25px;
+  padding: 0;
+  max-width: 500px;
+  // padding: 40px 25px;
   flex-flow: wrap;
   align-items: flex-start;
   text-align: left;
   /* .calc-result__price-block */
   &__price-block {
     margin: 0 auto 0 0;
+    order: 1;
   }
 
   /* .calc-result__price-title */
@@ -123,6 +144,7 @@
 
   &__price-period {
     margin: 0;
+    width: auto;
   }
 
   /* .calc-result__price-number */
@@ -130,8 +152,9 @@
 
   /* .calc-result__guarantee-block */
   &__guarantee-block {
+    order: 3;
     width: 250px;
-    order: 0;
+    // order: 0;
   }
 
   /* .calc-result__guarantee-title */
@@ -149,6 +172,7 @@
   /* .calc-result__buttons-block */
   &__buttons-block {
     margin: 30px 0 0;
+    order: 4;
     display: flex;
     > .btn {
       &:first-child {

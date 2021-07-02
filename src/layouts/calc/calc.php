@@ -74,47 +74,64 @@ foreach ( $calc as $item ) {
     <p class="calc-sect__descr"><?php echo $sect_descr ?></p> <?php
   endif ?>
   <div class="calc" id="calc">
-    <button type="button" class="calc__tour-btn"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-info.svg" class="calc__tour-btn-icon lazy"><span class="calc__tour-btn-text">Посмотреть как это работает</span></button>
     <div class="calc__group" id="calc-group-type">
-      <span class="calc__group-title">Выберите тип помещения:</span>
+      <span class="calc__group-title">Количество комнат:</span>
       <div class="calc__inputs">
         <input type="text" name="price" tabindex="-1" form="order-form" readonly id="calc-result" style="display:none">
         <div class="calc__input-wrap">
-          <select name="type" class="calc__select" form="order-form">
+          <label class="calc__radio radio radio_red"><input type="radio" name="type" value="0" form="order-form" class="radio__inp" checked><span class="radio__text">Квартира-студия</span></label>
+          <!-- <select name="type" class="calc__select" form="order-form">
             <option value="0" checked>Квартира-студия</option>
             <option value="1">1-комнатная квартира</option>
             <option value="2">2-комнатная квартира</option>
             <option value="3">3-комнатная квартира</option>
-          </select>
+          </select> -->
+        </div>
+        <div class="calc__input-wrap">  
+          <label class="calc__radio radio radio_red"><input type="radio" name="type" value="1" form="order-form" class="radio__inp"><span class="radio__text">1-комнатная квартира</span></label>
+        </div>
+        <div class="calc__input-wrap">            
+          <label class="calc__radio radio radio_red"><input type="radio" name="type" value="2" form="order-form" class="radio__inp"><span class="radio__text">2-комнатная квартира</span></label>
+        </div>
+        <div class="calc__input-wrap">            
+          <label class="calc__radio radio radio_red"><input type="radio" name="type" value="3" form="order-form" class="radio__inp"><span class="radio__text">3-комнатная квартира</span></label>
         </div>
       </div>
     </div>
     <div class="calc__group" id="calc-group-work">
-      <span class="calc__group-title">Выберите необходимые виды работ:</span>
+      <span class="calc__group-title">Необходимые работы:</span>
       <div class="calc__inputs">
         <div class="calc__input-wrap">
-          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="ceiling" form="order-form" class="check__inp" checked><span class="check__text">Потолок</span></label>
-          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Потолок'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"></div>
+          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="ceiling" form="order-form" class="check__inp"><span class="check__text">Потолок</span></label>
+          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Потолок'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy">
+          <span class="calc__input-hint-triangle"></span></div>
         </div>
         <div class="calc__input-wrap">
-          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="floor" form="order-form" class="check__inp" checked><span class="check__text">Пол</span></label>
-          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Пол'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"></div>
+          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="floor" form="order-form" class="check__inp"><span class="check__text">Пол</span></label>
+          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Пол'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy">
+          <span class="calc__input-hint-triangle"></span></div>
         </div>
         <div class="calc__input-wrap">
-          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="tile" form="order-form" class="check__inp" checked><span class="check__text">Кафель</span></label>
-          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Кафель'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"></div>
+          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="tile" form="order-form" class="check__inp"><span class="check__text">Кафель</span></label>
+          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Кафель'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy">
+          <span class="calc__input-hint-triangle"></span></div>
+        </div>
+      </div>
+      <div class="calc__inputs">
+        <div class="calc__input-wrap">
+          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="walls" form="order-form" class="check__inp"><span class="check__text">Стены</span></label>
+          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Стены'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy">
+          <span class="calc__input-hint-triangle"></span></div>
         </div>
         <div class="calc__input-wrap">
-          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="walls" form="order-form" class="check__inp" checked><span class="check__text">Стены</span></label>
-          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Стены'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"></div>
+          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="windows" form="order-form" class="check__inp"><span class="check__text">Окна</span></label>
+          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Окна'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy">
+          <span class="calc__input-hint-triangle"></span></div>
         </div>
         <div class="calc__input-wrap">
-          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="windows" form="order-form" class="check__inp" checked><span class="check__text">Окна</span></label>
-          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Окна'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"></div>
-        </div>
-        <div class="calc__input-wrap">
-          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="plumbing" form="order-form" class="check__inp" checked><span class="check__text">Сантехника</span></label>
-          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Сантехника'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"></div>
+          <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="work[]" value="plumbing" form="order-form" class="check__inp"><span class="check__text">Сантехника</span></label>
+          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Сантехника'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy">
+          <span class="calc__input-hint-triangle"></span></div>
         </div>
       </div>
     </div>
@@ -123,38 +140,37 @@ foreach ( $calc as $item ) {
       <div class="calc__inputs">
         <div class="calc__input-wrap">
           <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="extra-work[]" value="plaster" form="order-form" class="check__inp"><span class="check__text">Штукатурка</span></label>
-          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Штукатурка'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"></div>
+          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Штукатурка'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy">
+          <span class="calc__input-hint-triangle"></span></div>
         </div>
         <div class="calc__input-wrap">
           <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="extra-work[]" value="dry" form="order-form" class="check__inp"><span class="check__text">Ровнитель</span></label>
-          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Ровнитель'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"></div>
+          <div class="calc__input-hint" data-hint="<?php echo $tooltips['Ровнитель'] ?>"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy">
+          <span class="calc__input-hint-triangle"></span></div>
         </div>
       </div>
-    </div>
-    <div class="calc__group" id="calc-group-added">
-      <span class="calc__group-title">Добавить к стоимости:</span>
       <div class="calc__inputs">
         <div class="calc__input-wrap">
           <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="added[]" value="draft" form="order-form" class="check__inp"><span class="check__text">Черновые материалы</span></label>
-          <div class="calc__input-hint" data-hint="Матералы общестрительного назначения - грунтовки, шпаклевки, клеи, трубы для сантехники и прочее."><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"></div>
+          <div class="calc__input-hint" data-hint="Грунтовки, шпаклевки, клеи, трубы для сантехники и прочее"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"><span class="calc__input-hint-triangle"></span></div>
         </div>
         <div class="calc__input-wrap">
           <label class="calc__checkbox check check_tick check_red"><input type="checkbox" name="added[]" value="finish" form="order-form" class="check__inp"><span class="check__text">Чистовые материалы</span></label>
-          <div class="calc__input-hint" data-hint="Обои, краска, ламинат, сантехника и прочее. Качественные, в среднем ценовом диаопазоне."><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"></div>
+          <div class="calc__input-hint" data-hint="Обои, краска, ламинат, сантехника и прочее"><img src="#" alt="#" data-src="<?php echo $template_directory ?>/img/icon-question.svg" class="calc__input-hint-img lazy"><span class="calc__input-hint-triangle"></span></div>
         </div>
       </div>
     </div>
-    <img src="#" alt="#" class="calc__input-hint-img" id="calc-img">
   </div>
   <div class="calc-result">
+    <img src="#" alt="#" id="calc-img">
     <div class="calc-result__price-block">
-      <span class="calc-result__price-title">Стоимость ремонта</span>
+      <span class="calc-result__price-title">Окончательная стоимость</span>
       <span class="calc-result__price"><span class="calc-result__price-number">0</span> руб.</span>
       <p class="calc-result__price-period">Срок выполнения работ&nbsp;- <span id="calc-period"></span></p>
     </div>
     <div class="calc-result__guarantee-block">
       <span class="calc-result__guarantee-title">Гарантия на ремонт 5 лет</span>
-      <p class="calc-result__guarantee-descr">Все дополнительные пожелания оформляются в&nbsp;виде сметы, согласно утвержденным расценкам.</p>
+      <!-- <p class="calc-result__guarantee-descr">Все дополнительные пожелания оформляются в&nbsp;виде сметы, согласно утвержденным расценкам.</p> -->
       <!-- <a href="/" target="_blank" class="calc-result__guarantee-doc" id="calc-result-doc">Скачать шаблон договора</a> --> <?php
       $months_list = [
         '1' => 'января',

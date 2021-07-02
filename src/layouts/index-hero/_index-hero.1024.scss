@@ -13,12 +13,15 @@
     left: auto;
     right: 0;
   }
+  &__img {
+    object-position: 90% center;
+  }
   &__title {
     margin: 0 0 45px;
     line-height: 160%;
     font-size: 48px;
     >.br {
-      display: none;
+      // display: none;
     }
   }
 

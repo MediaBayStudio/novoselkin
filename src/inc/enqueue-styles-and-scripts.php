@@ -40,9 +40,12 @@ add_action( 'wp_enqueue_scripts', function() {
 
   enqueue_style( 'hover', '' ); // подключаем стили для эффектов при наведении
 
+  enqueue_style( 'fancybox.min', '' );
+
   // Подключаем скрипты циклом
   $scripts = [
 		'slick.min',
+    'fancybox.min',
 		'lazy.min',
 		'Popup.min',
 		'svg4everybody.min',
@@ -74,6 +77,7 @@ add_action( 'wp_enqueue_scripts', function() {
 
     $defer_scripts = [
 			'slick.min',
+      'fancybox.min',
 			'lazy.min',
 			'Popup.min',
       'intro.min',

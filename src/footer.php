@@ -26,7 +26,19 @@ wp_footer() ?>
   <p class="ftr__offer">Информация, указанная на данном сайте, является публичной офертой</p>
   <a href="/policy.pdf" target="_blank" title="Посмотреть политику конфиденциальности" class="ftr__policy">Политика конфиденциальности</a>
   <div class="ftr__dev">Разработка сайта: <a href="https://media-bay.ru" target="_blank" class="ftr__dev-link" title="Перейти на сайт разработчика">media bay</a></div>
-</footer> <?php
+</footer>
+<div class="case-popup popup">
+  <div class="case-popup__cnt">
+    <button type="button" class="case-popup__close">
+      <svg xmlns="http://www.w3.org/2000/svg" class="case-popup__close-svg"><path d="M17.5 1L1 17.5M1.5 1L18 17.5" class="case-popup__close-path"/></svg>
+    </button>
+    <span class="case-popup__title"></span>
+    <span class="case-popup__area"></span>
+    <div class="case-popup__images"></div>
+    <div class="case-popup__images-nav"></div>
+    <ul class="case-popup__text"></ul>
+  </div>
+</div> <?php
 require 'template-parts/thanks-popup.php';
 require 'template-parts/order-popup.php';
 require 'template-parts/callback-popup.php' ?>

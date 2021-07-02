@@ -3,131 +3,265 @@
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
 
+// .cases-sect {
+//   padding-bottom: 100px;
+//   overflow: hidden;
+//   &__title {
+//     font-size: 32px;
+//   }
+
+//   &__cases {
+//     position: relative;
+//   }
+
+//   &__arrow {
+//   }
+
+//   &__case {
+//     display: flex;
+//     align-items: flex-start;
+//     &:nth-child(n) {
+//       margin: 0;
+//     }
+//   }
+
+//   &__loadmore {
+//     display: none;
+//   }
+
+//   &__nav {
+//     width: 264px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//   }
+
+//   &__counter {
+//     font: 700 16px/100% Calibri;
+//     color: #767676;
+//   }
+
+//   &__arrow {
+//     width: 30px;
+//     height: 18px;
+//     transition: opacity .5s, filter .5s;
+//     &.slick-disabled {
+//       pointer-events: none;
+//       opacity: 0.25;
+//       filter: grayscale(1);
+//     }
+//   }
+
+//   &__arrow-svg {
+//     pointer-events: none;
+//     overflow: visible;
+//     width: 100%;
+//     height: 100%;
+//   }
+
+//   &__prev {
+//     > .cases-sect__arrow-svg {
+//       transform: rotate(180deg);
+//     }
+//   }
+// }
+
+// .case {
+//   &__gallery {
+//     flex-shrink: 0;
+//     margin: 0 30px 0 0;
+//     width: 390px;
+//     height: 290px;
+//     &-dots {
+//       bottom: 20px;
+//     }
+//     &-prev,
+//     &-next {
+//       height: 100%;
+//       width: 50px;
+//       position: absolute;
+//       top: 0;
+//       align-items: center;
+//       justify-content: center;
+//       color: #fff;
+//       z-index: 1;
+//       transition: opacity .35s, color .35s, transform .5s;
+//     }
+//     &-prev {
+//       left: 0;
+//       background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+//       &.slick-disabled {
+//         transform: translateX(-100%);
+//       }
+//     }
+//     &-next {
+//       right: 0;
+//       background: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+//       &.slick-disabled {
+//         transform: translateX(100%);
+//       }
+//     }
+//   }
+
+//   &__img {}
+
+//   &__bottom {
+//     margin-top: 55px;
+//   }
+
+//   &__title {
+//     margin: 0 0 10px;
+//     font-size: 18px;
+//   }
+
+//   &__ul {
+//     font-size: 16px;
+//   }
+
+//   &__li {
+//     &:not(:last-child) {
+//       margin: 0 0 10px;
+//     }
+//   }
+
+//   &__li-left {}
+
+//   &__li-right {}
+// }
+
 .cases-sect {
-  padding-bottom: 100px;
-  overflow: hidden;
+  padding-top: 60px;
+  padding-bottom: 45px;
+
+  &__heading {
+    // margin: 0 0 40px;
+    // display: flex;
+    // align-items: center;
+  }
+
   &__title {
-    font-size: 32px;
+    margin: 0 0 40px;
+    font-size: 28px;
   }
 
-  &__cases {
-    position: relative;
-  }
-
-  &__arrow {
-  }
-
-  &__case {
+  &__arrows {
+    margin: 0 auto;
+    // margin: 0 0 0 auto;
     display: flex;
-    align-items: flex-start;
-    &:nth-child(n) {
-      margin: 0;
-    }
+    justify-content: center;
   }
 
-  &__loadmore {
-    display: none;
-  }
-
-  &__nav {
-    width: 264px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-
-  &__counter {
-    font: 700 16px/100% Calibri;
-    color: #767676;
-  }
-
-  &__arrow {
-    width: 30px;
-    height: 18px;
-    transition: opacity .5s, filter .5s;
-    &.slick-disabled {
-      pointer-events: none;
-      opacity: 0.25;
-      filter: grayscale(1);
-    }
-  }
-
-  &__arrow-svg {
-    pointer-events: none;
-    overflow: visible;
-    width: 100%;
-    height: 100%;
+  &__prev,
+  &__next {
+    padding: 5px;
+    width: 40px;
   }
 
   &__prev {
-    > .cases-sect__arrow-svg {
-      transform: rotate(180deg);
+    margin: 0 15px 0 0;
+  }
+
+  &__cases {
+    margin: 0 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+
+    &:not(.slick-slider) {
+      .case {
+        width: calc((100% - 20px) / 2);
+        &:nth-child(odd) {
+          margin-right: 20px;
+        }
+      }
+    }
+
+    &.slick-slider {
+      .case {
+        &:nth-child(n) {
+          margin-right: 0;
+          padding-right: 20px;
+        }
+      }
+    }
+
+    .slick-track {
+      align-items: flex-start;
+    }
+
+    .slick-slide {
+      width: 720px;
+      display: flex;
+      flex-flow: column;
     }
   }
 }
 
 .case {
-  &__gallery {
-    flex-shrink: 0;
-    margin: 0 30px 0 0;
-    width: 390px;
-    height: 290px;
-    &-dots {
-      bottom: 20px;
-    }
-    &-prev,
-    &-next {
-      height: 100%;
-      width: 50px;
-      position: absolute;
-      top: 0;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      z-index: 1;
-      transition: opacity .35s, color .35s, transform .5s;
-    }
-    &-prev {
-      left: 0;
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
-      &.slick-disabled {
-        transform: translateX(-100%);
-      }
-    }
-    &-next {
-      right: 0;
-      background: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
-      &.slick-disabled {
-        transform: translateX(100%);
-      }
-    }
+
+  &:nth-child(odd) {
   }
 
-  &__img {}
+  &__images {}
 
-  &__bottom {
-    margin-top: 55px;
+  &__link {}
+
+  &__img {
+    height: 195px;
   }
 
+  &__title {}
+
+  &__arrow {}
+
+  &__arrow-img {}
+}
+
+
+.case-popup {
+  &__cnt {
+    padding: 40px 60px;
+    max-width: none;
+    width: 720px;
+  }
+  &__close {
+  }
+  &__close-svg {
+
+  }
+  &__close-path {
+  }
   &__title {
-    margin: 0 0 10px;
-    font-size: 18px;
+    margin: 0 0 5px;
+    font-size: 24px;
   }
-
-  &__ul {
+  &__area {
     font-size: 16px;
   }
-
-  &__li {
-    &:not(:last-child) {
-      margin: 0 0 10px;
+  &__images {
+    margin: 15px 0;
+    .slick-list {
+    }
+    &-img {
+      height: 395px;
     }
   }
-
-  &__li-left {}
-
-  &__li-right {}
+  &__images-nav {
+    .slick-list {
+    }
+    .slick-track {
+    }
+    &-img {
+      width: 108px;
+      height: 74px;
+    }
+  }
+  &__text {
+  }
+  &__p {
+    &:nth-last-child(n+2) {
+    }
+  }
 }

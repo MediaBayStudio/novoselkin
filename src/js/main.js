@@ -9,6 +9,30 @@ var
     'lg': '(min-width:1023.98px)',
     'xl': '(min-width:1439.98px)'
   },
+  SLIDER = {
+    nextArrow: '<button type="button" class="arrow"></button>',
+    prevArrow: '<button type="button" class="arrow"></button>',
+    dot: '<button type="button" class="dot"></button>',
+    hasSlickClass: function($el) {
+      return $el.hasClass('slick-slider');
+    },
+    unslick: function($el) {
+      $el.slick('unslick');
+    },
+    createArrow: function(className, inside) {
+      className = (className.indexOf('prev') === -1 ? 'next ' : 'prev ') + className;
+      return '<button type="button" class="arrow arrow_' + className + '">' + inside + '</button>';
+    },
+    setImages: function(slides) {
+      for (let i = 0, len = slides.length; i < len; i++) {
+        let img = q('img', slides[i]);
+        // Если элемент найден и он без display:none
+        if (img && img.offsetParent) {
+          img.src = img.getAttribute('data-lazy') || img.getAttribute('data-src');
+        }
+      }
+    }
+  },
   // Определяем бразуер пользователя
   browser = {
     // Opera 8.0+
@@ -244,14 +268,22 @@ var
 
 document.addEventListener('DOMContentLoaded', function() {
 
+  if (!NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = Array.prototype.forEach;
+  }
+
+  if (!HTMLCollection.prototype.forEach) {
+    HTMLCollection.prototype.forEach = Array.prototype.forEach;
+  }
+
   fakeScrollbar = id('fake-scrollbar');
   hdr = id('hdr');
   orderForm = id('order-form');
   calcBlock = id('calc');
   tinkoffBtn = id('tinkoff-btn');
   let aboutHeroBtn = id('about-hero-btn'),
-    casesBlock = q('.cases-sect__cases'),
-    casesLoadmore = q('.cases-sect__loadmore'),
+    // casesBlock = q('.cases-sect__cases'),
+    // casesLoadmore = q('.cases-sect__loadmore'),
     faqList = q('.index-faq__list');
 
   if (faqList) {
@@ -268,10 +300,10 @@ document.addEventListener('DOMContentLoaded', function() {
         let parent = element.parentElement,
           activeElement = q('.active', faqList);
 
-        parent&&parent.classList.add('active');
-        activeElement&&activeElement.classList.remove('active');
-        parent&&(parent.style.maxHeight = parent.scrollHeight + 'px');
-        activeElement&&(activeElement.style.maxHeight = activeElement.children[0].scrollHeight + 'px');
+        parent && parent.classList.add('active');
+        activeElement && activeElement.classList.remove('active');
+        parent && (parent.style.maxHeight = parent.scrollHeight + 'px');
+        activeElement && (activeElement.style.maxHeight = activeElement.children[0].scrollHeight + 'px');
 
       };
 
@@ -287,25 +319,254 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
-  if (casesBlock && casesLoadmore) {
-    if (!casesLoadmore.classList.contains('hidden') && media('(max-width:767.98px)')) {
-      let childs = casesBlock.children,
-        height = 0;
+  // if (casesBlock && casesLoadmore) {
+  //   if (!casesLoadmore.classList.contains('hidden') && media('(max-width:767.98px)')) {
+  //     let childs = casesBlock.children,
+  //       height = 0;
 
-      for (let i = 0, len = childs.length; i < 3; i++) {
-        // Один раз не нужно прибавлять нижний отступ
-        let mb = i === 0 ? 0 : parseInt(getComputedStyle(childs[i]).marginBottom);
+  //     for (let i = 0, len = childs.length; i < 3; i++) {
+  //       // Один раз не нужно прибавлять нижний отступ
+  //       let mb = i === 0 ? 0 : parseInt(getComputedStyle(childs[i]).marginBottom);
 
-        height += childs[i].offsetHeight + mb;
-      }
+  //       height += childs[i].offsetHeight + mb;
+  //     }
 
-      casesBlock.style.maxHeight = height + 'px';
+  //     casesBlock.style.maxHeight = height + 'px';
 
-      casesLoadmore.addEventListener('click', function() {
-        casesBlock.style.maxHeight = casesBlock.scrollHeight + 'px';
-        casesLoadmore.classList.add('hidden');
+  //     casesLoadmore.addEventListener('click', function() {
+  //       casesBlock.style.maxHeight = casesBlock.scrollHeight + 'px';
+  //       casesLoadmore.classList.add('hidden');
+  //     });
+  //   }
+  // }
+
+  let casesBlock = q('.cases-sect__cases');
+
+  if (casesBlock) {
+
+    casePopup = new Popup('.case-popup', {
+      closeButtons: '.case-popup__close'
+    });
+
+    casePopup.addEventListener('popupclose', function() {
+      $casePopupImages.slick('unslick');
+      $casePopupImagesNav.slick('unslick');
+      $.fancybox.destroy();
+    });
+
+
+    let casePopupTitle = q('.case-popup__title', casePopup),
+      casePopupArea = q('.case-popup__area', casePopup),
+      casePopupText = q('.case-popup__text', casePopup),
+      casePopupImages = q('.case-popup__images', casePopup),
+      casePopupImagesNav = q('.case-popup__images-nav', casePopup),
+      $casePopupImages = $(casePopupImages),
+      $casePopupImagesNav = $(casePopupImagesNav),
+      $casesBlock = $(casesBlock),
+      casesSlides = qa('.case', casesBlock),
+      loadmoreBtn = q('.cases-sect__more-btn', casesBlock.parentElement),
+      arrowSvg = '<svg class="arrow__svg" width="41" height="8" viewBox="0 0 41 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M40.3536 4.35355C40.5488 4.15829 40.5488 3.84171 40.3536 3.64645L37.1716 0.464466C36.9763 0.269204 36.6597 0.269204 36.4645 0.464466C36.2692 0.659728 36.2692 0.976311 36.4645 1.17157L39.2929 4L36.4645 6.82843C36.2692 7.02369 36.2692 7.34027 36.4645 7.53553C36.6597 7.7308 36.9763 7.7308 37.1716 7.53553L40.3536 4.35355ZM0 4.5H40V3.5H0V4.5Z" fill="currentColor"/></svg>',
+      cornerArrowSvg = '<svg class="arrow__svg" width="9" height="21" viewBox="0 0 9 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.615431 20.0376L8.23047 9.72557L0.615433 1" stroke="currentColor"/></svg>',
+      childs = casesBlock.children,
+      childsLength = childs.length,
+      coeff = 1,
+      getNeedleHeight = function(coeff) {
+        coeff = coeff || 1;
+        return (childs[0].offsetHeight + +getComputedStyle(childs[0]).marginBottom.slice(0, -2)) * 4 * coeff;
+      },
+      setCasesBlockHeight = function(event) {
+        if (media('(max-width:767.98px)')) {
+          loadmoreBtn && loadmoreBtn.removeAttribute('hidden');
+
+          if (event && event.type === 'click') {
+            let needleHeight = getNeedleHeight(coeff) + 'px';
+            casesBlock.style.maxHeight = needleHeight;
+          }
+          if (coeff * 4 >= childsLength) {
+            loadmoreBtn && loadmoreBtn.setAttribute('hidden', '');
+          }
+
+        } else {
+          casesBlock.removeAttribute('style');
+          loadmoreBtn && loadmoreBtn.setAttribute('hidden', '');
+          coeff = 1;
+        }
+      },
+      // buildCasesSlider = function() {
+      //   return;
+
+      //   if (media('(max-width:767.98px)')) {
+      //     if (SLIDER.hasSlickClass($casesBlock)) {
+      //       $casesBlock.slick('unslick');
+      //     }
+      //   } else {
+      //     if (SLIDER.hasSlickClass($casesBlock)) {
+      //       return;
+      //     }
+      //     if (casesSlides.length && casesSlides.length > 6) {
+      //       $casesBlock.slick({
+      //         appendArrows: $('.cases-sect__arrows'),
+      //         prevArrow: SLIDER.createArrow('cases-sect__prev', arrowSvg),
+      //         nextArrow: SLIDER.createArrow('cases-sect__next', arrowSvg),
+      //         infinite: false,
+      //         slide: '.case',
+      //         mobileFirst: true,
+      //         variableWidth: true,
+      //         slidesPerRow: 2,
+      //         rows: 2,
+      //         responsive: [{
+      //           breakpoint: 1023.98,
+      //           settings: {
+      //             slidesPerRow: 2,
+      //             rows: 2
+      //           }
+      //         }]
+      //       });
+      //     }
+      //   }
+      // },
+      prevAttr,
+      slideByMouse = function(e, slider) {
+        let deltaY = e.deltaY;
+
+        slider = slider || $(this);
+
+        slider[0].removeEventListener('mousewheel', slideByMouse);
+
+        slider.on('afterChange', function() {
+          slider[0].addEventListener('mousewheel', slideByMouse);
+          slider.off('afterChange');
+        });
+
+        if (deltaY > 0) {
+          slider.slick('slickNext');
+        } else if (deltaY < 0) {
+          slider.slick('slickPrev');
+        }
+      };
+
+    console.log('msg');
+
+    // casesBlock.style.maxHeight = getNeedleHeight(1) + 'px';
+    if (loadmoreBtn) {
+      loadmoreBtn.addEventListener('click', function(e) {
+        coeff++;
+        setCasesBlockHeight(e);
       });
     }
+
+    // casePopup.addEventListener('popupclose', function() {
+    //   console.log('closed');
+    // });
+
+
+    casesBlock.addEventListener('click', function(e) {
+      e.preventDefault();
+      let target = e.target;
+
+      if (target.classList.contains('case__link')) {
+        let parent = target.closest('.case'),
+          title = parent.getAttribute('data-title'),
+          area = parent.getAttribute('data-area'),
+          gallery = q('.case__images', parent),
+          galleryClone = gallery.cloneNode(true),
+          galleryChilds = galleryClone.children,
+          popupImages = '',
+          popupNavImages = '',
+          text = q('.case__text', parent);
+
+        if (area) {
+          area = area.replace('м2', 'м<sup class="case__title-sup">2</sup>');
+        }
+
+        if (galleryChilds) {
+          galleryChilds.forEach(function(a) {
+            let clearImgHTML = a.children[0].outerHTML.replace(/ lazyloaded| lazy| src=".*?"|data-/g, '');
+
+            popupImages += a.outerHTML.replace(/<img[\s\S]*?>/, clearImgHTML)
+              .replace('case__link"', 'case-popup__link" data-fancybox="images"')
+              .replace('case__img', 'case-popup__images-img');
+            popupNavImages += clearImgHTML.replace('case__img', 'case-popup__images-nav-img');
+          });
+        }
+
+        casePopupTitle.innerHTML = title;
+        casePopupArea.innerHTML = area;
+        casePopupText.innerHTML = text.innerHTML;
+        casePopupImages.innerHTML = popupImages;
+        casePopupImagesNav.innerHTML = popupNavImages;
+
+        $('[data-fancybox="images"]').fancybox({
+          beforeClose: function(e, instance, slide) {
+            $casePopupImages.slick('slickGoTo', e.currIndex);
+          },
+          backFocus: false,
+          buttons: [
+            'share',
+            'zoom',
+            'fullScreen',
+            'close'
+          ]
+        });
+
+        casePopupImagesNav.addEventListener('mousewheel', slideByMouse);
+
+        casePopupImages.addEventListener('mousewheel', slideByMouse);
+
+        $casePopupImages.slick({
+          prevArrow: SLIDER.createArrow('case-popup__prev', cornerArrowSvg),
+          nextArrow: SLIDER.createArrow('case-popup__next', cornerArrowSvg),
+          infinite: false,
+          draggable: false
+        });
+
+        $casePopupImagesNav.slick({
+          arrows: false,
+          dots: true,
+          // appendArrows: $('.cases-sect__arrows'),
+          // prevArrow: SLIDER.createArrow('cases-sect__prev', arrowSvg),
+          // nextArrow: SLIDER.createArrow('cases-sect__next', arrowSvg),
+          infinite: false,
+          variableWidth: true,
+          slidesToScroll: 5,
+          slidesToShow: 5
+        });
+
+        let casePopupNavImages = qa('img', casePopupImagesNav);
+
+        casePopupNavImages[0].classList.add('current');
+
+        $casePopupImages.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+          $casePopupImagesNav.slick('slickGoTo', nextSlide);
+          casePopupNavImages.forEach(function(img) {
+            img.classList.remove('current');
+          });
+          casePopupNavImages[nextSlide].classList.add('current');
+        });
+
+        casePopupImagesNav.addEventListener('click', function() {
+          let target = event.target,
+            tragetIndex = qa('.case-popup__images-nav-img', casePopupImagesNav, true).indexOf(target);
+
+          $casePopupImages.slick('slickGoTo', tragetIndex);
+        });
+
+        $casePopupImagesNav.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+          $casePopupImages.slick('slickGoTo', nextSlide);
+        });
+
+
+        casePopup.openPopup();
+
+      }
+
+      console.log(target);
+    });
+
+
+    // windowFuncs.resize.push(setCasesBlockHeight, buildCasesSlider);
+
+
   }
 
   if (aboutHeroBtn) {
@@ -1036,10 +1297,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
       // Слайдеры
       teamSlider = id('team-slider'),
-      teamLoadMoreBtn = id('team-more-btn'),
+      teamLoadMoreBtn = id('team-more-btn');
   
       // cases
-      casesSect = q('.cases-sect');
+      // casesSect = q('.cases-sect');
   
     if (teamSlider) {
       let slides = qa('.person', teamSlider),
@@ -1097,73 +1358,73 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   
-    if (casesSect) {
-      let casesSlider = q('.cases-sect__cases', casesSect),
-        casesGallery = $('.case__gallery', casesSlider),
-        casesLoadmoreBtn = q('.cases-sect__loadmore', casesSect),
-        $casesSlider = $(casesSlider),
-        counter = q('.cases-sect__counter', casesSect),
-        buildCaseGallerySlider = function() {
-          if (hasSlickClass(casesGallery)) {
-            // слайдер уже создан
-            return;
-          }
-          casesGallery.slick({
-            infinite: false,
-            arrows: false,
-            dots: true,
-            dotsClass: 'case__gallery-dots',
-            mobileFirst: true,
-            customPaging: () => dot,
-            responsive: [{
-              breakpoint: 767.98,
-              settings: {
-                arrows: true,
-                prevArrow: createArrow('case__gallery-prev', arrowSvg),
-                nextArrow: createArrow('case__gallery-next', arrowSvg)
-              }
-            }]
-          });
-        },
-        buildCasesSlider = function() {
-          if (media('(max-width:767.98px)')) {
-            if (hasSlickClass($casesSlider)) {
-              unslick($casesSlider);
-              return;
-            }
-          } else {
-            if (hasSlickClass($casesSlider)) {
-              // слайдер уже создан
-              return;
-            }
-            $casesSlider.slick({
-              accessibility: false,
-              fade: true,
-              infinite: false,
-              slide: '.cases-sect__case',
-              draggable: false,
-              swipe: false,
-              slidesToScroll: 1,
-              slidesToShow: 1,
-              appendArrows: $('.cases-sect__nav'),
-              prevArrow: '<button type="button" class="cases-sect__arrow cases-sect__prev"><svg class="cases-sect__arrow-svg" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.7071 8.7071C31.0976 8.31658 31.0976 7.68341 30.7071 7.29289L24.3431 0.92893C23.9526 0.538406 23.3195 0.538406 22.9289 0.92893C22.5384 1.31945 22.5384 1.95262 22.9289 2.34314L28.5858 8L22.9289 13.6569C22.5384 14.0474 22.5384 14.6805 22.9289 15.0711C23.3195 15.4616 23.9526 15.4616 24.3431 15.0711L30.7071 8.7071ZM8.74228e-08 9L30 9L30 7L-8.74228e-08 7L8.74228e-08 9Z" fill="#F73C4A"/></svg></button>',
-              nextArrow: '<button type="button" class="cases-sect__arrow cases-sect__next"><svg class="cases-sect__arrow-svg" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.7071 8.7071C31.0976 8.31658 31.0976 7.68341 30.7071 7.29289L24.3431 0.92893C23.9526 0.538406 23.3195 0.538406 22.9289 0.92893C22.5384 1.31945 22.5384 1.95262 22.9289 2.34314L28.5858 8L22.9289 13.6569C22.5384 14.0474 22.5384 14.6805 22.9289 15.0711C23.3195 15.4616 23.9526 15.4616 24.3431 15.0711L30.7071 8.7071ZM8.74228e-08 9L30 9L30 7L-8.74228e-08 7L8.74228e-08 9Z" fill="#F73C4A"/></svg></button>'
-            });
-          }
-        };
+    // if (casesSect) {
+    //   let casesSlider = q('.cases-sect__cases', casesSect),
+    //     casesGallery = $('.case__gallery', casesSlider),
+    //     casesLoadmoreBtn = q('.cases-sect__loadmore', casesSect),
+    //     $casesSlider = $(casesSlider),
+    //     counter = q('.cases-sect__counter', casesSect),
+    //     buildCaseGallerySlider = function() {
+    //       if (hasSlickClass(casesGallery)) {
+    //         // слайдер уже создан
+    //         return;
+    //       }
+    //       casesGallery.slick({
+    //         infinite: false,
+    //         arrows: false,
+    //         dots: true,
+    //         dotsClass: 'case__gallery-dots',
+    //         mobileFirst: true,
+    //         customPaging: () => dot,
+    //         responsive: [{
+    //           breakpoint: 767.98,
+    //           settings: {
+    //             arrows: true,
+    //             prevArrow: createArrow('case__gallery-prev', arrowSvg),
+    //             nextArrow: createArrow('case__gallery-next', arrowSvg)
+    //           }
+    //         }]
+    //       });
+    //     },
+    //     buildCasesSlider = function() {
+    //       if (media('(max-width:767.98px)')) {
+    //         if (hasSlickClass($casesSlider)) {
+    //           unslick($casesSlider);
+    //           return;
+    //         }
+    //       } else {
+    //         if (hasSlickClass($casesSlider)) {
+    //           // слайдер уже создан
+    //           return;
+    //         }
+    //         $casesSlider.slick({
+    //           accessibility: false,
+    //           fade: true,
+    //           infinite: false,
+    //           slide: '.cases-sect__case',
+    //           draggable: false,
+    //           swipe: false,
+    //           slidesToScroll: 1,
+    //           slidesToShow: 1,
+    //           appendArrows: $('.cases-sect__nav'),
+    //           prevArrow: '<button type="button" class="cases-sect__arrow cases-sect__prev"><svg class="cases-sect__arrow-svg" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.7071 8.7071C31.0976 8.31658 31.0976 7.68341 30.7071 7.29289L24.3431 0.92893C23.9526 0.538406 23.3195 0.538406 22.9289 0.92893C22.5384 1.31945 22.5384 1.95262 22.9289 2.34314L28.5858 8L22.9289 13.6569C22.5384 14.0474 22.5384 14.6805 22.9289 15.0711C23.3195 15.4616 23.9526 15.4616 24.3431 15.0711L30.7071 8.7071ZM8.74228e-08 9L30 9L30 7L-8.74228e-08 7L8.74228e-08 9Z" fill="#F73C4A"/></svg></button>',
+    //           nextArrow: '<button type="button" class="cases-sect__arrow cases-sect__next"><svg class="cases-sect__arrow-svg" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.7071 8.7071C31.0976 8.31658 31.0976 7.68341 30.7071 7.29289L24.3431 0.92893C23.9526 0.538406 23.3195 0.538406 22.9289 0.92893C22.5384 1.31945 22.5384 1.95262 22.9289 2.34314L28.5858 8L22.9289 13.6569C22.5384 14.0474 22.5384 14.6805 22.9289 15.0711C23.3195 15.4616 23.9526 15.4616 24.3431 15.0711L30.7071 8.7071ZM8.74228e-08 9L30 9L30 7L-8.74228e-08 7L8.74228e-08 9Z" fill="#F73C4A"/></svg></button>'
+    //         });
+    //       }
+    //     };
   
-      $casesSlider.on('init reInit afterChange', function(event, slick, currentSlide, nextSlide) {
-        if (event.target.classList.contains('cases-sect__cases') && slick.slideCount) {
-          let number = (currentSlide ? currentSlide : 0) + 1;
-          counter.textContent = 'Объект ' + number + '/' + (slick.slideCount - slick.options.slidesToShow + slick.options.slidesToScroll);
-        }
-      });
+    //   $casesSlider.on('init reInit afterChange', function(event, slick, currentSlide, nextSlide) {
+    //     if (event.target.classList.contains('cases-sect__cases') && slick.slideCount) {
+    //       let number = (currentSlide ? currentSlide : 0) + 1;
+    //       counter.textContent = 'Объект ' + number + '/' + (slick.slideCount - slick.options.slidesToShow + slick.options.slidesToScroll);
+    //     }
+    //   });
   
   
-      buildCaseGallerySlider();
-      buildCasesSlider();
-      windowFuncs.resize.push(buildCaseGallerySlider, buildCasesSlider);
-    }
+    //   buildCaseGallerySlider();
+    //   buildCasesSlider();
+    //   windowFuncs.resize.push(buildCaseGallerySlider, buildCasesSlider);
+    // }
   
   
     // настройки grab курсора на всех слайдерах
@@ -1468,8 +1729,8 @@ document.addEventListener('DOMContentLoaded', function() {
           orderPopupType = id('order-popup-type'),
           orderPopupPrice = id('order-popup-price'),
           orderPopupPeriod = id('order-popup-term'),
-          // checkedOption = q('.radio__inp[checked]', calcBlock),
-          checkedOption = q('option[checked]', calcBlock),
+          checkedOption = q('.radio__inp[checked]', calcBlock),
+          // checkedOption = q('option[checked]', calcBlock),
           resultNumber = q('.calc-result__price-number'),
           imgNameTemplate = '%number%-%ceiling%-%floor%-%tile%-%plumbing%-%walls%-%windows%',
   
@@ -1514,7 +1775,8 @@ document.addEventListener('DOMContentLoaded', function() {
               targetValue = target.value,
               targetChecked = target.checked,
               targetText = target.textContent || targetParent.textContent,
-              flatType = q('.calc__select').selectedOptions[0].textContent,
+              // flatType = q('.calc__select').selectedOptions[0].textContent,
+              flatType = q('.radio__inp[checked]', calcBlock).parentElement.textContent,
               checkedWorksInputs = qa('[name="work[]"]:checked, [name="extra-work[]"]:checked', calcBlock),
               checkedExtraWorksInputs = qa('[name="added[]"]:checked', calcBlock),
               allInputs = qa('input', calcBlock),
@@ -1553,6 +1815,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetName === 'type') {
               if (target.tagName === 'SELECT') {
                 targetText = target[target.selectedIndex].textContent;
+              } else {
+                targetText = target.parentElement.textContent;
               }
               checkedType = calcTable[targetText];
               // Ставим номер квартиры (0 - студия. 1 - 1к кв и т.д.)
@@ -1655,6 +1919,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
   
             for (let i = 0, j = 0, len = allInputs.length; i < len; i++) {
+              if (allInputs[i].type === 'radio') {
+                continue;
+              }
               let inputParent = allInputs[i].parentElement,
                 parentNextEl = inputParent.nextElementSibling,
                 inputIsCheked = allInputs[i].checked,
@@ -1717,8 +1984,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Делаем глобальный lazy, чтобы потом можно было обновлять его через lazy.refresh()
   lazy = new lazyload({
-    clearSrc: true,
-    clearMedia: true
+    // clearSrc: true,
+    // clearMedia: true
   });
 
   // Задаем обработчики событий 'load', 'resize', 'scroll'
