@@ -1652,41 +1652,71 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log(calcScript);
       body.removeChild(calcScript);
   
+      let calcSteps = [{
+        intro: 'Выберете количество комнат, необходимые и дополнительные работы.',
+        element: id('calc')
+      }];
+  
+      if (media('(min-width:767.98px)')) {
+        calcSteps.push({
+          intro: 'Все изменения отображаются на интерактивном плане квартиры.',
+          element: id('calc-img')
+        });
+      }
+  
+      calcSteps.push({
+        intro: 'От вашего выбора зависят стоимость ремонта и сроки. Они окончательные и закрепляются в договоре.',
+        element: q('.calc-result__price-block')
+      }, {
+        intro: 'Если нужно сразу создать договор – скачать его можно здесь.',
+        element: id('doc-form-btn')
+      }, {
+        intro: 'Оформить заявку у нашего менеджера или кредит в Тинькофф банке можно здесь.',
+        element: q('.calc-result__buttons-block')
+      }, {
+        intro: '<span style="display:block;font-size:18px;text-align:center;margin:0 0 10px;">Оформляйте заявку и&nbsp;наслаждайтесь ремонтом!</span><img src="https://media.giphy.com/media/WYEWpk4lRPDq0/giphy.gif" alt="#" class="intro-js-image" />',
+        element: id('calc-group-type')
+      });
+  
+  
+  
       [calcTourBtn, indexHeroBtn].forEach(function(btn) {
         btn.addEventListener('click', function() {
           introJs().setOptions({
             scrollTo: 'tooltip',
-            steps: [{
-              intro: 'Это калькулятор стоимости ремонта. С его помощью вы можете посчитать итоговую стоимость и&nbsp;сроки работ.',
-              element: q('.calc-sect__title', calcSect)
-            }, {
-              intro: 'Выберете тип своей квартиры.',
-              element: id('calc-group-type')
-            }, {
-              intro: 'Выберете необходимые вам работы. По нажатию на вопрос можно почитать описание.',
-              element: id('calc-group-work')
-            }, {
-              intro: 'Вы так же можете выбрать дополнительные работы – штукатурку всех стен или ровнитель для пола.',
-              element: id('calc-group-extra-work')
-            }, {
-              intro: 'А еще к стоимости можно добавить черновые или чистовые материалы.',
-              element: id('calc-group-added')
-            }, {
-              intro: 'Стоимость и срок выполнения работ для выбранных вами услуг отображается здесь и фиксируется в договоре.',
-              element: q('.calc-result__price-block', calcSect)
-            }, {
-              intro: 'Здесь можно оформить заявку.',
-              element: id('calc-order-btn')
-            }, {
-              intro: 'А тут оформить кредит в Тинькоф Банке.',
-              element: id('tinkoff-btn')
-            }, {
-              intro: 'Если нужно сразу создать договор – скачать его можно здесь.',
-              element: id('doc-form-btn')
-            }, {
-              intro: '<span style="display:block;font-size:18px;text-align:center;margin:0 0 10px;">Оформляйте заявку и&nbsp;наслаждайтесь ремонтом!</span><img src="https://media.giphy.com/media/WYEWpk4lRPDq0/giphy.gif" alt="#" class="intro-js-image" />',
-              element: id('calc-group-type')
-            }]
+            steps: calcSteps
+  
+            // [{
+            //   intro: 'Выберете количество комнат, необходимые работы и дополнительные.',
+            //   element: id('calc')
+            // }, {
+            //   intro: 'Выберете тип своей квартиры.',
+            //   element: id('calc-group-type')
+            // }, {
+            //   intro: 'Выберете необходимые вам работы. По нажатию на вопрос можно почитать описание.',
+            //   element: id('calc-group-work')
+            // }, {
+            //   intro: 'Вы так же можете выбрать дополнительные работы – штукатурку всех стен или ровнитель для пола.',
+            //   element: id('calc-group-extra-work')
+            // }, {
+            //   intro: 'А еще к стоимости можно добавить черновые или чистовые материалы.',
+            //   element: id('calc-group-added')
+            // }, {
+            //   intro: 'Стоимость и срок выполнения работ для выбранных вами услуг отображается здесь и фиксируется в договоре.',
+            //   element: q('.calc-result__price-block', calcSect)
+            // }, {
+            //   intro: 'Здесь можно оформить заявку.',
+            //   element: id('calc-order-btn')
+            // }, {
+            //   intro: 'А тут оформить кредит в Тинькоф Банке.',
+            //   element: id('tinkoff-btn')
+            // }, {
+            //   intro: 'Если нужно сразу создать договор – скачать его можно здесь.',
+            //   element: id('doc-form-btn')
+            // }, {
+            //   intro: '<span style="display:block;font-size:18px;text-align:center;margin:0 0 10px;">Оформляйте заявку и&nbsp;наслаждайтесь ремонтом!</span><img src="https://media.giphy.com/media/WYEWpk4lRPDq0/giphy.gif" alt="#" class="intro-js-image" />',
+            //   element: id('calc-group-type')
+            // }]
           }).start();
         });
       });
