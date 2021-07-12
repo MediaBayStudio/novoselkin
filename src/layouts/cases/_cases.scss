@@ -171,7 +171,14 @@
   &__text {
     display: flex;
     align-items: flex-start;
+    flex-wrap: wrap;
     pointer-events: none;
+  }
+
+  &__text-props {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
 
   &__title {
@@ -318,6 +325,10 @@
         &.slick-active {
           opacity: 0.5;
           pointer-events: none;
+        }
+
+        &:only-child {
+          opacity: 0;
         }
 
         &:nth-last-child(n+2) {

@@ -63,9 +63,13 @@ if ( $section['manual'] ) {
 
       $case_gallery = $case_fields['gallery'];
       $case_text = '';
+      $preview_text = '';
 
       foreach ( $case_fields['props'] as $prop ) {
         $case_text .= '<li class="case__li"><span class="case__li-left">' . $prop['left'] . '</span><span class="case__li-right">' . $prop['right']. '</span></li>';
+        if ( stripos( $prop['left'], 'Метраж' ) !== false || stripos( $prop['left'], 'Стоимость' ) !== false ) {
+          $preview_text .= '<div class="case__text-props"><span class="case__text-left">' . $prop['left'] . '</span><span class="case__text-right">' . $prop['right'] . '</span></div>';
+        }
       }
 
       $case_thumbnail = $case_gallery[0]['url'];
@@ -88,7 +92,8 @@ if ( $section['manual'] ) {
           <strong class="case__title"><?php echo $case_title . $case_area ?></strong>
           <div class="case__arrow">
             <img src="#" alt="Стрелка" class="case__arrow-img lazy" data-src="<?php echo $template_directory ?>/img/icon-case-arrow.svg" >
-          </div>
+          </div> <?php
+          echo $preview_text ?>
         </div>
       </div> <?php
       $i++;

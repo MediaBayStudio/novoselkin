@@ -46,11 +46,11 @@ $gallery = $section['gallery'] ?>
     echo $src_2560;
     echo $img_tag ?>
   </picture>
-  <h1 class="index-hero__title"><?php echo $section_title; #if ( $marked_title ) echo "<span class=\"index-hero__title-marked\">" . $marked_title . "</span>" ?></h1>
+  <h1 class="index-hero__title"><?php echo $section_title; if ( $marked_title ) echo "<span class=\"index-hero__title-marked\">" . $marked_title . "</span>" ?></h1>
   <ul class="index-hero__ul"> <?php
     foreach ( $list as $li ) : ?>
       <li class="index-hero__li">• <?php echo $li['li'] ?></li> <?php
     endforeach ?>
   </ul>
-  <button type="button" class="index-hero__btn btn btn_white">Рассчитать</button>
+  <button type="button" class="index-hero__btn btn btn_white" style="display:none">Рассчитать</button>
 </section>
